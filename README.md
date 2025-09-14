@@ -1,2 +1,2 @@
 # spearyx-frontend
-Website and tools for the Spearyx platform.
+Website and demo tools for the Spearyx platform.
