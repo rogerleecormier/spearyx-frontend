@@ -1,3 +1,4 @@
+import { cloudflare } from '@cloudflare/vite-plugin'
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'url'
@@ -20,6 +21,9 @@ export default createApp({
           semicolons: true,
         }),
         react(),
+        cloudflare({
+          // Enable Cloudflare-specific optimizations
+        }),
       ],
     },
   ],
