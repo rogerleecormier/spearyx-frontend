@@ -2,6 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
 import { Button } from '../components/ui/button';
+import { useLogger } from '../lib/useLogger';
 import { getServerData } from './server-data';
 
 interface ServerItem {
@@ -33,13 +34,24 @@ export const Route = createFileRoute('/data')({
 
 function DataPage() {
   const { serverData, serverFunctionData } = Route.useLoaderData();
+  const log = useLogger('DataPage');
 
   // Client-side query to demonstrate hydration
   const { data: clientData, refetch } = useSuspenseQuery({
     queryKey: ['client-data'],
     queryFn: async () => {
+      log.info('Starting client-side data fetch');
+      const startTime = performance.now();
+
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 500));
+
+      const endTime = performance.now();
+      const duration = endTime - startTime;
+
+      log.performance('Client data fetch', duration);
+      log.info('Client-side data fetch completed');
+
       return {
         message: 'Hello from the client!',
         timestamp: new Date().toISOString(),
@@ -126,7 +138,13 @@ function DataPage() {
                   {clientData.isServerSide ? '✅ Yes' : '❌ No'}
                 </p>
               </div>
-              <Button onClick={() => refetch()} className="shrink-0">
+              <Button
+                onClick={() => {
+                  log.userAction('refresh_client_data');
+                  refetch();
+                }}
+                className="shrink-0"
+              >
                 Refresh Client Data
               </Button>
             </div>
