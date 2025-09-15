@@ -299,8 +299,96 @@ const config: Config = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function({ addUtilities }: { addUtilities: (utilities: any) => void }) {
       const newUtilities = {
+        // Brand Typography Components
+        '.typography-hero': {
+          fontSize: '4.5rem',
+          lineHeight: '1',
+          letterSpacing: '-0.025em',
+          fontWeight: '900',
+        },
+        '.text-hero': {
+          fontSize: '4.5rem',
+          lineHeight: '1',
+          letterSpacing: '-0.025em',
+          fontWeight: '900',
+        },
+        '.typography-display': {
+          fontSize: '2.25rem',
+          letterSpacing: '-0.02em',
+        },
+        '.text-display': {
+          fontSize: '2.25rem',
+          letterSpacing: '-0.02em',
+        },
+        '.typography-headline': {
+          fontSize: '1.875rem',
+          lineHeight: '1.2',
+          letterSpacing: '-0.015em',
+          fontWeight: '700',
+        },
+        '.text-headline': {
+          fontSize: '1.875rem',
+          lineHeight: '1.2',
+          letterSpacing: '-0.015em',
+          fontWeight: '700',
+        },
+        '.typography-title': {
+          fontSize: '1.5rem',
+          lineHeight: '1.3',
+          letterSpacing: '-0.01em',
+          fontWeight: '600',
+        },
+        '.text-title': {
+          fontSize: '1.5rem',
+          lineHeight: '1.3',
+          letterSpacing: '-0.01em',
+          fontWeight: '600',
+        },
+        '.typography-body-lg': {
+          fontSize: '1.25rem',
+          fontWeight: '400',
+        },
+        '.text-body-lg': {
+          fontSize: '1.25rem',
+          fontWeight: '400',
+        },
+        '.typography-body': {
+          fontSize: '1rem',
+          lineHeight: '1.6',
+          fontWeight: '400',
+        },
+        '.typography-caption': {
+          fontSize: '0.875rem',
+          lineHeight: '1.4',
+          fontWeight: '400',
+        },
+        '.text-caption': {
+          fontSize: '0.875rem',
+          lineHeight: '1.4',
+          fontWeight: '400',
+        },
+        '.typography-label': {
+          fontSize: '0.75rem',
+          lineHeight: '1.3',
+          letterSpacing: '0.05em',
+          fontWeight: '500',
+          textTransform: 'uppercase',
+        },
+        '.text-label': {
+          fontSize: '0.75rem',
+          lineHeight: '1.3',
+          letterSpacing: '0.05em',
+          fontWeight: '500',
+          textTransform: 'uppercase',
+        },
         // Brand gradient text
         '.text-brand-gradient': {
+          background: 'linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #fb923c 100%)',
+          '-webkit-background-clip': 'text',
+          'background-clip': 'text',
+          '-webkit-text-fill-color': 'transparent',
+        },
+        '.text-gradient-brand': {
           background: 'linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #fb923c 100%)',
           '-webkit-background-clip': 'text',
           'background-clip': 'text',
@@ -314,9 +402,38 @@ const config: Config = {
         },
         // Brand glass effect
         '.glass-brand': {
-          background: 'rgba(15, 23, 42, 0.8)',
+          background: '#020617e6',
           'backdrop-filter': 'blur(12px)',
           border: '1px solid rgba(148, 163, 184, 0.1)',
+        },
+        // Brand Card Components
+        '.card-brand': {
+          borderRadius: '1rem',
+          border: '1px solid rgba(30, 41, 59, 0.5)',
+          background: '#020617e6',
+          padding: '2rem',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          backdropFilter: 'blur(0.5rem)',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            boxShadow: '0 35px 60px -12px rgba(0, 0, 0, 0.25)',
+            borderColor: 'rgba(14, 165, 233, 0.3)',
+            background: '#020617f0',
+          },
+        },
+        '.card-brand-elevated': {
+          '@apply card-brand': {},
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+          transition: 'box-shadow 0.3s ease',
+          '&:hover': {
+            boxShadow: '0 35px 60px -12px rgba(0, 0, 0, 0.25)',
+          },
+        },
+        '.card-brand-glass': {
+          borderRadius: '1rem',
+          border: '1px solid rgba(30, 41, 59, 0.5)',
+          background: '#020617e6',
+          backdropFilter: 'blur(16px)',
         },
         // Brand accent line
         '.accent-line': {
@@ -338,6 +455,157 @@ const config: Config = {
             'box-shadow': '0 0 0 3px rgba(14, 165, 233, 0.3)',
           },
         },
+        // Brand Button Variants
+        '.btn-brand-primary': {
+          borderRadius: '0.5rem',
+          background: '#0ea5e9',
+          padding: '0.75rem 1.5rem',
+          fontWeight: '600',
+          color: 'white',
+          transition: 'background-color 0.2s ease',
+          '@apply focus-brand': {},
+          '&:hover': {
+            background: '#0284c7',
+          },
+        },
+        '.btn-brand-secondary': {
+          borderRadius: '0.5rem',
+          background: '#f1f5f9',
+          padding: '0.75rem 1.5rem',
+          fontWeight: '600',
+          color: '#0f172a',
+          transition: 'background-color 0.2s ease',
+          '@apply focus-brand': {},
+          '&:hover': {
+            background: '#e2e8f0',
+          },
+        },
+        '.btn-brand-accent': {
+          borderRadius: '0.5rem',
+          background: '#f97316',
+          padding: '0.75rem 1.5rem',
+          fontWeight: '600',
+          color: 'white',
+          transition: 'background-color 0.2s ease',
+          '@apply focus-brand': {},
+          '&:hover': {
+            background: '#ea580c',
+          },
+        },
+        '.btn-brand-ghost': {
+          borderRadius: '0.5rem',
+          padding: '0.75rem 1.5rem',
+          fontWeight: '600',
+          color: '#0ea5e9',
+          transition: 'background-color 0.2s ease',
+          '@apply focus-brand': {},
+          '&:hover': {
+            background: 'rgba(14, 165, 233, 0.1)',
+          },
+        },
+        // Brand Input Components
+        '.input-brand': {
+          width: '100%',
+          borderRadius: '0.5rem',
+          border: '1px solid #64748b',
+          background: 'hsl(var(--background))',
+          padding: '0.5rem 1rem',
+          transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+          '&:focus': {
+            borderColor: '#0ea5e9',
+            boxShadow: '0 0 0 2px rgba(14, 165, 233, 0.2)',
+          },
+        },
+        '.input-brand-error': {
+          '@apply input-brand': {},
+          borderColor: 'hsl(var(--destructive))',
+          '&:focus': {
+            borderColor: 'hsl(var(--destructive))',
+            boxShadow: '0 0 0 2px hsl(var(--destructive) / 0.2)',
+          },
+        },
+        // Brand Navigation
+        '.nav-brand': {
+          borderBottom: '1px solid rgba(148, 163, 184, 0.5)',
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(0.5rem)',
+        },
+        '.nav-brand-item': {
+          fontWeight: '500',
+          color: 'hsl(var(--foreground))',
+          transition: 'color 0.2s ease',
+          '&:hover': {
+            color: '#0ea5e9',
+          },
+        },
+        '.nav-brand-item-active': {
+          fontWeight: '600',
+          color: '#0ea5e9',
+        },
+        // Brand Badge Components
+        '.badge-brand': {
+          display: 'inline-flex',
+          alignItems: 'center',
+          borderRadius: '9999px',
+          padding: '0.25rem 0.75rem',
+          fontSize: '0.875rem',
+          fontWeight: '500',
+        },
+        '.badge-brand-primary': {
+          '@apply badge-brand': {},
+          border: '1px solid rgba(14, 165, 233, 0.2)',
+          background: 'rgba(14, 165, 233, 0.1)',
+          color: '#0ea5e9',
+        },
+        '.badge-brand-secondary': {
+          '@apply badge-brand': {},
+          background: '#f1f5f9',
+          color: '#1e293b',
+        },
+        '.badge-brand-accent': {
+          '@apply badge-brand': {},
+          border: '1px solid rgba(249, 115, 22, 0.2)',
+          background: 'rgba(249, 115, 22, 0.1)',
+          color: '#f97316',
+        },
+        // Brand Status Indicators
+        '.status-success': {
+          border: '1px solid rgba(34, 197, 94, 0.2)',
+          background: 'rgba(34, 197, 94, 0.1)',
+          color: '#22c55e',
+        },
+        '.status-warning': {
+          border: '1px solid rgba(251, 191, 36, 0.2)',
+          background: 'rgba(251, 191, 36, 0.1)',
+          color: '#fbbf24',
+        },
+        '.status-error': {
+          border: '1px solid rgba(239, 68, 68, 0.2)',
+          background: 'rgba(239, 68, 68, 0.1)',
+          color: '#ef4444',
+        },
+        '.status-info': {
+          border: '1px solid rgba(14, 165, 233, 0.2)',
+          background: 'rgba(14, 165, 233, 0.1)',
+          color: '#0ea5e9',
+        },
+        // Brand Loading States
+        '.loading-brand': {
+          animation: 'pulse-brand 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          borderRadius: '0.25rem',
+          background: '#e2e8f0',
+        },
+        '.skeleton-brand': {
+          '@apply loading-brand': {},
+          height: '1rem',
+          width: '100%',
+        },
+        '.skeleton-brand-circle': {
+          '@apply loading-brand': {},
+          height: '3rem',
+          width: '3rem',
+          borderRadius: '9999px',
+        },
         // Brand hover effects
         '.hover-lift': {
           transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
@@ -351,6 +619,28 @@ const config: Config = {
           '&:hover': {
             'box-shadow': '0 0 20px rgba(14, 165, 233, 0.3)',
           },
+        },
+        // Additional Brand Utilities
+        '.border-gradient-brand': {
+          borderImage: 'linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #fb923c 100%) 1',
+        },
+        '.shadow-brand': {
+          boxShadow: '0 10px 25px -5px rgba(14, 165, 233, 0.1), 0 8px 10px -6px rgba(14, 165, 233, 0.1)',
+        },
+        '.shadow-spear': {
+          boxShadow: '0 10px 25px -5px rgba(249, 115, 22, 0.1), 0 8px 10px -6px rgba(249, 115, 22, 0.1)',
+        },
+        '.glow-brand': {
+          boxShadow: '0 0 20px rgba(14, 165, 233, 0.3)',
+        },
+        '.glow-spear': {
+          boxShadow: '0 0 20px rgba(249, 115, 22, 0.3)',
+        },
+        '.backdrop-blur-brand': {
+          backdropFilter: 'blur(12px)',
+        },
+        '.backdrop-blur-brand-lg': {
+          backdropFilter: 'blur(20px)',
         },
       }
       addUtilities(newUtilities)
