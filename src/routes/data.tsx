@@ -51,10 +51,10 @@ function DataPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8 dark:from-slate-900 dark:to-slate-800">
+      <div className="mx-auto max-w-4xl space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+          <h1 className="mb-4 text-4xl font-bold text-slate-900 dark:text-slate-100">
             Server-Side Rendering Demo
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400">
@@ -62,10 +62,10 @@ function DataPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           {/* Server-Side Data (from loader) */}
-          <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
+          <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-slate-800">
+            <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-100">
               Server-Side Data (SSR)
             </h2>
             <div className="space-y-2 text-sm">
@@ -84,8 +84,8 @@ function DataPage() {
           </div>
 
           {/* Server Function Data */}
-          <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
+          <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-slate-800">
+            <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-100">
               Server Function Data
             </h2>
             <div className="space-y-2 text-sm">
@@ -98,7 +98,7 @@ function DataPage() {
               </p>
               <div className="mt-4">
                 <strong>Items:</strong>
-                <ul className="list-disc list-inside mt-2 space-y-1">
+                <ul className="mt-2 list-inside list-disc space-y-1">
                   {serverFunctionData.items.map((item: ServerItem) => (
                     <li key={item.id}>{item.name}</li>
                   ))}
@@ -108,12 +108,12 @@ function DataPage() {
           </div>
 
           {/* Client-Side Data */}
-          <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-lg md:col-span-2">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
+          <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-slate-800 md:col-span-2">
+            <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-100">
               Client-Side Data (Hydrated)
             </h2>
             <div className="flex items-center gap-4">
-              <div className="space-y-2 text-sm flex-1">
+              <div className="flex-1 space-y-2 text-sm">
                 <p>
                   <strong>Message:</strong> {clientData.message}
                 </p>
@@ -136,7 +136,7 @@ function DataPage() {
         <div className="text-center">
           <a
             href="/"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
+            className="text-blue-600 hover:underline dark:text-blue-400"
           >
             ← Back to Home
           </a>

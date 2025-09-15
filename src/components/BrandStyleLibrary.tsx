@@ -60,7 +60,7 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({
     <div className={cn('space-y-2', className)}>
       <div
         className={cn(
-          'w-full h-16 rounded-lg border border-brand-precision-800/50 shadow-lg',
+          'h-16 w-full rounded-lg border border-brand-precision-800/50 shadow-lg',
           getColorClass(value)
         )}
       />
@@ -91,7 +91,7 @@ const TypographyExample: React.FC<TypographyExampleProps> = ({
   example,
   description,
 }) => (
-  <div className="space-y-4 p-6 bg-brand-precision-950/50 rounded-lg border border-brand-precision-800/30 overflow-hidden">
+  <div className="space-y-4 overflow-hidden rounded-lg border border-brand-precision-800/30 bg-brand-precision-950/50 p-6">
     <div className="font-mono text-xs text-brand-precision-400">{variant}</div>
     <div className={cn(className, 'break-words')}>{example}</div>
     <div className="text-xs text-brand-precision-300">{description}</div>
@@ -112,8 +112,8 @@ const DesignToken: React.FC<DesignTokenProps> = ({
   example,
   description,
 }) => (
-  <div className="p-4 bg-brand-precision-950/50 rounded-lg border border-brand-precision-800/30">
-    <div className="flex items-center justify-between mb-2">
+  <div className="rounded-lg border border-brand-precision-800/30 bg-brand-precision-950/50 p-4">
+    <div className="mb-2 flex items-center justify-between">
       <div className="font-mono text-sm text-brand-target-200">{name}</div>
       <div className="font-mono text-xs text-brand-precision-400">{value}</div>
     </div>
@@ -128,13 +128,13 @@ export const BrandStyleLibrary: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-precision-950 via-brand-precision-900 to-brand-precision-950">
       <div className="container mx-auto px-6 py-20">
-        <div className="max-w-7xl mx-auto space-y-20">
+        <div className="mx-auto max-w-7xl space-y-20">
           {/* Header */}
-          <div className="text-center space-y-8">
-            <h1 className="text-hero font-black text-gradient-brand">
+          <div className="space-y-8 text-center">
+            <h1 className="text-gradient-brand text-hero font-black">
               SPEARYX BRAND STYLE LIBRARY
             </h1>
-            <p className="text-body-lg text-brand-precision-200 max-w-4xl mx-auto">
+            <p className="mx-auto max-w-4xl text-body-lg text-brand-precision-200">
               Comprehensive design system for precision-engineered microtools.
               Tactical clarity through consistent visual language.
             </p>
@@ -143,16 +143,16 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Primary Brand Colors */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline font-bold text-brand-target-100 mb-4">
+              <h2 className="mb-4 text-headline font-bold text-brand-target-100">
                 PRIMARY BRAND COLORS
               </h2>
-              <div className="accent-line w-24 mx-auto" />
+              <div className="mx-auto w-24 accent-line" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {/* Target Colors */}
               <div className="space-y-4">
-                <h3 className="text-title font-semibold text-brand-target-200 mb-4">
+                <h3 className="mb-4 text-title font-semibold text-brand-target-200">
                   TARGET BLUE
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -181,7 +181,7 @@ export const BrandStyleLibrary: React.FC = () => {
 
               {/* Spear Colors */}
               <div className="space-y-4">
-                <h3 className="text-title text-brand-spear-200 mb-4">
+                <h3 className="mb-4 text-title text-brand-spear-200">
                   SPEAR ORANGE
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -210,7 +210,7 @@ export const BrandStyleLibrary: React.FC = () => {
 
               {/* Precision Grays */}
               <div className="space-y-4">
-                <h3 className="text-title text-brand-precision-200 mb-4">
+                <h3 className="mb-4 text-title text-brand-precision-200">
                   PRECISION GRAYS
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -242,16 +242,16 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Typography Scale */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline font-bold text-brand-target-100 mb-4">
+              <h2 className="mb-4 text-headline font-bold text-brand-target-100">
                 TYPOGRAPHY SCALE
               </h2>
-              <div className="accent-line w-24 mx-auto" />
+              <div className="mx-auto w-24 accent-line" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <TypographyExample
                 variant="text-hero (Hero Headlines)"
-                className="!text-hero font-black text-gradient-brand"
+                className="text-gradient-brand !text-hero font-black"
                 example="SPEARYX SUITE"
                 description="Main brand headlines, maximum impact"
               />
@@ -303,13 +303,13 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Design Tokens */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline font-bold text-brand-target-100 mb-4">
+              <h2 className="mb-4 text-headline font-bold text-brand-target-100">
                 DESIGN TOKENS
               </h2>
-              <div className="accent-line w-24 mx-auto" />
+              <div className="mx-auto w-24 accent-line" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {/* Spacing */}
               <div className="space-y-4">
                 <h3 className="text-title font-semibold text-brand-target-200">
@@ -318,25 +318,25 @@ export const BrandStyleLibrary: React.FC = () => {
                 <DesignToken
                   name="space-1"
                   value="0.25rem"
-                  example={<div className="w-1 h-4 bg-brand-target-500" />}
+                  example={<div className="h-4 w-1 bg-brand-target-500" />}
                   description="4px - Fine adjustments"
                 />
                 <DesignToken
                   name="space-2"
                   value="0.5rem"
-                  example={<div className="w-2 h-4 bg-brand-target-500" />}
+                  example={<div className="h-4 w-2 bg-brand-target-500" />}
                   description="8px - Small spacing"
                 />
                 <DesignToken
                   name="space-4"
                   value="1rem"
-                  example={<div className="w-4 h-4 bg-brand-target-500" />}
+                  example={<div className="h-4 w-4 bg-brand-target-500" />}
                   description="16px - Standard spacing"
                 />
                 <DesignToken
                   name="space-8"
                   value="2rem"
-                  example={<div className="w-8 h-4 bg-brand-target-500" />}
+                  example={<div className="h-4 w-8 bg-brand-target-500" />}
                   description="32px - Large spacing"
                 />
               </div>
@@ -350,7 +350,7 @@ export const BrandStyleLibrary: React.FC = () => {
                   name="rounded-sm"
                   value="0.125rem"
                   example={
-                    <div className="w-16 h-8 bg-brand-target-500 rounded-sm" />
+                    <div className="h-8 w-16 rounded-sm bg-brand-target-500" />
                   }
                   description="2px - Subtle rounding"
                 />
@@ -358,7 +358,7 @@ export const BrandStyleLibrary: React.FC = () => {
                   name="rounded-lg"
                   value="0.5rem"
                   example={
-                    <div className="w-16 h-8 bg-brand-target-500 rounded-lg" />
+                    <div className="h-8 w-16 rounded-lg bg-brand-target-500" />
                   }
                   description="8px - Standard rounding"
                 />
@@ -366,7 +366,7 @@ export const BrandStyleLibrary: React.FC = () => {
                   name="rounded-2xl"
                   value="1rem"
                   example={
-                    <div className="w-16 h-8 bg-brand-target-500 rounded-2xl" />
+                    <div className="h-8 w-16 rounded-2xl bg-brand-target-500" />
                   }
                   description="16px - Card rounding"
                 />
@@ -374,7 +374,7 @@ export const BrandStyleLibrary: React.FC = () => {
                   name="rounded-full"
                   value="9999px"
                   example={
-                    <div className="w-16 h-8 bg-brand-target-500 rounded-full" />
+                    <div className="h-8 w-16 rounded-full bg-brand-target-500" />
                   }
                   description="Pills and buttons"
                 />
@@ -389,7 +389,7 @@ export const BrandStyleLibrary: React.FC = () => {
                   name="shadow-sm"
                   value="0 1px 2px 0 rgb(0 0 0 / 0.05)"
                   example={
-                    <div className="w-16 h-8 bg-brand-target-500 shadow-sm rounded" />
+                    <div className="h-8 w-16 rounded bg-brand-target-500 shadow-sm" />
                   }
                   description="Subtle elevation"
                 />
@@ -397,7 +397,7 @@ export const BrandStyleLibrary: React.FC = () => {
                   name="shadow-lg"
                   value="0 10px 15px -3px rgb(0 0 0 / 0.1)"
                   example={
-                    <div className="w-16 h-8 bg-brand-target-500 shadow-lg rounded" />
+                    <div className="h-8 w-16 rounded bg-brand-target-500 shadow-lg" />
                   }
                   description="Card elevation"
                 />
@@ -405,7 +405,7 @@ export const BrandStyleLibrary: React.FC = () => {
                   name="shadow-2xl"
                   value="0 25px 50px -12px rgb(0 0 0 / 0.25)"
                   example={
-                    <div className="w-16 h-8 bg-brand-target-500 shadow-2xl rounded" />
+                    <div className="h-8 w-16 rounded bg-brand-target-500 shadow-2xl" />
                   }
                   description="High elevation"
                 />
@@ -416,34 +416,34 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Card Components */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline font-bold text-brand-target-100 mb-4">
+              <h2 className="mb-4 text-headline font-bold text-brand-target-100">
                 CARD COMPONENTS
               </h2>
-              <div className="accent-line w-24 mx-auto" />
+              <div className="mx-auto w-24 accent-line" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {/* Standard Brand Card */}
               <div className="space-y-4">
                 <h3 className="text-title font-semibold text-brand-target-200">
                   STANDARD CARD
                 </h3>
                 <div className="card-brand p-6">
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="mb-4 flex items-center justify-between">
                     <h4 className="text-title text-brand-precision-900">
                       Tactical Module
                     </h4>
                     <span className="badge-brand-primary">ACTIVE</span>
                   </div>
-                  <p className="text-body text-brand-precision-600 mb-4">
+                  <p className="mb-4 text-body text-brand-precision-600">
                     Precision-engineered microtools for advanced pattern
                     recognition and deployment.
                   </p>
                   <div className="flex gap-2">
-                    <button className="btn-brand-primary text-sm px-4 py-2">
+                    <button className="btn-brand-primary px-4 py-2 text-sm">
                       Deploy
                     </button>
-                    <button className="btn-brand-ghost text-sm px-4 py-2">
+                    <button className="btn-brand-ghost px-4 py-2 text-sm">
                       Configure
                     </button>
                   </div>
@@ -456,9 +456,9 @@ export const BrandStyleLibrary: React.FC = () => {
                   ELEVATED CARD
                 </h3>
                 <div className="card-brand-elevated p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-gradient-brand rounded-lg flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">S</span>
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="bg-gradient-brand flex h-10 w-10 items-center justify-center rounded-lg">
+                      <span className="text-lg font-bold text-white">S</span>
                     </div>
                     <div>
                       <h4 className="text-title text-brand-precision-900">
@@ -469,15 +469,15 @@ export const BrandStyleLibrary: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  <p className="text-body text-brand-precision-600 mb-4">
+                  <p className="mb-4 text-body text-brand-precision-600">
                     Advanced targeting system with real-time analytics and
                     predictive insights.
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="status-success px-3 py-1 rounded-full text-xs">
+                    <span className="status-success rounded-full px-3 py-1 text-xs">
                       ONLINE
                     </span>
-                    <button className="btn-brand-accent text-sm px-4 py-2">
+                    <button className="btn-brand-accent px-4 py-2 text-sm">
                       Launch
                     </button>
                   </div>
@@ -490,22 +490,22 @@ export const BrandStyleLibrary: React.FC = () => {
                   GLASS CARD
                 </h3>
                 <div className="card-brand-glass p-6">
-                  <h4 className="text-headline text-gradient-brand mb-3">
+                  <h4 className="text-gradient-brand mb-3 text-headline">
                     RAPID DEPLOY
                   </h4>
-                  <p className="text-body text-brand-precision-300 mb-4">
+                  <p className="mb-4 text-body text-brand-precision-300">
                     Instant deployment with zero-downtime updates and automatic
                     scaling.
                   </p>
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-brand-target-500 rounded-full animate-pulse-brand"></div>
+                      <div className="h-2 w-2 animate-pulse-brand rounded-full bg-brand-target-500"></div>
                       <span className="text-caption text-brand-precision-400">
                         Real-time monitoring
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-brand-spear-500 rounded-full animate-pulse-brand"></div>
+                      <div className="h-2 w-2 animate-pulse-brand rounded-full bg-brand-spear-500"></div>
                       <span className="text-caption text-brand-precision-400">
                         Auto-scaling enabled
                       </span>
@@ -519,14 +519,14 @@ export const BrandStyleLibrary: React.FC = () => {
                 <h3 className="text-title font-semibold text-brand-target-200">
                   FEATURE CARD
                 </h3>
-                <div className="card-brand p-6 hover-lift cursor-pointer">
-                  <div className="w-12 h-12 bg-brand-target-500/10 rounded-xl flex items-center justify-center mb-4">
-                    <div className="w-6 h-6 bg-brand-target-500 rounded"></div>
+                <div className="card-brand cursor-pointer p-6 hover-lift">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-target-500/10">
+                    <div className="h-6 w-6 rounded bg-brand-target-500"></div>
                   </div>
-                  <h4 className="text-title text-brand-precision-900 mb-2">
+                  <h4 className="mb-2 text-title text-brand-precision-900">
                     Pattern Recognition
                   </h4>
-                  <p className="text-body text-brand-precision-600 mb-4">
+                  <p className="mb-4 text-body text-brand-precision-600">
                     Advanced ML algorithms for intelligent data processing and
                     analysis.
                   </p>
@@ -534,8 +534,8 @@ export const BrandStyleLibrary: React.FC = () => {
                     <span className="text-label text-brand-precision-500">
                       BETA FEATURE
                     </span>
-                    <div className="w-8 h-8 bg-brand-target-500/20 rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-brand-target-500 rounded-full"></div>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-target-500/20">
+                      <div className="h-2 w-2 rounded-full bg-brand-target-500"></div>
                     </div>
                   </div>
                 </div>
@@ -547,15 +547,15 @@ export const BrandStyleLibrary: React.FC = () => {
                   STATS CARD
                 </h3>
                 <div className="card-brand p-6">
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="mb-4 flex items-center justify-between">
                     <h4 className="text-title text-brand-precision-900">
                       Performance
                     </h4>
-                    <span className="status-info px-3 py-1 rounded-full text-xs">
+                    <span className="status-info rounded-full px-3 py-1 text-xs">
                       LIVE
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="mb-4 grid grid-cols-2 gap-4">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-brand-target-500">
                         99.9%
@@ -573,8 +573,8 @@ export const BrandStyleLibrary: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full bg-brand-precision-200 rounded-full h-2">
-                    <div className="bg-gradient-brand h-2 rounded-full w-4/5"></div>
+                  <div className="h-2 w-full rounded-full bg-brand-precision-200">
+                    <div className="bg-gradient-brand h-2 w-4/5 rounded-full"></div>
                   </div>
                 </div>
               </div>
@@ -584,24 +584,24 @@ export const BrandStyleLibrary: React.FC = () => {
                 <h3 className="text-title font-semibold text-brand-target-200">
                   ALERT CARD
                 </h3>
-                <div className="card-brand p-6 border-l-4 border-brand-spear-500">
+                <div className="card-brand border-l-4 border-brand-spear-500 p-6">
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-brand-spear-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <div className="w-2 h-2 bg-brand-spear-500 rounded-full"></div>
+                    <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-brand-spear-500/20">
+                      <div className="h-2 w-2 rounded-full bg-brand-spear-500"></div>
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-title text-brand-precision-900 mb-1">
+                      <h4 className="mb-1 text-title text-brand-precision-900">
                         System Alert
                       </h4>
-                      <p className="text-body text-brand-precision-600 mb-3">
+                      <p className="mb-3 text-body text-brand-precision-600">
                         High CPU usage detected on server cluster. Consider
                         scaling resources.
                       </p>
                       <div className="flex gap-2">
-                        <button className="btn-brand-accent text-sm px-4 py-2">
+                        <button className="btn-brand-accent px-4 py-2 text-sm">
                           Resolve
                         </button>
-                        <button className="btn-brand-ghost text-sm px-4 py-2">
+                        <button className="btn-brand-ghost px-4 py-2 text-sm">
                           Dismiss
                         </button>
                       </div>
@@ -615,13 +615,13 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Button Components */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline font-bold text-brand-target-100 mb-4">
+              <h2 className="mb-4 text-headline font-bold text-brand-target-100">
                 BUTTON COMPONENTS
               </h2>
-              <div className="accent-line w-24 mx-auto" />
+              <div className="mx-auto w-24 accent-line" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               <div className="space-y-6">
                 <h3 className="text-title font-semibold text-brand-target-200">
                   BUTTON VARIANTS
@@ -634,13 +634,13 @@ export const BrandStyleLibrary: React.FC = () => {
                     <button className="btn-brand-ghost">Ghost</button>
                   </div>
                   <div className="flex flex-wrap gap-3">
-                    <button className="btn-brand-primary text-sm px-4 py-2">
+                    <button className="btn-brand-primary px-4 py-2 text-sm">
                       Small Primary
                     </button>
-                    <button className="btn-brand-secondary text-sm px-4 py-2">
+                    <button className="btn-brand-secondary px-4 py-2 text-sm">
                       Small Secondary
                     </button>
-                    <button className="btn-brand-accent text-sm px-4 py-2">
+                    <button className="btn-brand-accent px-4 py-2 text-sm">
                       Small Accent
                     </button>
                   </div>
@@ -685,20 +685,20 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Form Components */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline font-bold text-brand-target-100 mb-4">
+              <h2 className="mb-4 text-headline font-bold text-brand-target-100">
                 FORM COMPONENTS
               </h2>
-              <div className="accent-line w-24 mx-auto" />
+              <div className="mx-auto w-24 accent-line" />
             </div>
 
-            <div className="max-w-2xl mx-auto">
+            <div className="mx-auto max-w-2xl">
               <div className="card-brand p-8">
-                <h3 className="text-title text-brand-precision-900 mb-6">
+                <h3 className="mb-6 text-title text-brand-precision-900">
                   Configuration Form
                 </h3>
                 <div className="space-y-6">
                   <div>
-                    <label className="text-label text-brand-precision-700 mb-2 block">
+                    <label className="mb-2 block text-label text-brand-precision-700">
                       Project Name
                     </label>
                     <input
@@ -708,7 +708,7 @@ export const BrandStyleLibrary: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="text-label text-brand-precision-700 mb-2 block">
+                    <label className="mb-2 block text-label text-brand-precision-700">
                       Environment
                     </label>
                     <select className="input-brand">
@@ -718,7 +718,7 @@ export const BrandStyleLibrary: React.FC = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="text-label text-brand-precision-700 mb-2 block">
+                    <label className="mb-2 block text-label text-brand-precision-700">
                       Error State Example
                     </label>
                     <input
@@ -726,7 +726,7 @@ export const BrandStyleLibrary: React.FC = () => {
                       placeholder="This field has an error..."
                       defaultValue="Invalid input"
                     />
-                    <p className="text-caption text-red-500 mt-1">
+                    <p className="mt-1 text-caption text-red-500">
                       This field is required
                     </p>
                   </div>
@@ -744,13 +744,13 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Badge Components */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline font-bold text-brand-target-100 mb-4">
+              <h2 className="mb-4 text-headline font-bold text-brand-target-100">
                 BADGE COMPONENTS
               </h2>
-              <div className="accent-line w-24 mx-auto" />
+              <div className="mx-auto w-24 accent-line" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               <div className="space-y-6">
                 <h3 className="text-title font-semibold text-brand-target-200">
                   BADGE VARIANTS
@@ -767,16 +767,16 @@ export const BrandStyleLibrary: React.FC = () => {
                   STATUS BADGES
                 </h3>
                 <div className="flex flex-wrap gap-3">
-                  <span className="status-success px-3 py-1 rounded-full text-sm">
+                  <span className="status-success rounded-full px-3 py-1 text-sm">
                     Success
                   </span>
-                  <span className="status-warning px-3 py-1 rounded-full text-sm">
+                  <span className="status-warning rounded-full px-3 py-1 text-sm">
                     Warning
                   </span>
-                  <span className="status-error px-3 py-1 rounded-full text-sm">
+                  <span className="status-error rounded-full px-3 py-1 text-sm">
                     Error
                   </span>
-                  <span className="status-info px-3 py-1 rounded-full text-sm">
+                  <span className="status-info rounded-full px-3 py-1 text-sm">
                     Info
                   </span>
                 </div>
@@ -787,22 +787,22 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Effect Examples */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline font-bold text-brand-target-100 mb-4">
+              <h2 className="mb-4 text-headline font-bold text-brand-target-100">
                 VISUAL EFFECTS
               </h2>
-              <div className="accent-line w-24 mx-auto" />
+              <div className="mx-auto w-24 accent-line" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {/* Gradient Text */}
               <div className="space-y-4">
                 <h3 className="text-title font-semibold text-brand-target-200">
                   GRADIENT TEXT
                 </h3>
-                <div className="text-4xl font-black text-gradient-brand">
+                <div className="text-gradient-brand text-4xl font-black">
                   GRADIENT
                 </div>
-                <div className="text-2xl font-bold text-gradient-brand-reverse">
+                <div className="text-gradient-brand-reverse text-2xl font-bold">
                   REVERSE
                 </div>
               </div>
@@ -813,8 +813,8 @@ export const BrandStyleLibrary: React.FC = () => {
                   GLOW EFFECTS
                 </h3>
                 <div className="space-y-4">
-                  <div className="w-16 h-16 bg-brand-target-500 rounded-lg glow-brand mx-auto"></div>
-                  <div className="w-16 h-16 bg-brand-spear-500 rounded-lg glow-spear mx-auto"></div>
+                  <div className="mx-auto h-16 w-16 rounded-lg bg-brand-target-500 glow-brand"></div>
+                  <div className="mx-auto h-16 w-16 rounded-lg bg-brand-spear-500 glow-spear"></div>
                 </div>
               </div>
 
@@ -824,8 +824,8 @@ export const BrandStyleLibrary: React.FC = () => {
                   SHADOWS
                 </h3>
                 <div className="space-y-4">
-                  <div className="w-16 h-16 bg-brand-target-500 rounded-lg shadow-brand mx-auto"></div>
-                  <div className="w-16 h-16 bg-brand-spear-500 rounded-lg shadow-spear mx-auto"></div>
+                  <div className="shadow-brand mx-auto h-16 w-16 rounded-lg bg-brand-target-500"></div>
+                  <div className="shadow-spear mx-auto h-16 w-16 rounded-lg bg-brand-spear-500"></div>
                 </div>
               </div>
 
@@ -835,8 +835,8 @@ export const BrandStyleLibrary: React.FC = () => {
                   ANIMATIONS
                 </h3>
                 <div className="space-y-4">
-                  <div className="w-16 h-16 bg-brand-target-500 rounded-lg animate-pulse-brand mx-auto"></div>
-                  <div className="w-16 h-16 bg-brand-spear-500 rounded-lg animate-glow-pulse mx-auto"></div>
+                  <div className="mx-auto h-16 w-16 animate-pulse-brand rounded-lg bg-brand-target-500"></div>
+                  <div className="mx-auto h-16 w-16 animate-glow-pulse rounded-lg bg-brand-spear-500"></div>
                 </div>
               </div>
             </div>
@@ -845,15 +845,15 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Usage Guidelines */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline font-bold text-brand-target-100 mb-4">
+              <h2 className="mb-4 text-headline font-bold text-brand-target-100">
                 USAGE GUIDELINES
               </h2>
-              <div className="accent-line w-24 mx-auto" />
+              <div className="mx-auto w-24 accent-line" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-brand-precision-950/50 rounded-2xl p-8 border border-brand-precision-800/30">
-                <h3 className="text-title font-semibold text-brand-target-200 mb-4">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              <div className="rounded-2xl border border-brand-precision-800/30 bg-brand-precision-950/50 p-8">
+                <h3 className="mb-4 text-title font-semibold text-brand-target-200">
                   COLOR USAGE
                 </h3>
                 <ul className="space-y-2 text-brand-precision-300">
@@ -864,8 +864,8 @@ export const BrandStyleLibrary: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-brand-precision-950/50 rounded-2xl p-8 border border-brand-precision-800/30">
-                <h3 className="text-title font-semibold text-brand-target-200 mb-4">
+              <div className="rounded-2xl border border-brand-precision-800/30 bg-brand-precision-950/50 p-8">
+                <h3 className="mb-4 text-title font-semibold text-brand-target-200">
                   TYPOGRAPHY RULES
                 </h3>
                 <ul className="space-y-2 text-brand-precision-300">
@@ -876,8 +876,8 @@ export const BrandStyleLibrary: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-brand-precision-950/50 rounded-2xl p-8 border border-brand-precision-800/30">
-                <h3 className="text-title font-semibold text-brand-target-200 mb-4">
+              <div className="rounded-2xl border border-brand-precision-800/30 bg-brand-precision-950/50 p-8">
+                <h3 className="mb-4 text-title font-semibold text-brand-target-200">
                   SPACING SYSTEM
                 </h3>
                 <ul className="space-y-2 text-brand-precision-300">
@@ -888,8 +888,8 @@ export const BrandStyleLibrary: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-brand-precision-950/50 rounded-2xl p-8 border border-brand-precision-800/30">
-                <h3 className="text-title font-semibold text-brand-target-200 mb-4">
+              <div className="rounded-2xl border border-brand-precision-800/30 bg-brand-precision-950/50 p-8">
+                <h3 className="mb-4 text-title font-semibold text-brand-target-200">
                   COMPONENT PATTERNS
                 </h3>
                 <ul className="space-y-2 text-brand-precision-300">

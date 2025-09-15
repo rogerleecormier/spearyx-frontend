@@ -56,7 +56,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background font-sans text-foreground antialiased;
   }
 }
 
@@ -96,64 +96,64 @@
 
   /* Brand Card Components */
   .card-brand {
-    @apply bg-brand-precision-950/80 backdrop-blur-sm rounded-2xl p-8 border border-brand-precision-800/50 shadow-xl hover:shadow-2xl transition-all duration-300;
+    @apply rounded-2xl border border-brand-precision-800/50 bg-brand-precision-950/80 p-8 shadow-xl backdrop-blur-sm transition-all duration-300 hover:shadow-2xl;
     @apply hover:border-brand-target-600/30 hover:bg-brand-precision-950/90;
   }
 
   .card-brand-elevated {
-    @apply card-brand shadow-xl hover:shadow-2xl transition-shadow duration-300;
+    @apply card-brand shadow-xl transition-shadow duration-300 hover:shadow-2xl;
   }
 
   .card-brand-glass {
-    @apply bg-brand-precision-950/80 backdrop-blur-md border border-brand-precision-800/50 rounded-2xl;
+    @apply rounded-2xl border border-brand-precision-800/50 bg-brand-precision-950/80 backdrop-blur-md;
   }
 
   /* Brand Button Variants */
   .btn-brand-primary {
-    @apply bg-brand-target-500 hover:bg-brand-target-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 focus-brand;
+    @apply rounded-lg bg-brand-target-500 px-6 py-3 font-semibold text-white transition-colors duration-200 focus-brand hover:bg-brand-target-600;
   }
 
   .btn-brand-secondary {
-    @apply bg-brand-precision-200 hover:bg-brand-precision-300 text-brand-precision-900 font-semibold px-6 py-3 rounded-lg transition-colors duration-200 focus-brand;
+    @apply rounded-lg bg-brand-precision-200 px-6 py-3 font-semibold text-brand-precision-900 transition-colors duration-200 focus-brand hover:bg-brand-precision-300;
   }
 
   .btn-brand-accent {
-    @apply bg-brand-spear-500 hover:bg-brand-spear-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 focus-brand;
+    @apply rounded-lg bg-brand-spear-500 px-6 py-3 font-semibold text-white transition-colors duration-200 focus-brand hover:bg-brand-spear-600;
   }
 
   .btn-brand-ghost {
-    @apply text-brand-target-500 hover:bg-brand-target-500/10 font-semibold px-6 py-3 rounded-lg transition-colors duration-200 focus-brand;
+    @apply rounded-lg px-6 py-3 font-semibold text-brand-target-500 transition-colors duration-200 focus-brand hover:bg-brand-target-500/10;
   }
 
   /* Brand Input Components */
   .input-brand {
-    @apply w-full px-4 py-3 bg-background border border-input rounded-lg focus:ring-2 focus:ring-brand-target-500 focus:border-brand-target-500 transition-colors duration-200;
+    @apply w-full rounded-lg border border-input bg-background px-4 py-3 transition-colors duration-200 focus:border-brand-target-500 focus:ring-2 focus:ring-brand-target-500;
   }
 
   .input-brand-error {
-    @apply input-brand border-destructive focus:ring-destructive focus:border-destructive;
+    @apply input-brand border-destructive focus:border-destructive focus:ring-destructive;
   }
 
   /* Brand Navigation */
   .nav-brand {
-    @apply bg-card/80 backdrop-blur-sm border-b border-border/50;
+    @apply border-b border-border/50 bg-card/80 backdrop-blur-sm;
   }
 
   .nav-brand-item {
-    @apply text-foreground hover:text-brand-target-500 transition-colors duration-200 font-medium;
+    @apply font-medium text-foreground transition-colors duration-200 hover:text-brand-target-500;
   }
 
   .nav-brand-item-active {
-    @apply text-brand-target-500 font-semibold;
+    @apply font-semibold text-brand-target-500;
   }
 
   /* Brand Badge Components */
   .badge-brand {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+    @apply inline-flex items-center rounded-full px-3 py-1 text-sm font-medium;
   }
 
   .badge-brand-primary {
-    @apply badge-brand bg-brand-target-500/10 text-brand-target-500 border border-brand-target-500/20;
+    @apply badge-brand border border-brand-target-500/20 bg-brand-target-500/10 text-brand-target-500;
   }
 
   .badge-brand-secondary {
@@ -161,29 +161,29 @@
   }
 
   .badge-brand-accent {
-    @apply badge-brand bg-brand-spear-500/10 text-brand-spear-500 border border-brand-spear-500/20;
+    @apply badge-brand border border-brand-spear-500/20 bg-brand-spear-500/10 text-brand-spear-500;
   }
 
   /* Brand Status Indicators */
   .status-success {
-    @apply text-green-500 bg-green-500/10 border-green-500/20;
+    @apply border-green-500/20 bg-green-500/10 text-green-500;
   }
 
   .status-warning {
-    @apply text-yellow-500 bg-yellow-500/10 border-yellow-500/20;
+    @apply border-yellow-500/20 bg-yellow-500/10 text-yellow-500;
   }
 
   .status-error {
-    @apply text-red-500 bg-red-500/10 border-red-500/20;
+    @apply border-red-500/20 bg-red-500/10 text-red-500;
   }
 
   .status-info {
-    @apply text-brand-target-500 bg-brand-target-500/10 border-brand-target-500/20;
+    @apply border-brand-target-500/20 bg-brand-target-500/10 text-brand-target-500;
   }
 
   /* Brand Loading States */
   .loading-brand {
-    @apply animate-pulse bg-brand-precision-200 rounded;
+    @apply animate-pulse rounded bg-brand-precision-200;
   }
 
   .skeleton-brand {
@@ -200,7 +200,7 @@
   }
 
   .focus-brand-ring-inset {
-    @apply focus:outline-none focus:ring-2 focus:ring-brand-target-500 focus:ring-inset;
+    @apply focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-target-500;
   }
 }
 
