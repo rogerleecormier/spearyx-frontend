@@ -1,9 +1,9 @@
-import React from 'react'
-import { cn } from '../lib/utils'
+import React from 'react';
+import { cn } from '../lib/utils';
 
 interface LogoProps {
-  className?: string
-  size?: number
+  className?: string;
+  size?: number;
 }
 
 export const Logo: React.FC<LogoProps> = ({ className, size = 64 }) => {
@@ -14,7 +14,7 @@ export const Logo: React.FC<LogoProps> = ({ className, size = 64 }) => {
       viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("text-current", className)}
+      className={cn('text-current', className)}
     >
       {/* Targeting Reticle (Crosshairs) */}
       <circle
@@ -84,5 +84,5 @@ export const Logo: React.FC<LogoProps> = ({ className, size = 64 }) => {
         strokeLinecap="round"
       />
     </svg>
-  )
-}
+  );
+};

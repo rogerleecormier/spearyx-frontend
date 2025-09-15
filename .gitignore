@@ -263,8 +263,8 @@ public
 .yarn/install-state.gz
 .pnp.*
 
-# TanStack Router generated files
-src/routeTree.gen.ts
+# TanStack Router generated files (keep in repo for deployment)
+# src/routeTree.gen.ts
 
 # Local development
 *.local

@@ -1,10 +1,10 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { Logo } from '../components/logo'
-import { Button } from '../components/ui/button'
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { Logo } from '../components/logo';
+import { Button } from '../components/ui/button';
 
 export const Route = createFileRoute('/')({
   component: Home,
-})
+});
 
 function Home() {
   return (
@@ -19,7 +19,8 @@ function Home() {
             Spearyx
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
-            Precision targeting meets innovative solutions. Coming soon to revolutionize your experience.
+            Precision targeting meets innovative solutions. Coming soon to
+            revolutionize your experience.
           </p>
         </div>
 
@@ -34,12 +35,15 @@ function Home() {
             Stay tuned for updates
           </div>
           <Link to="/data">
-            <Button variant="outline" className="text-slate-700 dark:text-slate-300">
+            <Button
+              variant="outline"
+              className="text-slate-700 dark:text-slate-300"
+            >
               View SSR Demo →
             </Button>
           </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }

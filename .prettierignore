@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Generated files
+src/routeTree.gen.ts
+
+# Package files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Config files that should maintain specific formatting
+.eslintrc.cjs
+postcss.config.js
+tailwind.config.ts
+vite.config.ts
+
+# Logs
+*.log
