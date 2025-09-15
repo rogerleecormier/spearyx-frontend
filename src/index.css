@@ -4,48 +4,50 @@
 
 @layer base {
   :root {
+    /* Light mode - using brand colors */
     --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --foreground: 210 40% 8%; /* brand-precision-900 */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 210 40% 8%; /* brand-precision-900 */
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
+    --popover-foreground: 210 40% 8%; /* brand-precision-900 */
+    --primary: 199 89% 48%; /* brand-target-500 */
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --secondary: 210 40% 96%; /* brand-precision-100 */
+    --secondary-foreground: 210 40% 8%; /* brand-precision-900 */
+    --muted: 210 40% 96%; /* brand-precision-100 */
+    --muted-foreground: 215 16% 47%; /* brand-precision-500 */
+    --accent: 199 89% 48%; /* brand-target-500 */
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --border: 215 16% 47%; /* brand-precision-500 */
+    --input: 215 16% 47%; /* brand-precision-500 */
+    --ring: 199 89% 48%; /* brand-target-500 */
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    /* Dark mode - using brand precision grays */
+    --background: 210 40% 8%; /* brand-precision-900 */
+    --foreground: 210 40% 98%; /* brand-precision-50 */
+    --card: 210 40% 8%; /* brand-precision-900 */
+    --card-foreground: 210 40% 98%; /* brand-precision-50 */
+    --popover: 210 40% 8%; /* brand-precision-900 */
+    --popover-foreground: 210 40% 98%; /* brand-precision-50 */
+    --primary: 199 89% 48%; /* brand-target-500 */
+    --primary-foreground: 210 40% 8%; /* brand-precision-900 */
+    --secondary: 215 16% 15%; /* brand-precision-800 */
+    --secondary-foreground: 210 40% 98%; /* brand-precision-50 */
+    --muted: 215 16% 15%; /* brand-precision-800 */
+    --muted-foreground: 215 16% 47%; /* brand-precision-500 */
+    --accent: 199 89% 48%; /* brand-target-500 */
+    --accent-foreground: 210 40% 8%; /* brand-precision-900 */
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 215 16% 15%; /* brand-precision-800 */
+    --input: 215 16% 15%; /* brand-precision-800 */
+    --ring: 199 89% 48%; /* brand-target-500 */
   }
 }
 
@@ -54,6 +56,208 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer components {
+  /* Brand Typography Components */
+  .typography-hero {
+    @apply text-hero font-black tracking-tight;
+  }
+
+  .typography-display {
+    @apply text-display font-bold tracking-tight;
+  }
+
+  .typography-headline {
+    @apply text-headline font-bold tracking-tight;
+  }
+
+  .typography-title {
+    @apply text-title font-semibold tracking-tight;
+  }
+
+  .typography-body-lg {
+    @apply text-body-lg font-normal;
+  }
+
+  .typography-body {
+    @apply text-body font-normal;
+  }
+
+  .typography-caption {
+    @apply text-caption font-normal;
+  }
+
+  .typography-label {
+    @apply text-label font-medium uppercase tracking-wide;
+  }
+
+  /* Brand Card Components */
+  .card-brand {
+    @apply bg-brand-precision-950/80 backdrop-blur-sm rounded-2xl p-8 border border-brand-precision-800/50 shadow-xl hover:shadow-2xl transition-all duration-300;
+    @apply hover:border-brand-target-600/30 hover:bg-brand-precision-950/90;
+  }
+
+  .card-brand-elevated {
+    @apply card-brand shadow-xl hover:shadow-2xl transition-shadow duration-300;
+  }
+
+  .card-brand-glass {
+    @apply bg-brand-precision-950/80 backdrop-blur-md border border-brand-precision-800/50 rounded-2xl;
+  }
+
+  /* Brand Button Variants */
+  .btn-brand-primary {
+    @apply bg-brand-target-500 hover:bg-brand-target-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 focus-brand;
+  }
+
+  .btn-brand-secondary {
+    @apply bg-brand-precision-200 hover:bg-brand-precision-300 text-brand-precision-900 font-semibold px-6 py-3 rounded-lg transition-colors duration-200 focus-brand;
+  }
+
+  .btn-brand-accent {
+    @apply bg-brand-spear-500 hover:bg-brand-spear-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 focus-brand;
+  }
+
+  .btn-brand-ghost {
+    @apply text-brand-target-500 hover:bg-brand-target-500/10 font-semibold px-6 py-3 rounded-lg transition-colors duration-200 focus-brand;
+  }
+
+  /* Brand Input Components */
+  .input-brand {
+    @apply w-full px-4 py-3 bg-background border border-input rounded-lg focus:ring-2 focus:ring-brand-target-500 focus:border-brand-target-500 transition-colors duration-200;
+  }
+
+  .input-brand-error {
+    @apply input-brand border-destructive focus:ring-destructive focus:border-destructive;
+  }
+
+  /* Brand Navigation */
+  .nav-brand {
+    @apply bg-card/80 backdrop-blur-sm border-b border-border/50;
+  }
+
+  .nav-brand-item {
+    @apply text-foreground hover:text-brand-target-500 transition-colors duration-200 font-medium;
+  }
+
+  .nav-brand-item-active {
+    @apply text-brand-target-500 font-semibold;
+  }
+
+  /* Brand Badge Components */
+  .badge-brand {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-brand-primary {
+    @apply badge-brand bg-brand-target-500/10 text-brand-target-500 border border-brand-target-500/20;
+  }
+
+  .badge-brand-secondary {
+    @apply badge-brand bg-brand-precision-200 text-brand-precision-800;
+  }
+
+  .badge-brand-accent {
+    @apply badge-brand bg-brand-spear-500/10 text-brand-spear-500 border border-brand-spear-500/20;
+  }
+
+  /* Brand Status Indicators */
+  .status-success {
+    @apply text-green-500 bg-green-500/10 border-green-500/20;
+  }
+
+  .status-warning {
+    @apply text-yellow-500 bg-yellow-500/10 border-yellow-500/20;
+  }
+
+  .status-error {
+    @apply text-red-500 bg-red-500/10 border-red-500/20;
+  }
+
+  .status-info {
+    @apply text-brand-target-500 bg-brand-target-500/10 border-brand-target-500/20;
+  }
+
+  /* Brand Loading States */
+  .loading-brand {
+    @apply animate-pulse bg-brand-precision-200 rounded;
+  }
+
+  .skeleton-brand {
+    @apply loading-brand h-4 w-full;
+  }
+
+  .skeleton-brand-circle {
+    @apply loading-brand h-12 w-12 rounded-full;
+  }
+
+  /* Brand Focus States */
+  .focus-brand-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-brand-target-500 focus:ring-offset-2;
+  }
+
+  .focus-brand-ring-inset {
+    @apply focus:outline-none focus:ring-2 focus:ring-brand-target-500 focus:ring-inset;
+  }
+}
+
+@layer utilities {
+  /* Brand-specific utilities */
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #fb923c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-brand-reverse {
+    background: linear-gradient(135deg, #fb923c 0%, #0ea5e9 50%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .bg-gradient-brand {
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #fb923c 100%);
+  }
+
+  .bg-gradient-brand-subtle {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #fff7ed 100%);
+  }
+
+  .border-gradient-brand {
+    border-image: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #fb923c 100%)
+      1;
+  }
+
+  .shadow-brand {
+    box-shadow:
+      0 10px 25px -5px rgba(14, 165, 233, 0.1),
+      0 8px 10px -6px rgba(14, 165, 233, 0.1);
+  }
+
+  .shadow-spear {
+    box-shadow:
+      0 10px 25px -5px rgba(249, 115, 22, 0.1),
+      0 8px 10px -6px rgba(249, 115, 22, 0.1);
+  }
+
+  .glow-brand {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+  }
+
+  .glow-spear {
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);
+  }
+
+  .backdrop-blur-brand {
+    backdrop-filter: blur(12px);
+  }
+
+  .backdrop-blur-brand-lg {
+    backdrop-filter: blur(20px);
   }
 }

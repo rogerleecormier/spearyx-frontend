@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DataRouteImport } from './routes/data'
+import { Route as BrandStyleGuideRouteImport } from './routes/brand-style-guide'
 import { Route as IndexRouteImport } from './routes/index'
 
 const DataRoute = DataRouteImport.update({
   id: '/data',
   path: '/data',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandStyleGuideRoute = BrandStyleGuideRouteImport.update({
+  id: '/brand-style-guide',
+  path: '/brand-style-guide',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/brand-style-guide': typeof BrandStyleGuideRoute
   '/data': typeof DataRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/brand-style-guide': typeof BrandStyleGuideRoute
   '/data': typeof DataRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/brand-style-guide': typeof BrandStyleGuideRoute
   '/data': typeof DataRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/data'
+  fullPaths: '/' | '/brand-style-guide' | '/data'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/data'
-  id: '__root__' | '/' | '/data'
+  to: '/' | '/brand-style-guide' | '/data'
+  id: '__root__' | '/' | '/brand-style-guide' | '/data'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BrandStyleGuideRoute: typeof BrandStyleGuideRoute
   DataRoute: typeof DataRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/data'
       fullPath: '/data'
       preLoaderRoute: typeof DataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brand-style-guide': {
+      id: '/brand-style-guide'
+      path: '/brand-style-guide'
+      fullPath: '/brand-style-guide'
+      preLoaderRoute: typeof BrandStyleGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BrandStyleGuideRoute: BrandStyleGuideRoute,
   DataRoute: DataRoute,
 }
 export const routeTree = rootRouteImport
