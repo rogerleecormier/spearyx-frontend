@@ -6,13 +6,15 @@ This comprehensive brand stylesheet integrates your Spearyx brand colors with Ta
 
 ## When to Use shadcn vs Tailwind Directly
 
-### Use shadcn components for:
+### Use shadcn components for
+
 - **Interactive components**: Buttons, forms, modals, dropdowns, tooltips
 - **Complex UI patterns**: Data tables, charts, navigation menus
 - **Accessibility**: Components with built-in ARIA support
 - **Consistency**: Pre-built components that work together seamlessly
 
-### Use Tailwind directly for:
+### Use Tailwind directly for
+
 - **Typography**: Custom text styles and hierarchies
 - **Layout**: Spacing, positioning, responsive design
 - **Brand-specific elements**: Custom gradients, animations, effects
@@ -21,6 +23,7 @@ This comprehensive brand stylesheet integrates your Spearyx brand colors with Ta
 ## Brand Color System
 
 ### Primary Colors
+
 ```css
 /* Target Blue - Primary brand color */
 brand-target-500: #0ea5e9
@@ -39,6 +42,7 @@ brand-precision-100: #f1f5f9 (lightest)
 ```
 
 ### Usage Examples
+
 ```tsx
 // Primary button
 <button className="bg-brand-target-500 hover:bg-brand-target-600 text-white">
@@ -58,6 +62,7 @@ brand-precision-100: #f1f5f9 (lightest)
 ## Typography System
 
 ### Font Sizes
+
 ```css
 /* Brand-specific typography scale */
 text-hero: 4.5rem (72px) - Hero headlines
@@ -71,6 +76,7 @@ text-label: 0.75rem (12px) - Labels
 ```
 
 ### Font Weights
+
 ```css
 font-thin: 100
 font-light: 300
@@ -82,7 +88,8 @@ font-extrabold: 800
 font-black: 900
 ```
 
-### Usage Examples
+### Typography Usage Examples
+
 ```tsx
 // Hero headline with gradient
 <h1 className="text-hero text-gradient-brand">
@@ -103,6 +110,7 @@ font-black: 900
 ## Component Classes
 
 ### Cards
+
 ```tsx
 // Standard brand card
 <div className="card-brand p-6">
@@ -122,6 +130,7 @@ font-black: 900
 ```
 
 ### Buttons
+
 ```tsx
 // Primary button
 <button className="btn-brand-primary">
@@ -145,6 +154,7 @@ font-black: 900
 ```
 
 ### Form Inputs
+
 ```tsx
 // Standard input
 <input className="input-brand" placeholder="Enter text..." />
@@ -154,6 +164,7 @@ font-black: 900
 ```
 
 ### Badges
+
 ```tsx
 // Primary badge
 <span className="badge-brand-primary">Primary</span>
@@ -166,6 +177,7 @@ font-black: 900
 ```
 
 ### Status Indicators
+
 ```tsx
 // Success status
 <div className="status-success px-3 py-1 rounded-full">
@@ -191,6 +203,7 @@ font-black: 900
 ## Utility Classes
 
 ### Gradients
+
 ```tsx
 // Brand gradient text
 <h1 className="text-gradient-brand">Gradient Text</h1>
@@ -210,6 +223,7 @@ font-black: 900
 ```
 
 ### Effects
+
 ```tsx
 // Brand glow effect
 <div className="glow-brand p-4 rounded-lg">
@@ -238,6 +252,7 @@ font-black: 900
 ```
 
 ### Focus States
+
 ```tsx
 // Brand focus ring
 <button className="focus-brand-ring">

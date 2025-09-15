@@ -1,6 +1,5 @@
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
 import { fileURLToPath } from 'url'
 import { createApp } from 'vinxi'
 
@@ -24,9 +23,4 @@ export default createApp({
       ],
     },
   ],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, './src'),
-    },
-  },
 })

@@ -64,13 +64,16 @@ src/
 ## Scripts
 
 ### Development
+
 - `npm run dev` - Start development server
 - `npm run preview` - Preview production build
 
 ### Build & Deployment
+
 - `npm run build` - Build for production
 
 ### Code Quality
+
 - `npm run lint` - Run ESLint
 - `npm run lint:fix` - Run ESLint with auto-fix
 - `npm run type-check` - Run TypeScript type checking
@@ -78,10 +81,12 @@ src/
 - `npm run format:fix` - Fix code formatting with Prettier
 
 ### Security
+
 - `npm run audit` - Check for security vulnerabilities
 - `npm run audit:fix` - Fix security vulnerabilities
 
 ### CI/CD
+
 - `npm run ci` - Run all checks (lint, type-check, format, audit) + build
 
 ## Adding Shadcn Components

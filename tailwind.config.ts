@@ -296,7 +296,8 @@ const config: Config = {
   plugins: [
     tailwindcssAnimate,
     // Custom brand utilities
-    function({ addUtilities }) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function({ addUtilities }: { addUtilities: (utilities: any) => void }) {
       const newUtilities = {
         // Brand gradient text
         '.text-brand-gradient': {

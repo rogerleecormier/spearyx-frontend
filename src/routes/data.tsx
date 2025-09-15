@@ -1,7 +1,14 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
+
 import { Button } from '../components/ui/button';
 import { getServerData } from './server-data';
+
+interface ServerItem {
+  id: number;
+  name: string;
+  timestamp: string;
+}
 
 export const Route = createFileRoute('/data')({
   component: DataPage,
@@ -92,7 +99,7 @@ function DataPage() {
               <div className="mt-4">
                 <strong>Items:</strong>
                 <ul className="list-disc list-inside mt-2 space-y-1">
-                  {serverFunctionData.items.map((item: any) => (
+                  {serverFunctionData.items.map((item: ServerItem) => (
                     <li key={item.id}>{item.name}</li>
                   ))}
                 </ul>
