@@ -6,24 +6,24 @@
   :root {
     /* Light mode - using brand colors */
     --background: 0 0% 100%;
-    --foreground: 210 40% 8%; /* brand-precision-900 */
+    --foreground: 210 40% 8%; /* strategic-900 */
     --card: 0 0% 100%;
-    --card-foreground: 210 40% 8%; /* brand-precision-900 */
+    --card-foreground: 210 40% 8%; /* strategic-900 */
     --popover: 0 0% 100%;
-    --popover-foreground: 210 40% 8%; /* brand-precision-900 */
-    --primary: 199 89% 48%; /* brand-target-500 */
+    --popover-foreground: 210 40% 8%; /* strategic-900 */
+    --primary: 199 89% 48%; /* command-500 */
     --primary-foreground: 0 0% 98%;
-    --secondary: 210 40% 96%; /* brand-precision-100 */
-    --secondary-foreground: 210 40% 8%; /* brand-precision-900 */
-    --muted: 210 40% 96%; /* brand-precision-100 */
-    --muted-foreground: 215 16% 47%; /* brand-precision-500 */
-    --accent: 199 89% 48%; /* brand-target-500 */
+    --secondary: 210 40% 96%; /* strategic-100 */
+    --secondary-foreground: 210 40% 8%; /* strategic-900 */
+    --muted: 210 40% 96%; /* strategic-100 */
+    --muted-foreground: 215 16% 47%; /* strategic-500 */
+    --accent: 199 89% 48%; /* command-500 */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 215 16% 47%; /* brand-precision-500 */
-    --input: 215 16% 47%; /* brand-precision-500 */
-    --ring: 199 89% 48%; /* brand-target-500 */
+    --border: 215 16% 47%; /* strategic-500 */
+    --input: 215 16% 47%; /* strategic-500 */
+    --ring: 199 89% 48%; /* command-500 */
     --radius: 0.5rem;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -37,25 +37,25 @@
 
   .dark {
     /* Dark mode - using brand precision grays */
-    --background: 210 40% 8%; /* brand-precision-900 */
-    --foreground: 210 40% 98%; /* brand-precision-50 */
-    --card: 210 40% 8%; /* brand-precision-900 */
-    --card-foreground: 210 40% 98%; /* brand-precision-50 */
-    --popover: 210 40% 8%; /* brand-precision-900 */
-    --popover-foreground: 210 40% 98%; /* brand-precision-50 */
-    --primary: 199 89% 48%; /* brand-target-500 */
-    --primary-foreground: 210 40% 8%; /* brand-precision-900 */
-    --secondary: 215 16% 15%; /* brand-precision-800 */
-    --secondary-foreground: 210 40% 98%; /* brand-precision-50 */
-    --muted: 215 16% 15%; /* brand-precision-800 */
-    --muted-foreground: 215 16% 47%; /* brand-precision-500 */
-    --accent: 199 89% 48%; /* brand-target-500 */
-    --accent-foreground: 210 40% 8%; /* brand-precision-900 */
+    --background: 210 40% 8%; /* strategic-900 */
+    --foreground: 210 40% 98%; /* strategic-50 */
+    --card: 210 40% 8%; /* strategic-900 */
+    --card-foreground: 210 40% 98%; /* strategic-50 */
+    --popover: 210 40% 8%; /* strategic-900 */
+    --popover-foreground: 210 40% 98%; /* strategic-50 */
+    --primary: 199 89% 48%; /* command-500 */
+    --primary-foreground: 210 40% 8%; /* strategic-900 */
+    --secondary: 215 16% 15%; /* strategic-800 */
+    --secondary-foreground: 210 40% 98%; /* strategic-50 */
+    --muted: 215 16% 15%; /* strategic-800 */
+    --muted-foreground: 215 16% 47%; /* strategic-500 */
+    --accent: 199 89% 48%; /* command-500 */
+    --accent-foreground: 210 40% 8%; /* strategic-900 */
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 215 16% 15%; /* brand-precision-800 */
-    --input: 215 16% 15%; /* brand-precision-800 */
-    --ring: 199 89% 48%; /* brand-target-500 */ --sidebar-background: 240 5.9% 10%; --sidebar-foreground: 240 4.8% 95.9%; --sidebar-primary: 224.3 76.3% 48%; --sidebar-primary-foreground: 0 0% 100%; --sidebar-accent: 240 3.7% 15.9%; --sidebar-accent-foreground: 240 4.8% 95.9%; --sidebar-border: 240 3.7% 15.9%; --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 215 16% 15%; /* strategic-800 */
+    --input: 215 16% 15%; /* strategic-800 */
+    --ring: 199 89% 48%; /* command-500 */ --sidebar-background: 240 5.9% 10%; --sidebar-foreground: 240 4.8% 95.9%; --sidebar-primary: 224.3 76.3% 48%; --sidebar-primary-foreground: 0 0% 100%; --sidebar-accent: 240 3.7% 15.9%; --sidebar-accent-foreground: 240 4.8% 95.9%; --sidebar-border: 240 3.7% 15.9%; --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -76,5 +76,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .card-brand {
+    @apply relative rounded-2xl border border-strategic-700/30 bg-gradient-to-br from-strategic-900/80 to-strategic-950/90 p-8 backdrop-blur-sm transition-all duration-300 hover:border-command-500/30 hover:shadow-lg;
   }
 }

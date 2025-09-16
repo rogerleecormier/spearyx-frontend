@@ -1,30 +1,26 @@
-import { cloudflare } from '@cloudflare/vite-plugin'
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import react from '@vitejs/plugin-react'
-import { fileURLToPath } from 'url'
-import { createApp } from 'vinxi'
+import { fileURLToPath, URL } from 'url'
+import { defineConfig } from 'vite'
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-
-export default createApp({
-  routers: [
-    {
-      name: 'public',
-      type: 'spa',
-      handler: './src/index.html',
-      target: 'browser',
-      plugins: () => [
-        TanStackRouterVite({
-          routesDirectory: './src/routes',
-          generatedRouteTree: './src/routeTree.gen.ts',
-          quoteStyle: 'single',
-          semicolons: true,
-        }),
-        react(),
-        cloudflare({
-          // Enable Cloudflare-specific optimizations
-        }),
-      ],
-    },
+export default defineConfig({
+  plugins: [
+    TanStackRouterVite({
+      routesDirectory: './src/routes',
+      generatedRouteTree: './src/routeTree.gen.ts',
+      quoteStyle: 'single',
+      semicolons: true,
+    }),
+    react(),
   ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  server: {
+    fs: {
+      allow: ['.']
+    }
+  }
 })

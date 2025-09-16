@@ -1,7 +1,7 @@
 export {
-    AlertCard, BrandCard, CommandCenterCard, FeatureCard, HeroCard, StatsCard, TacticalBriefingCard
+    AlertCard, BrandCard,
+    CommandCard, FeaturedHeroCard, GlassCard, HeroCard, IntelligenceCard, MissionCard, StatsCard, StrategicCard, TacticalCard
 } from './BrandCards';
-export { BrandCardsExample } from './BrandCardsExample';
 export { BrandStyleLibrary } from './BrandStyleLibrary';
 export { ComingSoon } from './ComingSoon';
 export { Logo } from './logo';
