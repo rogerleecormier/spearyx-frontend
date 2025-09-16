@@ -1,17 +1,18 @@
+import { createFileRoute } from '@tanstack/react-router';
+
 import {
-    AlertCard,
-    CommandCard,
-    FeaturedHeroCard,
-    GlassCard,
-    HeroCard,
-    IntelligenceCard,
-    MissionCard,
-    StatsCard,
-    StrategicCard,
-    TacticalCard
+  AlertCard,
+  CommandCard,
+  FeaturedHeroCard,
+  GlassCard,
+  HeroCard,
+  IntelligenceCard,
+  MissionCard,
+  StatsCard,
+  StrategicCard,
+  TacticalCard,
 } from '@/components/BrandCards';
 import { Logo } from '@/components/logo';
-import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/brand-cards-library')({
   component: BrandCardsLibrary,
@@ -22,7 +23,6 @@ function BrandCardsLibrary() {
     <div className="min-h-screen bg-gradient-to-br from-strategic-950 via-strategic-900 to-strategic-950">
       <div className="container mx-auto px-platoon py-army">
         <div className="mx-auto max-w-7xl space-y-army">
-
           {/* Header */}
           <div className="space-y-platoon text-center">
             <div className="flex justify-center">
@@ -33,23 +33,24 @@ function BrandCardsLibrary() {
             </div>
 
             <div className="space-y-squad">
-            <h1 className="mission-briefing font-black bg-gradient-to-r from-command-400 via-tactical-400 to-command-600 bg-clip-text text-transparent">
-              SPEARYX BRAND CARDS
-            </h1>
-            <p className="operational-title text-strategic-200 max-w-4xl mx-auto">
-              Precision-engineered card system for project management excellence.
-              Laser-focused components delivering tactical clarity and strategic precision.
-            </p>
+              <h1 className="bg-gradient-to-r from-command-400 via-tactical-400 to-command-600 bg-clip-text font-black text-transparent mission-briefing">
+                SPEARYX BRAND CARDS
+              </h1>
+              <p className="mx-auto max-w-4xl text-strategic-200 operational-title">
+                Precision-engineered card system for project management
+                excellence. Laser-focused components delivering tactical clarity
+                and strategic precision.
+              </p>
             </div>
           </div>
 
           {/* Command Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-command-200 mb-squad">
+              <h2 className="mb-squad font-bold text-command-200 operational-title">
                 COMMAND CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-command-400 to-command-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-command-400 to-command-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon md:grid-cols-2 lg:grid-cols-3">
@@ -58,8 +59,8 @@ function BrandCardsLibrary() {
                 description="Central command hub for project oversight, resource allocation, and strategic decision-making with precision targeting."
                 status="active"
                 metrics={[
-                  { label: "Active Projects", value: "24/24" },
-                  { label: "On-Time Delivery", value: "99.9%" }
+                  { label: 'Active Projects', value: '24/24' },
+                  { label: 'On-Time Delivery', value: '99.9%' },
                 ]}
               />
 
@@ -68,8 +69,8 @@ function BrandCardsLibrary() {
                 description="Real-time analytics and KPI tracking with intelligent alerts for proactive issue resolution and clarity optimization."
                 status="active"
                 metrics={[
-                  { label: "Coverage", value: "87%" },
-                  { label: "Risk Alerts", value: "12" }
+                  { label: 'Coverage', value: '87%' },
+                  { label: 'Risk Alerts', value: '12' },
                 ]}
               />
 
@@ -78,8 +79,8 @@ function BrandCardsLibrary() {
                 description="Secure collaboration platform with encrypted channels and crystal-clear communication for precision execution."
                 status="standby"
                 metrics={[
-                  { label: "Active Channels", value: "18/20" },
-                  { label: "Response Time", value: "<2.3s" }
+                  { label: 'Active Channels', value: '18/20' },
+                  { label: 'Response Time', value: '<2.3s' },
                 ]}
               />
             </div>
@@ -88,10 +89,10 @@ function BrandCardsLibrary() {
           {/* Tactical Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-tactical-200 mb-squad">
+              <h2 className="mb-squad font-bold text-tactical-200 operational-title">
                 TACTICAL CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-tactical-400 to-tactical-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-tactical-400 to-tactical-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon md:grid-cols-2 lg:grid-cols-3">
@@ -124,10 +125,10 @@ function BrandCardsLibrary() {
           {/* Strategic Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-strategic-200 mb-squad">
+              <h2 className="mb-squad font-bold text-strategic-200 operational-title">
                 STRATEGIC CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-strategic-400 to-strategic-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-strategic-400 to-strategic-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon md:grid-cols-2">
@@ -136,7 +137,11 @@ function BrandCardsLibrary() {
                 overview="Comprehensive strategic planning for multi-year product development and market expansion initiatives targeting sustainable growth."
                 priority="critical"
                 deadline="Q2 2025"
-                stakeholders={["Executive Board", "Product Leadership", "Engineering Teams"]}
+                stakeholders={[
+                  'Executive Board',
+                  'Product Leadership',
+                  'Engineering Teams',
+                ]}
               />
 
               <StrategicCard
@@ -144,7 +149,7 @@ function BrandCardsLibrary() {
                 overview="Strategic assessment and intelligent reallocation of budget and talent resources for maximum ROI and competitive advantage."
                 priority="high"
                 deadline="Q1 2025"
-                stakeholders={["Finance Division", "HR Leadership"]}
+                stakeholders={['Finance Division', 'HR Leadership']}
               />
             </div>
           </section>
@@ -152,10 +157,10 @@ function BrandCardsLibrary() {
           {/* Intelligence Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-strategic-200 mb-squad">
+              <h2 className="mb-squad font-bold text-strategic-200 operational-title">
                 INTELLIGENCE CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-strategic-400 to-strategic-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-strategic-400 to-strategic-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon md:grid-cols-2">
@@ -196,10 +201,10 @@ function BrandCardsLibrary() {
           {/* Mission Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-command-200 mb-squad">
+              <h2 className="mb-squad font-bold text-command-200 operational-title">
                 MISSION CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-command-400 to-command-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-command-400 to-command-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon md:grid-cols-2">
@@ -227,10 +232,10 @@ function BrandCardsLibrary() {
           {/* Alert Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-tactical-200 mb-squad">
+              <h2 className="mb-squad font-bold text-tactical-200 operational-title">
                 ALERT CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-tactical-400 to-tactical-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-tactical-400 to-tactical-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon">
@@ -263,10 +268,10 @@ function BrandCardsLibrary() {
           {/* Stats Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-strategic-200 mb-squad">
+              <h2 className="mb-squad font-bold text-strategic-200 operational-title">
                 STATISTICS CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-strategic-400 to-strategic-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-strategic-400 to-strategic-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon md:grid-cols-2 lg:grid-cols-3">
@@ -274,8 +279,18 @@ function BrandCardsLibrary() {
                 title="Platform Performance"
                 period="Last 24 Hours"
                 metrics={[
-                  { label: "System Uptime", value: "99.97%", change: "+0.02%", trend: "up" },
-                  { label: "Response Time", value: "2.3ms", change: "-0.1ms", trend: "up" }
+                  {
+                    label: 'System Uptime',
+                    value: '99.97%',
+                    change: '+0.02%',
+                    trend: 'up',
+                  },
+                  {
+                    label: 'Response Time',
+                    value: '2.3ms',
+                    change: '-0.1ms',
+                    trend: 'up',
+                  },
                 ]}
               />
 
@@ -283,8 +298,18 @@ function BrandCardsLibrary() {
                 title="Project Delivery Metrics"
                 period="Current Quarter"
                 metrics={[
-                  { label: "On-Time Delivery", value: "94.2%", change: "+2.1%", trend: "up" },
-                  { label: "Budget Variance", value: "87.5%", change: "+1.3%", trend: "up" }
+                  {
+                    label: 'On-Time Delivery',
+                    value: '94.2%',
+                    change: '+2.1%',
+                    trend: 'up',
+                  },
+                  {
+                    label: 'Budget Variance',
+                    value: '87.5%',
+                    change: '+1.3%',
+                    trend: 'up',
+                  },
                 ]}
               />
 
@@ -292,8 +317,18 @@ function BrandCardsLibrary() {
                 title="Analytics & Reporting"
                 period="Last 7 Days"
                 metrics={[
-                  { label: "Reports Generated", value: "1,247", change: "+156", trend: "up" },
-                  { label: "Risks Mitigated", value: "89", change: "+12", trend: "up" }
+                  {
+                    label: 'Reports Generated',
+                    value: '1,247',
+                    change: '+156',
+                    trend: 'up',
+                  },
+                  {
+                    label: 'Risks Mitigated',
+                    value: '89',
+                    change: '+12',
+                    trend: 'up',
+                  },
                 ]}
               />
             </div>
@@ -302,10 +337,10 @@ function BrandCardsLibrary() {
           {/* Hero Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-command-200 mb-squad">
+              <h2 className="mb-squad font-bold text-command-200 operational-title">
                 HERO CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-command-400 to-command-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-command-400 to-command-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon md:grid-cols-2">
@@ -332,10 +367,10 @@ function BrandCardsLibrary() {
           {/* Featured Hero Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-tactical-200 mb-squad">
+              <h2 className="mb-squad font-bold text-tactical-200 operational-title">
                 FEATURED HERO CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-tactical-400 to-tactical-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-tactical-400 to-tactical-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon">
@@ -344,17 +379,17 @@ function BrandCardsLibrary() {
                 tagline="Complete Project Control Solution"
                 description="The ultimate project management platform featuring advanced AI intelligence, real-time analytics, and seamless team collaboration tools designed for precision execution and strategic success."
                 features={[
-                  "Real-time project tracking and coordination",
-                  "Advanced AI-powered decision support",
-                  "Secure encrypted communication channels",
-                  "Comprehensive analytics and reporting",
-                  "Multi-platform deployment support"
+                  'Real-time project tracking and coordination',
+                  'Advanced AI-powered decision support',
+                  'Secure encrypted communication channels',
+                  'Comprehensive analytics and reporting',
+                  'Multi-platform deployment support',
                 ]}
                 metrics={[
-                  { label: "Active Projects", value: "247" },
-                  { label: "Success Rate", value: "98.7%" },
-                  { label: "Response Time", value: "<2ms" },
-                  { label: "Uptime", value: "99.99%" }
+                  { label: 'Active Projects', value: '247' },
+                  { label: 'Success Rate', value: '98.7%' },
+                  { label: 'Response Time', value: '<2ms' },
+                  { label: 'Uptime', value: '99.99%' },
                 ]}
                 gradient="command"
               />
@@ -364,58 +399,66 @@ function BrandCardsLibrary() {
           {/* Glass Cards Section */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-strategic-200 mb-squad">
+              <h2 className="mb-squad font-bold text-strategic-200 operational-title">
                 GLASS EFFECT CARDS
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-strategic-400 to-strategic-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-strategic-400 to-strategic-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon md:grid-cols-2">
-              <GlassCard
-                title="RAPID DEPLOYMENT"
-                accent="command"
-              >
+              <GlassCard title="RAPID DEPLOYMENT" accent="command">
                 <div className="space-y-6">
-                  <p className="text-strategic-200 leading-relaxed mb-4">
-                    Instant deployment protocols with zero-downtime updates and automatic scaling for seamless project continuity.
+                  <p className="mb-4 leading-relaxed text-strategic-200">
+                    Instant deployment protocols with zero-downtime updates and
+                    automatic scaling for seamless project continuity.
                   </p>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <div className="h-3 w-3 rounded-full bg-command-500" />
-                      <span className="text-sm text-strategic-200">Real-time monitoring active</span>
+                      <span className="text-sm text-strategic-200">
+                        Real-time monitoring active
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="h-3 w-3 rounded-full bg-tactical-500" />
-                      <span className="text-sm text-strategic-200">Auto-scaling enabled</span>
+                      <span className="text-sm text-strategic-200">
+                        Auto-scaling enabled
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="h-3 w-3 rounded-full bg-intelligence-success-500" />
-                      <span className="text-sm text-strategic-200">Backup systems online</span>
+                      <span className="text-sm text-strategic-200">
+                        Backup systems online
+                      </span>
                     </div>
                   </div>
                 </div>
               </GlassCard>
 
-              <GlassCard
-                title="TACTICAL ANALYSIS"
-                accent="tactical"
-              >
+              <GlassCard title="TACTICAL ANALYSIS" accent="tactical">
                 <div className="space-y-6">
-                  <p className="text-strategic-200 leading-relaxed mb-4">
-                    Advanced pattern recognition and predictive analytics for strategic project insights and competitive advantage.
+                  <p className="mb-4 leading-relaxed text-strategic-200">
+                    Advanced pattern recognition and predictive analytics for
+                    strategic project insights and competitive advantage.
                   </p>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <div className="h-3 w-3 rounded-full bg-tactical-500" />
-                      <span className="text-sm text-strategic-200">Risk assessment active</span>
+                      <span className="text-sm text-strategic-200">
+                        Risk assessment active
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="h-3 w-3 rounded-full bg-command-500" />
-                      <span className="text-sm text-strategic-200">Trend analysis running</span>
+                      <span className="text-sm text-strategic-200">
+                        Trend analysis running
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="h-3 w-3 rounded-full bg-strategic-400" />
-                      <span className="text-sm text-strategic-200">Report generation complete</span>
+                      <span className="text-sm text-strategic-200">
+                        Report generation complete
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -426,27 +469,31 @@ function BrandCardsLibrary() {
           {/* Usage Guidelines */}
           <section className="space-y-platoon">
             <div className="text-center">
-              <h2 className="operational-title font-bold text-strategic-200 mb-squad">
+              <h2 className="mb-squad font-bold text-strategic-200 operational-title">
                 USAGE GUIDELINES
               </h2>
-              <div className="mx-auto w-24 h-squad bg-gradient-to-r from-strategic-400 to-strategic-600 rounded-full" />
+              <div className="mx-auto h-squad w-24 rounded-full bg-gradient-to-r from-strategic-400 to-strategic-600" />
             </div>
 
             <div className="grid grid-cols-1 gap-platoon md:grid-cols-2">
               <div className="rounded-2xl border border-strategic-200/30 bg-strategic-950/50 p-platoon">
-                <h3 className="tactical-heading font-semibold text-command-200 mb-company">
+                <h3 className="mb-company font-semibold text-command-200 tactical-heading">
                   COMMAND CARDS
                 </h3>
                 <ul className="space-y-squad text-strategic-300">
                   <li>• Use for project dashboards and control interfaces</li>
-                  <li>• Perfect for performance monitoring and status displays</li>
+                  <li>
+                    • Perfect for performance monitoring and status displays
+                  </li>
                   <li>• Include metrics and KPIs for quick assessment</li>
-                  <li>• Command blue theme with precision-focused terminology</li>
+                  <li>
+                    • Command blue theme with precision-focused terminology
+                  </li>
                 </ul>
               </div>
 
               <div className="rounded-2xl border border-strategic-200/30 bg-strategic-950/50 p-platoon">
-                <h3 className="tactical-heading font-semibold text-tactical-200 mb-company">
+                <h3 className="mb-company font-semibold text-tactical-200 tactical-heading">
                   TACTICAL CARDS
                 </h3>
                 <ul className="space-y-squad text-strategic-300">
@@ -458,7 +505,7 @@ function BrandCardsLibrary() {
               </div>
 
               <div className="rounded-2xl border border-strategic-200/30 bg-strategic-950/50 p-platoon">
-                <h3 className="tactical-heading font-semibold text-strategic-200 mb-company">
+                <h3 className="mb-company font-semibold text-strategic-200 tactical-heading">
                   STRATEGIC CARDS
                 </h3>
                 <ul className="space-y-squad text-strategic-300">
@@ -470,25 +517,33 @@ function BrandCardsLibrary() {
               </div>
 
               <div className="rounded-2xl border border-strategic-200/30 bg-strategic-950/50 p-platoon">
-                <h3 className="tactical-heading font-semibold text-strategic-200 mb-company">
+                <h3 className="mb-company font-semibold text-strategic-200 tactical-heading">
                   HERO & SPECIAL VARIANTS
                 </h3>
                 <ul className="space-y-squad text-strategic-300">
-                  <li>• Hero cards for featured content with gradient top borders</li>
+                  <li>
+                    • Hero cards for featured content with gradient top borders
+                  </li>
                   <li>• Featured hero cards for prominent product showcases</li>
-                  <li>• Intelligence cards for data insights and performance alerts</li>
-                  <li>• Mission cards for detailed project milestone tracking</li>
+                  <li>
+                    • Intelligence cards for data insights and performance
+                    alerts
+                  </li>
+                  <li>
+                    • Mission cards for detailed project milestone tracking
+                  </li>
                   <li>• Glass cards for premium analytics interfaces</li>
-                  <li>• Stats cards for project performance metrics and KPIs</li>
+                  <li>
+                    • Stats cards for project performance metrics and KPIs
+                  </li>
                 </ul>
               </div>
             </div>
           </section>
-
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default BrandCardsLibrary;
