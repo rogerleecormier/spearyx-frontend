@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root';
 import { Route as DataRouteImport } from './routes/data';
+import { Route as BrandTypographyLibraryRouteImport } from './routes/brand-typography-library';
 import { Route as BrandStyleGuideRouteImport } from './routes/brand-style-guide';
 import { Route as BrandCardsLibraryRouteImport } from './routes/brand-cards-library';
 import { Route as IndexRouteImport } from './routes/index';
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index';
 const DataRoute = DataRouteImport.update({
   id: '/data',
   path: '/data',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const BrandTypographyLibraryRoute = BrandTypographyLibraryRouteImport.update({
+  id: '/brand-typography-library',
+  path: '/brand-typography-library',
   getParentRoute: () => rootRouteImport,
 } as any);
 const BrandStyleGuideRoute = BrandStyleGuideRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/brand-cards-library': typeof BrandCardsLibraryRoute;
   '/brand-style-guide': typeof BrandStyleGuideRoute;
+  '/brand-typography-library': typeof BrandTypographyLibraryRoute;
   '/data': typeof DataRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/brand-cards-library': typeof BrandCardsLibraryRoute;
   '/brand-style-guide': typeof BrandStyleGuideRoute;
+  '/brand-typography-library': typeof BrandTypographyLibraryRoute;
   '/data': typeof DataRoute;
 }
 export interface FileRoutesById {
@@ -52,18 +60,30 @@ export interface FileRoutesById {
   '/': typeof IndexRoute;
   '/brand-cards-library': typeof BrandCardsLibraryRoute;
   '/brand-style-guide': typeof BrandStyleGuideRoute;
+  '/brand-typography-library': typeof BrandTypographyLibraryRoute;
   '/data': typeof DataRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/brand-cards-library' | '/brand-style-guide' | '/data';
+  fullPaths:
+    | '/'
+    | '/brand-cards-library'
+    | '/brand-style-guide'
+    | '/brand-typography-library'
+    | '/data';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/brand-cards-library' | '/brand-style-guide' | '/data';
+  to:
+    | '/'
+    | '/brand-cards-library'
+    | '/brand-style-guide'
+    | '/brand-typography-library'
+    | '/data';
   id:
     | '__root__'
     | '/'
     | '/brand-cards-library'
     | '/brand-style-guide'
+    | '/brand-typography-library'
     | '/data';
   fileRoutesById: FileRoutesById;
 }
@@ -71,6 +91,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   BrandCardsLibraryRoute: typeof BrandCardsLibraryRoute;
   BrandStyleGuideRoute: typeof BrandStyleGuideRoute;
+  BrandTypographyLibraryRoute: typeof BrandTypographyLibraryRoute;
   DataRoute: typeof DataRoute;
 }
 
@@ -81,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/data';
       fullPath: '/data';
       preLoaderRoute: typeof DataRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/brand-typography-library': {
+      id: '/brand-typography-library';
+      path: '/brand-typography-library';
+      fullPath: '/brand-typography-library';
+      preLoaderRoute: typeof BrandTypographyLibraryRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/brand-style-guide': {
@@ -111,6 +139,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrandCardsLibraryRoute: BrandCardsLibraryRoute,
   BrandStyleGuideRoute: BrandStyleGuideRoute,
+  BrandTypographyLibraryRoute: BrandTypographyLibraryRoute,
   DataRoute: DataRoute,
 };
 export const routeTree = rootRouteImport

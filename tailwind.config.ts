@@ -80,6 +80,61 @@ const config: Config = {
   				fontWeight: '500'
   			}
   		],
+  		// Additional typography classes for consistency
+  		'hero': [
+  			'4.5rem',
+  			{
+  				lineHeight: '1',
+  				letterSpacing: '-0.025em',
+  				fontWeight: '900'
+  			}
+  		],
+  		'display': [
+  			'3rem',
+  			{
+  				lineHeight: '1.1',
+  				letterSpacing: '-0.02em',
+  				fontWeight: '700'
+  			}
+  		],
+  		'headline': [
+  			'2.25rem',
+  			{
+  				lineHeight: '1.2',
+  				letterSpacing: '-0.015em',
+  				fontWeight: '600'
+  			}
+  		],
+  		'title': [
+  			'1.5rem',
+  			{
+  				lineHeight: '1.3',
+  				letterSpacing: '-0.01em',
+  				fontWeight: '600'
+  			}
+  		],
+  		'body-lg': [
+  			'1.25rem',
+  			{
+  				lineHeight: '1.7',
+  				fontWeight: '400'
+  			}
+  		],
+  		'caption': [
+  			'0.875rem',
+  			{
+  				lineHeight: '1.4',
+  				fontWeight: '400'
+  			}
+  		],
+  		'label': [
+  			'0.75rem',
+  			{
+  				lineHeight: '1.3',
+  				letterSpacing: '0.05em',
+  				fontWeight: '500'
+  			}
+  		],
   		xs: [
   			'0.75rem',
   			{
@@ -615,6 +670,54 @@ const config: Config = {
           fontWeight: '400',
         },
         '.status-indicator': {
+          fontSize: '0.75rem',
+          lineHeight: '1.3',
+          letterSpacing: '0.05em',
+          fontWeight: '500',
+          textTransform: 'uppercase',
+        },
+
+        // === ADDITIONAL TYPOGRAPHY CLASSES ===
+        '.text-hero': {
+          fontSize: '4.5rem',
+          lineHeight: '1',
+          letterSpacing: '-0.025em',
+          fontWeight: '900',
+        },
+        '.text-display': {
+          fontSize: '3rem',
+          lineHeight: '1.1',
+          letterSpacing: '-0.02em',
+          fontWeight: '700',
+        },
+        '.text-headline': {
+          fontSize: '2.25rem',
+          lineHeight: '1.2',
+          letterSpacing: '-0.015em',
+          fontWeight: '600',
+        },
+        '.text-title': {
+          fontSize: '1.5rem',
+          lineHeight: '1.3',
+          letterSpacing: '-0.01em',
+          fontWeight: '600',
+        },
+        '.text-body': {
+          fontSize: '1rem',
+          lineHeight: '1.6',
+          fontWeight: '400',
+        },
+        '.text-body-lg': {
+          fontSize: '1.25rem',
+          lineHeight: '1.7',
+          fontWeight: '400',
+        },
+        '.text-caption': {
+          fontSize: '0.875rem',
+          lineHeight: '1.4',
+          fontWeight: '400',
+        },
+        '.text-label': {
           fontSize: '0.75rem',
           lineHeight: '1.3',
           letterSpacing: '0.05em',
