@@ -1,6 +1,16 @@
 import React from 'react';
 
 import { cn } from '@/lib/utils';
+import {
+  BrandTypography,
+  CommandDirective,
+  FieldReport,
+  IntelligenceBrief,
+  OperationalTitle,
+  StatusIndicator,
+  StrategicBody,
+  TacticalHeading,
+} from './BrandTypography';
 
 // Base Card Component - Simplified to match ComingSoon style
 interface BrandCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -91,31 +101,29 @@ export const CommandCard: React.FC<CommandCardProps> = ({
   };
 
   return (
-    <BrandCard variant="command" className={cn('', className)} {...props}>
+    <BrandCard variant="command" className={className} {...props}>
       <div className="space-y-6">
         <div className="flex items-start justify-between">
-          <div className="space-y-2">
-            <h3 className="text-xl font-bold text-command-100">{title}</h3>
-            <p className="leading-relaxed text-strategic-300">{description}</p>
+          <div className="space-y-3">
+            <OperationalTitle as="h3">{title}</OperationalTitle>
+            <FieldReport>{description}</FieldReport>
           </div>
-          <div
-            className={cn(
-              'text-sm font-bold uppercase tracking-wide',
-              statusColors[status]
-            )}
-          >
+          <StatusIndicator className={statusColors[status]}>
             {status}
-          </div>
+          </StatusIndicator>
         </div>
 
         {metrics && (
           <div className="grid grid-cols-2 gap-4">
             {metrics.map((metric, index) => (
               <div key={index} className="text-center">
-                <div className="text-2xl font-bold text-command-300">
+                <BrandTypography
+                  variant="command-directive"
+                  className="text-command-300"
+                >
                   {metric.value}
-                </div>
-                <div className="text-sm text-strategic-400">{metric.label}</div>
+                </BrandTypography>
+                <IntelligenceBrief>{metric.label}</IntelligenceBrief>
               </div>
             ))}
           </div>
@@ -159,11 +167,11 @@ export const TacticalCard: React.FC<TacticalCardProps> = ({
   };
 
   return (
-    <BrandCard variant="tactical" className={cn('', className)} {...props}>
+    <BrandCard variant="tactical" className={className} {...props}>
       <div className="space-y-6">
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-bold text-command-100">{title}</h3>
+            <OperationalTitle as="h3">{title}</OperationalTitle>
             <div
               className={cn(
                 'rounded-full px-3 py-1 text-xs font-bold uppercase',
@@ -173,18 +181,20 @@ export const TacticalCard: React.FC<TacticalCardProps> = ({
               {threatLevel}
             </div>
           </div>
-          <p className="leading-relaxed text-strategic-300">{objective}</p>
+          <FieldReport>{objective}</FieldReport>
         </div>
 
         {progress !== undefined && (
           <div className="space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-strategic-400">Progress</span>
-              <span className="text-strategic-400">{progress}%</span>
+            <div className="flex justify-between">
+              <IntelligenceBrief>Progress</IntelligenceBrief>
+              <IntelligenceBrief>{progress}%</IntelligenceBrief>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-strategic-700/30">
               <div
-                className="h-full bg-gradient-to-r from-tactical-400 to-tactical-600 transition-all duration-500"
+                className={cn(
+                  'h-full bg-gradient-to-r from-tactical-400 to-tactical-600 transition-all duration-500'
+                )}
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -194,10 +204,12 @@ export const TacticalCard: React.FC<TacticalCardProps> = ({
         {(team || actions) && (
           <div className="flex items-center justify-between border-t border-strategic-700/30 pt-4">
             {team && (
-              <div className="text-sm text-strategic-400">
+              <IntelligenceBrief>
                 Team:{' '}
-                <span className="font-medium text-command-300">{team}</span>
-              </div>
+                <BrandTypography variant="body" className="font-medium text-command-300">
+                  {team}
+                </BrandTypography>
+              </IntelligenceBrief>
             )}
             {actions && <div className="flex gap-3">{actions}</div>}
           </div>
@@ -235,11 +247,11 @@ export const StrategicCard: React.FC<StrategicCardProps> = ({
   };
 
   return (
-    <BrandCard variant="strategic" className={cn('', className)} {...props}>
+    <BrandCard variant="strategic" className={className} {...props}>
       <div className="space-y-6">
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-bold text-command-100">{title}</h3>
+            <OperationalTitle as="h3">{title}</OperationalTitle>
             <div
               className={cn(
                 'rounded-full px-3 py-1 text-xs font-bold uppercase',
@@ -249,26 +261,26 @@ export const StrategicCard: React.FC<StrategicCardProps> = ({
               {priority}
             </div>
           </div>
-          <p className="leading-relaxed text-strategic-300">{overview}</p>
+          <FieldReport>{overview}</FieldReport>
         </div>
 
         {(deadline || stakeholders) && (
           <div className="grid grid-cols-2 gap-4 border-t border-strategic-700/30 pt-4">
             {deadline && (
-              <div>
-                <div className="mb-1 text-sm text-strategic-400">Deadline</div>
-                <div className="font-medium text-command-300">{deadline}</div>
+              <div className="space-y-1">
+                <IntelligenceBrief>Deadline</IntelligenceBrief>
+                <BrandTypography variant="body" className="font-medium text-command-300">
+                  {deadline}
+                </BrandTypography>
               </div>
             )}
             {stakeholders && (
-              <div>
-                <div className="mb-1 text-sm text-strategic-400">
-                  Stakeholders
-                </div>
-                <div className="font-medium text-command-300">
+              <div className="space-y-1">
+                <IntelligenceBrief>Stakeholders</IntelligenceBrief>
+                <BrandTypography variant="body" className="font-medium text-command-300">
                   {stakeholders.slice(0, 2).join(', ')}
                   {stakeholders.length > 2 && ` +${stakeholders.length - 2}`}
-                </div>
+                </BrandTypography>
               </div>
             )}
           </div>
@@ -322,11 +334,11 @@ export const IntelligenceCard: React.FC<IntelligenceCardProps> = ({
     <BrandCard
       variant="intelligence"
       status={status}
-      className={cn('', className)}
+      className={className}
       {...props}
     >
       <div className="space-y-6">
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-4">
           <div
             className={cn(
               'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold',
@@ -335,22 +347,24 @@ export const IntelligenceCard: React.FC<IntelligenceCardProps> = ({
           >
             {statusIcons[status]}
           </div>
-          <div className="flex-1 space-y-2">
-            <h3 className="text-xl font-bold text-command-100">{title}</h3>
-            <p className="leading-relaxed text-strategic-300">{briefing}</p>
+          <div className="flex-1 space-y-3">
+            <OperationalTitle as="h3">{title}</OperationalTitle>
+            <FieldReport>{briefing}</FieldReport>
           </div>
         </div>
 
         {(source || timestamp) && (
           <div className="flex items-center justify-between border-t border-strategic-700/30 pt-4">
             {source && (
-              <div className="text-sm text-strategic-400">
+              <IntelligenceBrief>
                 Source:{' '}
-                <span className="font-medium text-command-300">{source}</span>
-              </div>
+                <BrandTypography variant="body" className="font-medium text-command-300">
+                  {source}
+                </BrandTypography>
+              </IntelligenceBrief>
             )}
             {timestamp && (
-              <div className="text-sm text-strategic-400">{timestamp}</div>
+              <IntelligenceBrief>{timestamp}</IntelligenceBrief>
             )}
           </div>
         )}
@@ -400,9 +414,11 @@ export const GlassCard: React.FC<GlassCardProps> = ({
           accentColors[accent]
         )}
       />
-      <div className="relative z-10">
-        <h3 className="mb-4 text-xl font-bold text-command-100">{title}</h3>
-        <div className="text-strategic-200">{children || content}</div>
+      <div className="relative z-10 space-y-4">
+        <OperationalTitle as="h3">{title}</OperationalTitle>
+        <StrategicBody className="text-strategic-200">
+          {children || content}
+        </StrategicBody>
       </div>
     </BrandCard>
   );
@@ -446,43 +462,44 @@ export const MissionCard: React.FC<MissionCardProps> = ({
     critical: '●●●●',
   };
 
+  const progressWidthClass = progress ? `w-[${progress}%]` : 'w-0';
+
   return (
-    <BrandCard variant="mission" className={cn('', className)} {...props}>
+    <BrandCard variant="mission" className={className} {...props}>
       <div className="space-y-6">
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-start justify-between">
-            <div>
-              <div className="mb-1 text-sm text-strategic-400">
-                Mission {missionId}
-              </div>
-              <h3 className="text-xl font-bold text-command-100">{title}</h3>
+            <div className="space-y-1">
+              <IntelligenceBrief>Mission {missionId}</IntelligenceBrief>
+              <OperationalTitle as="h3">{title}</OperationalTitle>
             </div>
-            <div className="text-right">
-              <div
-                className={cn(
-                  'mb-1 text-sm font-bold uppercase',
-                  statusColors[status]
-                )}
+            <div className="text-right space-y-1">
+              <BrandTypography
+                variant="intelligence-brief"
+                className={cn('font-bold uppercase', statusColors[status])}
               >
                 {status}
-              </div>
-              <div className="text-xs text-tactical-400">
+              </BrandTypography>
+              <BrandTypography variant="label" className="text-tactical-400">
                 {priorityIcons[priority]}
-              </div>
+              </BrandTypography>
             </div>
           </div>
-          <p className="leading-relaxed text-strategic-300">{description}</p>
+          <FieldReport>{description}</FieldReport>
         </div>
 
         {progress !== undefined && (
           <div className="space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-strategic-400">Completion</span>
-              <span className="text-strategic-400">{progress}%</span>
+            <div className="flex justify-between">
+              <IntelligenceBrief>Completion</IntelligenceBrief>
+              <IntelligenceBrief>{progress}%</IntelligenceBrief>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-strategic-700/30">
               <div
-                className="h-full bg-gradient-to-r from-command-400 to-command-600 transition-all duration-500"
+                className={cn(
+                  'h-full bg-gradient-to-r from-command-400 to-command-600 transition-all duration-500',
+                  progressWidthClass
+                )}
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -492,12 +509,12 @@ export const MissionCard: React.FC<MissionCardProps> = ({
         {(assignedTo || actions) && (
           <div className="flex items-center justify-between border-t border-strategic-700/30 pt-4">
             {assignedTo && (
-              <div className="text-sm text-strategic-400">
+              <IntelligenceBrief>
                 Assigned:{' '}
-                <span className="font-medium text-command-300">
+                <BrandTypography variant="body" className="font-medium text-command-300">
                   {assignedTo}
-                </span>
-              </div>
+                </BrandTypography>
+              </IntelligenceBrief>
             )}
             {actions && <div className="flex gap-3">{actions}</div>}
           </div>
@@ -549,27 +566,27 @@ export const HeroCard: React.FC<HeroCardProps> = ({
         <div className="flex items-start justify-between">
           <div className="flex flex-1 items-start gap-4">
             {icon && <div className="flex-shrink-0 text-4xl">{icon}</div>}
-            <div className="flex-1 space-y-2">
+            <div className="flex-1 space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-bold text-command-100">{title}</h3>
+                <CommandDirective as="h3">{title}</CommandDirective>
                 {badge && (
-                  <div className="rounded-full bg-command-500/20 px-3 py-1 text-sm font-bold uppercase text-command-300">
+                  <StatusIndicator className="rounded-full bg-command-500/20 px-3 py-1 text-command-300">
                     {badge}
-                  </div>
+                  </StatusIndicator>
                 )}
               </div>
               {subtitle && (
-                <p className="text-lg font-medium text-tactical-300">
+                <TacticalHeading className="text-tactical-300">
                   {subtitle}
-                </p>
+                </TacticalHeading>
               )}
             </div>
           </div>
         </div>
 
-        <p className="text-lg leading-relaxed text-strategic-300">
+        <StrategicBody className="text-strategic-300">
           {description}
-        </p>
+        </StrategicBody>
 
         {actions && (
           <div className="flex gap-4 border-t border-strategic-700/30 pt-4">
@@ -621,13 +638,17 @@ export const FeaturedHeroCard: React.FC<FeaturedHeroCardProps> = ({
 
       <div className="space-y-8">
         <div className="space-y-4">
-          <h3 className="text-3xl font-bold text-command-100">{title}</h3>
+          <BrandTypography variant="briefing-title" as="h3">
+            {title}
+          </BrandTypography>
           {tagline && (
-            <p className="text-xl font-medium text-tactical-300">{tagline}</p>
+            <TacticalHeading className="text-tactical-300">
+              {tagline}
+            </TacticalHeading>
           )}
-          <p className="text-lg leading-relaxed text-strategic-300">
+          <StrategicBody className="text-strategic-300">
             {description}
-          </p>
+          </StrategicBody>
         </div>
 
         {features && (
@@ -635,7 +656,7 @@ export const FeaturedHeroCard: React.FC<FeaturedHeroCardProps> = ({
             {features.map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="h-2 w-2 flex-shrink-0 rounded-full bg-command-500" />
-                <span className="text-strategic-300">{feature}</span>
+                <FieldReport className="text-strategic-300">{feature}</FieldReport>
               </div>
             ))}
           </div>
@@ -644,11 +665,11 @@ export const FeaturedHeroCard: React.FC<FeaturedHeroCardProps> = ({
         {metrics && (
           <div className="grid grid-cols-2 gap-6 border-t border-strategic-700/30 pt-6 md:grid-cols-4">
             {metrics.map((metric, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl font-bold text-command-300">
+              <div key={index} className="text-center space-y-1">
+                <BrandTypography variant="briefing-title" className="text-command-300">
                   {metric.value}
-                </div>
-                <div className="text-sm text-strategic-400">{metric.label}</div>
+                </BrandTypography>
+                <IntelligenceBrief>{metric.label}</IntelligenceBrief>
               </div>
             ))}
           </div>
@@ -692,9 +713,9 @@ export const AlertCard: React.FC<AlertCardProps> = ({
   };
 
   return (
-    <BrandCard variant="alert" className={cn('', className)} {...props}>
+    <BrandCard variant="alert" className={className} {...props}>
       <div className="space-y-6">
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-4">
           <div
             className={cn(
               'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-lg font-bold',
@@ -709,22 +730,24 @@ export const AlertCard: React.FC<AlertCardProps> = ({
           >
             {severityIcons[severity]}
           </div>
-          <div className="flex-1 space-y-2">
-            <h3 className="text-xl font-bold text-command-100">{title}</h3>
-            <p className="leading-relaxed text-strategic-300">{message}</p>
+          <div className="flex-1 space-y-3">
+            <OperationalTitle as="h3">{title}</OperationalTitle>
+            <FieldReport>{message}</FieldReport>
           </div>
         </div>
 
         {(source || timestamp) && (
           <div className="flex items-center justify-between border-t border-strategic-700/30 pt-4">
             {source && (
-              <div className="text-sm text-strategic-400">
+              <IntelligenceBrief>
                 Source:{' '}
-                <span className="font-medium text-command-300">{source}</span>
-              </div>
+                <BrandTypography variant="body" className="font-medium text-command-300">
+                  {source}
+                </BrandTypography>
+              </IntelligenceBrief>
             )}
             {timestamp && (
-              <div className="text-sm text-strategic-400">{timestamp}</div>
+              <IntelligenceBrief>{timestamp}</IntelligenceBrief>
             )}
           </div>
         )}
@@ -761,31 +784,32 @@ export const StatsCard: React.FC<StatsCardProps> = ({
   ...props
 }) => {
   return (
-    <BrandCard variant="stats" className={cn('', className)} {...props}>
+    <BrandCard variant="stats" className={className} {...props}>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h3 className="text-xl font-bold text-command-100">{title}</h3>
-          {period && <div className="text-sm text-strategic-400">{period}</div>}
+          <OperationalTitle as="h3">{title}</OperationalTitle>
+          {period && <IntelligenceBrief>{period}</IntelligenceBrief>}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           {metrics.map((metric, index) => (
             <div key={index} className="space-y-2 text-center">
-              <div className="text-2xl font-bold text-command-300">
+              <BrandTypography variant="command-directive" className="text-command-300">
                 {metric.value}
-              </div>
-              <div className="text-sm text-strategic-400">{metric.label}</div>
+              </BrandTypography>
+              <IntelligenceBrief>{metric.label}</IntelligenceBrief>
               {metric.change && (
-                <div
+                <BrandTypography
+                  variant="label"
                   className={cn(
-                    'text-xs font-medium',
+                    'font-medium',
                     metric.trend === 'up' && 'text-intelligence-success-400',
                     metric.trend === 'down' && 'text-intelligence-danger-400',
                     metric.trend === 'neutral' && 'text-strategic-400'
                   )}
                 >
                   {metric.change}
-                </div>
+                </BrandTypography>
               )}
             </div>
           ))}
