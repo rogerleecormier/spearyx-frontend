@@ -516,32 +516,16 @@ const config: Config = {
   					transform: 'translateX(0)'
   				}
   			},
-  			'extraction-sequence': {
-  				'0%': {
-  					opacity: '1',
-  					transform: 'translateY(0)'
-  				},
-  				'100%': {
-  					opacity: '0',
-  					transform: 'translateY(-5px)'
-  				}
-  			},
-  			'accordion-down': {
-  				from: {
-  					height: '0'
-  				},
-  				to: {
-  					height: 'var(--radix-accordion-content-height)'
-  				}
-  			},
-  			'accordion-up': {
-  				from: {
-  					height: 'var(--radix-accordion-content-height)'
-  				},
-  				to: {
-  					height: '0'
-  				}
-  			}
+			'extraction-sequence': {
+				'0%': {
+					opacity: '1',
+					transform: 'translateY(0)'
+				},
+				'100%': {
+					opacity: '0',
+					transform: 'translateY(-5px)'
+				}
+			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
@@ -553,11 +537,9 @@ const config: Config = {
   			'target-acquisition': 'target-acquisition 2s ease-in-out infinite',
   			'alert-flare': 'alert-flare 1.5s ease-in-out infinite',
   			'deployment-sequence': 'deployment-sequence 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)',
-  			'strike-force': 'strike-force 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)',
-  			'stealth-insert': 'stealth-insert 0.4s ease-out',
-  			'extraction-sequence': 'extraction-sequence 0.3s ease-in',
-  			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+			'strike-force': 'strike-force 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)',
+			'stealth-insert': 'stealth-insert 0.4s ease-out',
+			'extraction-sequence': 'extraction-sequence 0.3s ease-in'
   		},
   		backdropBlur: {
   			xs: '2px',
