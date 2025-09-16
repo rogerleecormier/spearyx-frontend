@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { cn } from '@/lib/utils';
+
 import {
   BrandTypography,
   CommandDirective,
@@ -114,16 +115,18 @@ export const CommandCard: React.FC<CommandCardProps> = ({
         </div>
 
         {metrics && (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-6">
             {metrics.map((metric, index) => (
-              <div key={index} className="text-center">
+              <div key={index} className="space-y-2 text-center">
                 <BrandTypography
-                  variant="command-directive"
-                  className="text-command-300"
+                  variant="briefing-title"
+                  className="text-command-300 leading-none"
                 >
                   {metric.value}
                 </BrandTypography>
-                <IntelligenceBrief>{metric.label}</IntelligenceBrief>
+                <IntelligenceBrief className="block">
+                  {metric.label}
+                </IntelligenceBrief>
               </div>
             ))}
           </div>
@@ -206,7 +209,10 @@ export const TacticalCard: React.FC<TacticalCardProps> = ({
             {team && (
               <IntelligenceBrief>
                 Team:{' '}
-                <BrandTypography variant="body" className="font-medium text-command-300">
+                <BrandTypography
+                  variant="body"
+                  className="font-medium text-command-300"
+                >
                   {team}
                 </BrandTypography>
               </IntelligenceBrief>
@@ -264,27 +270,33 @@ export const StrategicCard: React.FC<StrategicCardProps> = ({
           <FieldReport>{overview}</FieldReport>
         </div>
 
-        {(deadline || stakeholders) && (
-          <div className="grid grid-cols-2 gap-4 border-t border-strategic-700/30 pt-4">
-            {deadline && (
-              <div className="space-y-1">
-                <IntelligenceBrief>Deadline</IntelligenceBrief>
-                <BrandTypography variant="body" className="font-medium text-command-300">
-                  {deadline}
-                </BrandTypography>
-              </div>
-            )}
-            {stakeholders && (
-              <div className="space-y-1">
-                <IntelligenceBrief>Stakeholders</IntelligenceBrief>
-                <BrandTypography variant="body" className="font-medium text-command-300">
-                  {stakeholders.slice(0, 2).join(', ')}
-                  {stakeholders.length > 2 && ` +${stakeholders.length - 2}`}
-                </BrandTypography>
-              </div>
-            )}
-          </div>
-        )}
+         {(deadline || stakeholders) && (
+           <div className="grid grid-cols-2 gap-6 border-t border-strategic-700/30 pt-4">
+             {deadline && (
+               <div className="space-y-2">
+                 <IntelligenceBrief className="block">Deadline</IntelligenceBrief>
+                 <BrandTypography
+                   variant="body"
+                   className="font-medium text-command-300 block"
+                 >
+                   {deadline}
+                 </BrandTypography>
+               </div>
+             )}
+             {stakeholders && (
+               <div className="space-y-2">
+                 <IntelligenceBrief className="block">Stakeholders</IntelligenceBrief>
+                 <BrandTypography
+                   variant="body"
+                   className="font-medium text-command-300 block"
+                 >
+                   {stakeholders.slice(0, 2).join(', ')}
+                   {stakeholders.length > 2 && ` +${stakeholders.length - 2}`}
+                 </BrandTypography>
+               </div>
+             )}
+           </div>
+         )}
 
         {actions && (
           <div className="flex gap-3 border-t border-strategic-700/30 pt-4">
@@ -358,14 +370,15 @@ export const IntelligenceCard: React.FC<IntelligenceCardProps> = ({
             {source && (
               <IntelligenceBrief>
                 Source:{' '}
-                <BrandTypography variant="body" className="font-medium text-command-300">
+                <BrandTypography
+                  variant="body"
+                  className="font-medium text-command-300"
+                >
                   {source}
                 </BrandTypography>
               </IntelligenceBrief>
             )}
-            {timestamp && (
-              <IntelligenceBrief>{timestamp}</IntelligenceBrief>
-            )}
+            {timestamp && <IntelligenceBrief>{timestamp}</IntelligenceBrief>}
           </div>
         )}
 
@@ -473,7 +486,7 @@ export const MissionCard: React.FC<MissionCardProps> = ({
               <IntelligenceBrief>Mission {missionId}</IntelligenceBrief>
               <OperationalTitle as="h3">{title}</OperationalTitle>
             </div>
-            <div className="text-right space-y-1">
+            <div className="space-y-1 text-right">
               <BrandTypography
                 variant="intelligence-brief"
                 className={cn('font-bold uppercase', statusColors[status])}
@@ -511,7 +524,10 @@ export const MissionCard: React.FC<MissionCardProps> = ({
             {assignedTo && (
               <IntelligenceBrief>
                 Assigned:{' '}
-                <BrandTypography variant="body" className="font-medium text-command-300">
+                <BrandTypography
+                  variant="body"
+                  className="font-medium text-command-300"
+                >
                   {assignedTo}
                 </BrandTypography>
               </IntelligenceBrief>
@@ -656,7 +672,9 @@ export const FeaturedHeroCard: React.FC<FeaturedHeroCardProps> = ({
             {features.map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="h-2 w-2 flex-shrink-0 rounded-full bg-command-500" />
-                <FieldReport className="text-strategic-300">{feature}</FieldReport>
+                <FieldReport className="text-strategic-300">
+                  {feature}
+                </FieldReport>
               </div>
             ))}
           </div>
@@ -665,8 +683,11 @@ export const FeaturedHeroCard: React.FC<FeaturedHeroCardProps> = ({
         {metrics && (
           <div className="grid grid-cols-2 gap-6 border-t border-strategic-700/30 pt-6 md:grid-cols-4">
             {metrics.map((metric, index) => (
-              <div key={index} className="text-center space-y-1">
-                <BrandTypography variant="briefing-title" className="text-command-300">
+              <div key={index} className="space-y-1 text-center">
+                <BrandTypography
+                  variant="briefing-title"
+                  className="text-command-300"
+                >
                   {metric.value}
                 </BrandTypography>
                 <IntelligenceBrief>{metric.label}</IntelligenceBrief>
@@ -741,14 +762,15 @@ export const AlertCard: React.FC<AlertCardProps> = ({
             {source && (
               <IntelligenceBrief>
                 Source:{' '}
-                <BrandTypography variant="body" className="font-medium text-command-300">
+                <BrandTypography
+                  variant="body"
+                  className="font-medium text-command-300"
+                >
                   {source}
                 </BrandTypography>
               </IntelligenceBrief>
             )}
-            {timestamp && (
-              <IntelligenceBrief>{timestamp}</IntelligenceBrief>
-            )}
+            {timestamp && <IntelligenceBrief>{timestamp}</IntelligenceBrief>}
           </div>
         )}
 
@@ -794,7 +816,10 @@ export const StatsCard: React.FC<StatsCardProps> = ({
         <div className="grid grid-cols-2 gap-4">
           {metrics.map((metric, index) => (
             <div key={index} className="space-y-2 text-center">
-              <BrandTypography variant="command-directive" className="text-command-300">
+              <BrandTypography
+                variant="command-directive"
+                className="text-command-300"
+              >
                 {metric.value}
               </BrandTypography>
               <IntelligenceBrief>{metric.label}</IntelligenceBrief>
