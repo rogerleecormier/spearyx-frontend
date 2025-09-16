@@ -8,6 +8,7 @@ interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
   as?: React.ElementType;
   children: React.ReactNode;
   className?: string;
+  block?: boolean; // Add convenience prop for block display
 }
 
 // Typography Variants based on existing Tailwind config
@@ -60,12 +61,16 @@ const BrandTypography = React.forwardRef<HTMLElement, TypographyProps>(
       as: Component = 'span',
       children,
       className,
+      block = false,
       ...props
     },
     ref
   ) => {
     // Base classes for all typography
     const baseClasses = 'font-inter';
+    
+    // Add block display when requested
+    const displayClass = block ? 'block' : '';
 
     // Variant-specific classes
     const variantClasses = {
@@ -127,6 +132,7 @@ const BrandTypography = React.forwardRef<HTMLElement, TypographyProps>(
         ref={ref}
         className={cn(
           baseClasses,
+          displayClass,
           variantClasses[variant as keyof typeof variantClasses],
           className
         )}
@@ -144,14 +150,16 @@ BrandTypography.displayName = 'BrandTypography';
 interface MissionBriefingProps extends Omit<TypographyProps, 'variant'> {
   children: React.ReactNode;
   className?: string;
+  block?: boolean;
 }
 
 export const MissionBriefing: React.FC<MissionBriefingProps> = ({
   children,
   className,
+  block,
   ...props
 }) => (
-  <BrandTypography variant="mission-briefing" className={className} {...props}>
+  <BrandTypography variant="mission-briefing" className={className} block={block} {...props}>
     {children}
   </BrandTypography>
 );
@@ -159,14 +167,16 @@ export const MissionBriefing: React.FC<MissionBriefingProps> = ({
 interface CommandDirectiveProps extends Omit<TypographyProps, 'variant'> {
   children: React.ReactNode;
   className?: string;
+  block?: boolean;
 }
 
 export const CommandDirective: React.FC<CommandDirectiveProps> = ({
   children,
   className,
+  block,
   ...props
 }) => (
-  <BrandTypography variant="command-directive" className={className} {...props}>
+  <BrandTypography variant="command-directive" className={className} block={block} {...props}>
     {children}
   </BrandTypography>
 );
@@ -174,14 +184,16 @@ export const CommandDirective: React.FC<CommandDirectiveProps> = ({
 interface TacticalHeadingProps extends Omit<TypographyProps, 'variant'> {
   children: React.ReactNode;
   className?: string;
+  block?: boolean;
 }
 
 export const TacticalHeading: React.FC<TacticalHeadingProps> = ({
   children,
   className,
+  block,
   ...props
 }) => (
-  <BrandTypography variant="tactical-heading" className={className} {...props}>
+  <BrandTypography variant="tactical-heading" className={className} block={block} {...props}>
     {children}
   </BrandTypography>
 );
@@ -204,14 +216,16 @@ export const OperationalTitle: React.FC<OperationalTitleProps> = ({
 interface StrategicBodyProps extends Omit<TypographyProps, 'variant'> {
   children: React.ReactNode;
   className?: string;
+  block?: boolean;
 }
 
 export const StrategicBody: React.FC<StrategicBodyProps> = ({
   children,
   className,
+  block,
   ...props
 }) => (
-  <BrandTypography variant="strategic-body" className={className} {...props}>
+  <BrandTypography variant="strategic-body" className={className} block={block} {...props}>
     {children}
   </BrandTypography>
 );
@@ -253,14 +267,16 @@ export const IntelligenceBrief: React.FC<IntelligenceBriefProps> = ({
 interface StatusIndicatorProps extends Omit<TypographyProps, 'variant'> {
   children: React.ReactNode;
   className?: string;
+  block?: boolean;
 }
 
 export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   children,
   className,
+  block,
   ...props
 }) => (
-  <BrandTypography variant="status-indicator" className={className} {...props}>
+  <BrandTypography variant="status-indicator" className={className} block={block} {...props}>
     {children}
   </BrandTypography>
 );
@@ -558,4 +574,5 @@ export const TypographyShowcase: React.FC<TypographyShowcaseProps> = ({
 export { BrandTypography };
 
 // Export types
-export type { TypographyProps, TypographyVariant };
+    export type { TypographyProps, TypographyVariant };
+

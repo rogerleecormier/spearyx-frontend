@@ -106,8 +106,8 @@ export const CommandCard: React.FC<CommandCardProps> = ({
       <div className="space-y-6">
         <div className="flex items-start justify-between">
           <div className="space-y-3">
-            <OperationalTitle as="h3">{title}</OperationalTitle>
-            <FieldReport>{description}</FieldReport>
+            <OperationalTitle as="h3" block>{title}</OperationalTitle>
+            <FieldReport block>{description}</FieldReport>
           </div>
           <StatusIndicator className={statusColors[status]}>
             {status}
@@ -120,11 +120,12 @@ export const CommandCard: React.FC<CommandCardProps> = ({
               <div key={index} className="space-y-2 text-center">
                 <BrandTypography
                   variant="briefing-title"
+                  block
                   className="text-command-300 leading-none"
                 >
                   {metric.value}
                 </BrandTypography>
-                <IntelligenceBrief className="block">
+                <IntelligenceBrief block>
                   {metric.label}
                 </IntelligenceBrief>
               </div>
@@ -174,7 +175,7 @@ export const TacticalCard: React.FC<TacticalCardProps> = ({
       <div className="space-y-6">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <OperationalTitle as="h3">{title}</OperationalTitle>
+            <OperationalTitle as="h3" block>{title}</OperationalTitle>
             <div
               className={cn(
                 'rounded-full px-3 py-1 text-xs font-bold uppercase',
@@ -184,7 +185,7 @@ export const TacticalCard: React.FC<TacticalCardProps> = ({
               {threatLevel}
             </div>
           </div>
-          <FieldReport>{objective}</FieldReport>
+          <FieldReport block>{objective}</FieldReport>
         </div>
 
         {progress !== undefined && (
@@ -257,7 +258,7 @@ export const StrategicCard: React.FC<StrategicCardProps> = ({
       <div className="space-y-6">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <OperationalTitle as="h3">{title}</OperationalTitle>
+            <OperationalTitle as="h3" block>{title}</OperationalTitle>
             <div
               className={cn(
                 'rounded-full px-3 py-1 text-xs font-bold uppercase',
@@ -267,17 +268,18 @@ export const StrategicCard: React.FC<StrategicCardProps> = ({
               {priority}
             </div>
           </div>
-          <FieldReport>{overview}</FieldReport>
+          <FieldReport block>{overview}</FieldReport>
         </div>
 
          {(deadline || stakeholders) && (
            <div className="grid grid-cols-2 gap-6 border-t border-strategic-700/30 pt-4">
              {deadline && (
                <div className="space-y-2">
-                 <IntelligenceBrief className="block">Deadline</IntelligenceBrief>
+                 <IntelligenceBrief block>Deadline</IntelligenceBrief>
                  <BrandTypography
                    variant="body"
-                   className="font-medium text-command-300 block"
+                   block
+                   className="font-medium text-command-300"
                  >
                    {deadline}
                  </BrandTypography>
@@ -285,10 +287,11 @@ export const StrategicCard: React.FC<StrategicCardProps> = ({
              )}
              {stakeholders && (
                <div className="space-y-2">
-                 <IntelligenceBrief className="block">Stakeholders</IntelligenceBrief>
+                 <IntelligenceBrief block>Stakeholders</IntelligenceBrief>
                  <BrandTypography
                    variant="body"
-                   className="font-medium text-command-300 block"
+                   block
+                   className="font-medium text-command-300"
                  >
                    {stakeholders.slice(0, 2).join(', ')}
                    {stakeholders.length > 2 && ` +${stakeholders.length - 2}`}
@@ -360,8 +363,8 @@ export const IntelligenceCard: React.FC<IntelligenceCardProps> = ({
             {statusIcons[status]}
           </div>
           <div className="flex-1 space-y-3">
-            <OperationalTitle as="h3">{title}</OperationalTitle>
-            <FieldReport>{briefing}</FieldReport>
+            <OperationalTitle as="h3" block>{title}</OperationalTitle>
+            <FieldReport block>{briefing}</FieldReport>
           </div>
         </div>
 
@@ -428,8 +431,8 @@ export const GlassCard: React.FC<GlassCardProps> = ({
         )}
       />
       <div className="relative z-10 space-y-4">
-        <OperationalTitle as="h3">{title}</OperationalTitle>
-        <StrategicBody className="text-strategic-200">
+        <OperationalTitle as="h3" block>{title}</OperationalTitle>
+        <StrategicBody block className="text-strategic-200">
           {children || content}
         </StrategicBody>
       </div>
@@ -484,7 +487,7 @@ export const MissionCard: React.FC<MissionCardProps> = ({
           <div className="flex items-start justify-between">
             <div className="space-y-1">
               <IntelligenceBrief>Mission {missionId}</IntelligenceBrief>
-              <OperationalTitle as="h3">{title}</OperationalTitle>
+              <OperationalTitle as="h3" block>{title}</OperationalTitle>
             </div>
             <div className="space-y-1 text-right">
               <BrandTypography
@@ -498,7 +501,7 @@ export const MissionCard: React.FC<MissionCardProps> = ({
               </BrandTypography>
             </div>
           </div>
-          <FieldReport>{description}</FieldReport>
+          <FieldReport block>{description}</FieldReport>
         </div>
 
         {progress !== undefined && (
@@ -600,7 +603,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({
           </div>
         </div>
 
-        <StrategicBody className="text-strategic-300">
+        <StrategicBody block className="text-strategic-300">
           {description}
         </StrategicBody>
 
@@ -662,7 +665,7 @@ export const FeaturedHeroCard: React.FC<FeaturedHeroCardProps> = ({
               {tagline}
             </TacticalHeading>
           )}
-          <StrategicBody className="text-strategic-300">
+          <StrategicBody block className="text-strategic-300">
             {description}
           </StrategicBody>
         </div>
@@ -672,7 +675,7 @@ export const FeaturedHeroCard: React.FC<FeaturedHeroCardProps> = ({
             {features.map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="h-2 w-2 flex-shrink-0 rounded-full bg-command-500" />
-                <FieldReport className="text-strategic-300">
+                <FieldReport block className="text-strategic-300">
                   {feature}
                 </FieldReport>
               </div>
@@ -690,7 +693,7 @@ export const FeaturedHeroCard: React.FC<FeaturedHeroCardProps> = ({
                 >
                   {metric.value}
                 </BrandTypography>
-                <IntelligenceBrief>{metric.label}</IntelligenceBrief>
+                <IntelligenceBrief block>{metric.label}</IntelligenceBrief>
               </div>
             ))}
           </div>
@@ -752,8 +755,8 @@ export const AlertCard: React.FC<AlertCardProps> = ({
             {severityIcons[severity]}
           </div>
           <div className="flex-1 space-y-3">
-            <OperationalTitle as="h3">{title}</OperationalTitle>
-            <FieldReport>{message}</FieldReport>
+            <OperationalTitle as="h3" block>{title}</OperationalTitle>
+            <FieldReport block>{message}</FieldReport>
           </div>
         </div>
 
@@ -809,7 +812,7 @@ export const StatsCard: React.FC<StatsCardProps> = ({
     <BrandCard variant="stats" className={className} {...props}>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <OperationalTitle as="h3">{title}</OperationalTitle>
+          <OperationalTitle as="h3" block>{title}</OperationalTitle>
           {period && <IntelligenceBrief>{period}</IntelligenceBrief>}
         </div>
 
@@ -822,7 +825,7 @@ export const StatsCard: React.FC<StatsCardProps> = ({
               >
                 {metric.value}
               </BrandTypography>
-              <IntelligenceBrief>{metric.label}</IntelligenceBrief>
+              <IntelligenceBrief block>{metric.label}</IntelligenceBrief>
               {metric.change && (
                 <BrandTypography
                   variant="label"
