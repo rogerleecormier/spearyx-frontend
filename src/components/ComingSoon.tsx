@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { cn } from '../lib/utils';
+import { BrandCard, FeaturedHeroCard, HeroCard } from './BrandCards';
+import {
+  BrandTypography,
+  FieldReport,
+  GradientHero,
+  IntelligenceBrief,
+  OperationalTitle,
+  StatusIndicator,
+  StrategicBody,
+} from './BrandTypography';
 import { Logo } from './logo';
-
-interface InfoCardProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-const InfoCard: React.FC<InfoCardProps> = ({ children, className }) => (
-  <div className={cn('card-brand', className)}>{children}</div>
-);
 
 interface ToolCardProps {
   icon: string;
@@ -19,17 +19,18 @@ interface ToolCardProps {
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ icon, title, description }) => (
-  <InfoCard className="group text-center transition-transform duration-300 hover:scale-105">
+  <BrandCard className="group text-center transition-transform duration-300 hover:scale-105">
     <div className="mb-4 text-4xl transition-transform duration-300 group-hover:scale-110">
       {icon}
     </div>
-    <h3 className="mb-3 text-title font-bold text-command-100 transition-colors group-hover:text-command-200">
+    <OperationalTitle
+      as="h3"
+      className="mb-3 transition-colors group-hover:text-command-200"
+    >
       {title}
-    </h3>
-    <p className="leading-relaxed text-strategic-300 text-body">
-      {description}
-    </p>
-  </InfoCard>
+    </OperationalTitle>
+    <FieldReport className="leading-relaxed">{description}</FieldReport>
+  </BrandCard>
 );
 
 export const ComingSoon: React.FC = () => {
@@ -57,142 +58,159 @@ export const ComingSoon: React.FC = () => {
             </div>
 
             <div className="space-y-8">
-              <h1 className="text-gradient-brand text-hero font-black">
-                SPEARYX SUITE
-              </h1>
-              <p className="mx-auto max-w-5xl text-display font-light leading-tight text-strategic-200">
-                Precision-engineered microtools for project leaders who demand
+              <GradientHero className="text-hero">SPEARYX SUITE</GradientHero>
+              <StrategicBody
+                block
+                className="mx-auto max-w-5xl text-lg leading-tight"
+              >
+                Advanced project management tools engineered for precision and
+                efficiency.
                 <span className="font-medium text-command-300">
                   {' '}
-                  tactical clarity
+                  Streamline operations, optimize workflows, deliver results.
                 </span>
-              </p>
+              </StrategicBody>
             </div>
           </div>
 
           {/* Mission Statement Card */}
           <div className="mx-auto max-w-5xl">
-            <InfoCard className="relative overflow-hidden text-center">
-              <div className="via-brand-spear-500 absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-command-600 to-command-600" />
-              <h2 className="mb-6 text-headline font-bold text-command-100">
-                TARGET ACQUIRED: PROJECT CLARITY
-              </h2>
-              <p className="mx-auto max-w-3xl text-body-lg leading-relaxed text-strategic-200">
-                Eliminate project management chaos with laser-focused,
-                AI-powered tools. Engineered for precision, built for speed,
-                designed for results.
-              </p>
-              <div className="text-brand-spear-400 mt-6 font-mono text-caption tracking-wider">
-                ENGAGEMENT TIME: &lt; 60 SECONDS
-              </div>
-            </InfoCard>
+            <FeaturedHeroCard
+              title="PRECISION PROJECT MANAGEMENT"
+              tagline="Clear Vision, Streamlined Execution"
+              description="Transform project management challenges into strategic advantages with intelligent, precision-engineered tools. Built for project managers who demand clarity, efficiency, and results."
+              features={[
+                'Intelligent workflow optimization',
+                'Real-time performance analytics',
+                'Strategic resource allocation',
+                'Automated progress tracking',
+              ]}
+              metrics={[
+                { label: 'Setup Time', value: '< 60s' },
+                { label: 'Efficiency Gain', value: '300%' },
+                { label: 'Error Reduction', value: '95%' },
+                { label: 'Time Saved', value: '40%' },
+              ]}
+              gradient="command"
+            />
           </div>
 
-          {/* Tactical Arsenal */}
+          {/* Core Tools */}
           <div className="space-y-12">
             <div className="text-center">
-              <h2 className="mb-4 text-display font-bold text-command-100">
-                TACTICAL ARSENAL
-              </h2>
+              <BrandTypography variant="display" as="h2" className="mb-4">
+                CORE PROJECT TOOLS
+              </BrandTypography>
+              <StrategicBody
+                block
+                className="mx-auto max-w-5xl text-lg leading-tight"
+              >
+               Essential project tools—more innovative features arriving soon.
+                
+              </StrategicBody>
               <div className="accent-line mx-auto w-24" />
             </div>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4">
               <ToolCard
                 icon="🎯"
                 title="PROJECT CHARTER"
-                description="AI-guided mission parameters with precision-defined objectives and success metrics"
+                description="AI-assisted project definition with clear objectives, scope, and success criteria for maximum clarity"
               />
               <ToolCard
-                icon="⚔️"
+                icon="👥"
                 title="RACI MATRIX"
-                description="Strategic responsibility mapping with intelligent role optimization and conflict resolution"
+                description="Intelligent responsibility mapping that eliminates confusion and optimizes team accountability"
               />
               <ToolCard
-                icon="🔍"
-                title="PRIORITY GRID"
-                description="Eisenhower-class priority targeting with AI threat assessment and focus optimization"
+                icon="📊"
+                title="PRIORITY MATRIX"
+                description="Smart priority assessment using proven frameworks to focus efforts on high-impact activities"
               />
               <ToolCard
-                icon="🛡️"
-                title="RISK REGISTER"
-                description="Comprehensive threat analysis with probability scoring and countermeasure deployment"
+                icon="⚠️"
+                title="RISK ASSESSMENT"
+                description="Comprehensive risk analysis with probability scoring and proactive mitigation strategies"
               />
             </div>
           </div>
 
-          {/* Tactical Advantages */}
+          {/* Key Advantages */}
           <div className="mx-auto max-w-6xl">
-            <InfoCard>
-              <h2 className="mb-12 text-center text-headline font-bold text-command-100">
-                TACTICAL ADVANTAGES
-              </h2>
+            <BrandCard>
+              <BrandTypography
+                variant="display"
+                as="h2"
+                className="mb-12 text-center"
+              >
+                COMPETITIVE ADVANTAGES
+              </BrandTypography>
               <div className="grid grid-cols-1 gap-12 text-center md:grid-cols-3">
                 <div className="group">
                   <div className="mb-6 text-5xl transition-transform duration-300 group-hover:scale-110">
                     ⚡
                   </div>
-                  <h3 className="mb-4 text-title font-bold text-command-200">
-                    RAPID DEPLOYMENT
-                  </h3>
-                  <p className="leading-relaxed text-strategic-300 text-body">
-                    From chaos to clarity in under 60 seconds. No lengthy setup,
-                    no complex configurations.
-                  </p>
+                  <OperationalTitle as="h3" className="mb-4">
+                    RAPID IMPLEMENTATION
+                  </OperationalTitle>
+                  <FieldReport className="leading-relaxed">
+                    From setup to execution in under 60 seconds. Streamlined
+                    onboarding with intelligent configuration recommendations.
+                  </FieldReport>
                 </div>
                 <div className="group">
                   <div className="mb-6 text-5xl transition-transform duration-300 group-hover:scale-110">
                     🧠
                   </div>
-                  <h3 className="mb-4 text-title font-bold text-command-200">
-                    AI INTELLIGENCE
-                  </h3>
-                  <p className="leading-relaxed text-strategic-300 text-body">
-                    Advanced pattern recognition and predictive insights for
-                    superior decision-making.
-                  </p>
+                  <OperationalTitle as="h3" className="mb-4">
+                    INTELLIGENT AUTOMATION
+                  </OperationalTitle>
+                  <FieldReport className="leading-relaxed">
+                    Advanced analytics and pattern recognition provide
+                    actionable insights for superior project outcomes.
+                  </FieldReport>
                 </div>
                 <div className="group">
                   <div className="mb-6 text-5xl transition-transform duration-300 group-hover:scale-110">
                     🎯
                   </div>
-                  <h3 className="mb-4 text-title font-bold text-command-200">
-                    PRECISION FOCUS
-                  </h3>
-                  <p className="leading-relaxed text-strategic-300 text-body">
-                    Zero bloat, maximum impact. Every feature engineered for
-                    tactical effectiveness.
-                  </p>
+                  <OperationalTitle as="h3" className="mb-4">
+                    FOCUSED EFFICIENCY
+                  </OperationalTitle>
+                  <FieldReport className="leading-relaxed">
+                    Purpose-built tools with zero bloat. Every feature designed
+                    for maximum project management effectiveness.
+                  </FieldReport>
                 </div>
               </div>
-            </InfoCard>
+            </BrandCard>
           </div>
 
-          {/* Mission Briefing CTA */}
+          {/* Launch Information */}
           <div className="mx-auto max-w-5xl">
-            <InfoCard className="relative text-center">
-              <div className="bg-gradient-brand absolute inset-0 rounded-2xl opacity-20" />
-              <div className="relative">
-                <h2 className="mb-6 text-display font-bold text-command-100">
-                  MISSION BRIEFING: COMING SOON
-                </h2>
-
-                <div className="space-y-6">
-                  <p className="mx-auto max-w-3xl text-body-lg text-strategic-200">
-                    We're finalizing operations. Detailed information and early
-                    access sign‑up will be available soon.
-                  </p>
-
-                  <div className="space-y-3">
-                    <p className="text-title font-bold text-command-300">
-                      🚀 DEPLOYMENT: Q4 2025
-                    </p>
-                    <p className="font-mono text-label tracking-wide text-strategic-400">
-                      CLASSIFIED ACCESS // FIRST 100 OPERATIVES ONLY
-                    </p>
-                  </div>
+            <HeroCard
+              title="LAUNCH PREPARATION IN PROGRESS"
+              subtitle="Project Management Excellence Coming Soon"
+              description="We're fine-tuning our precision-engineered tools to ensure maximum effectiveness for project managers. Early access registration and detailed feature information will be available soon."
+              icon="🚀"
+              badge="BETA ACCESS"
+              actions={
+                <div className="space-y-4">
+                  <StatusIndicator
+                    block
+                    className="rounded-full bg-command-500/20 px-4 py-2 text-command-300"
+                  >
+                    LAUNCH TARGET: Q4 2025
+                  </StatusIndicator>
+                  <IntelligenceBrief
+                    block
+                    className="font-mono tracking-wide text-strategic-400"
+                  >
+                    PRIORITY ACCESS • LIMITED TO FIRST 100 PROJECT MANAGERS
+                  </IntelligenceBrief>
                 </div>
-              </div>
-            </InfoCard>
+              }
+              gradient="command"
+            />
           </div>
         </div>
       </div>

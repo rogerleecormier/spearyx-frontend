@@ -4,7 +4,6 @@ import { cn } from '@/lib/utils';
 
 import {
   BrandTypography,
-  CommandDirective,
   FieldReport,
   IntelligenceBrief,
   OperationalTitle,
@@ -106,7 +105,9 @@ export const CommandCard: React.FC<CommandCardProps> = ({
       <div className="space-y-6">
         <div className="flex items-start justify-between">
           <div className="space-y-3">
-            <OperationalTitle as="h3" block>{title}</OperationalTitle>
+            <OperationalTitle as="h3" block>
+              {title}
+            </OperationalTitle>
             <FieldReport block>{description}</FieldReport>
           </div>
           <StatusIndicator className={statusColors[status]}>
@@ -121,13 +122,11 @@ export const CommandCard: React.FC<CommandCardProps> = ({
                 <BrandTypography
                   variant="briefing-title"
                   block
-                  className="text-command-300 leading-none"
+                  className="leading-none text-command-300"
                 >
                   {metric.value}
                 </BrandTypography>
-                <IntelligenceBrief block>
-                  {metric.label}
-                </IntelligenceBrief>
+                <IntelligenceBrief block>{metric.label}</IntelligenceBrief>
               </div>
             ))}
           </div>
@@ -175,7 +174,9 @@ export const TacticalCard: React.FC<TacticalCardProps> = ({
       <div className="space-y-6">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <OperationalTitle as="h3" block>{title}</OperationalTitle>
+            <OperationalTitle as="h3" block>
+              {title}
+            </OperationalTitle>
             <div
               className={cn(
                 'rounded-full px-3 py-1 text-xs font-bold uppercase',
@@ -258,7 +259,9 @@ export const StrategicCard: React.FC<StrategicCardProps> = ({
       <div className="space-y-6">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <OperationalTitle as="h3" block>{title}</OperationalTitle>
+            <OperationalTitle as="h3" block>
+              {title}
+            </OperationalTitle>
             <div
               className={cn(
                 'rounded-full px-3 py-1 text-xs font-bold uppercase',
@@ -271,35 +274,35 @@ export const StrategicCard: React.FC<StrategicCardProps> = ({
           <FieldReport block>{overview}</FieldReport>
         </div>
 
-         {(deadline || stakeholders) && (
-           <div className="grid grid-cols-2 gap-6 border-t border-strategic-700/30 pt-4">
-             {deadline && (
-               <div className="space-y-2">
-                 <IntelligenceBrief block>Deadline</IntelligenceBrief>
-                 <BrandTypography
-                   variant="body"
-                   block
-                   className="font-medium text-command-300"
-                 >
-                   {deadline}
-                 </BrandTypography>
-               </div>
-             )}
-             {stakeholders && (
-               <div className="space-y-2">
-                 <IntelligenceBrief block>Stakeholders</IntelligenceBrief>
-                 <BrandTypography
-                   variant="body"
-                   block
-                   className="font-medium text-command-300"
-                 >
-                   {stakeholders.slice(0, 2).join(', ')}
-                   {stakeholders.length > 2 && ` +${stakeholders.length - 2}`}
-                 </BrandTypography>
-               </div>
-             )}
-           </div>
-         )}
+        {(deadline || stakeholders) && (
+          <div className="grid grid-cols-2 gap-6 border-t border-strategic-700/30 pt-4">
+            {deadline && (
+              <div className="space-y-2">
+                <IntelligenceBrief block>Deadline</IntelligenceBrief>
+                <BrandTypography
+                  variant="body"
+                  block
+                  className="font-medium text-command-300"
+                >
+                  {deadline}
+                </BrandTypography>
+              </div>
+            )}
+            {stakeholders && (
+              <div className="space-y-2">
+                <IntelligenceBrief block>Stakeholders</IntelligenceBrief>
+                <BrandTypography
+                  variant="body"
+                  block
+                  className="font-medium text-command-300"
+                >
+                  {stakeholders.slice(0, 2).join(', ')}
+                  {stakeholders.length > 2 && ` +${stakeholders.length - 2}`}
+                </BrandTypography>
+              </div>
+            )}
+          </div>
+        )}
 
         {actions && (
           <div className="flex gap-3 border-t border-strategic-700/30 pt-4">
@@ -363,7 +366,9 @@ export const IntelligenceCard: React.FC<IntelligenceCardProps> = ({
             {statusIcons[status]}
           </div>
           <div className="flex-1 space-y-3">
-            <OperationalTitle as="h3" block>{title}</OperationalTitle>
+            <OperationalTitle as="h3" block>
+              {title}
+            </OperationalTitle>
             <FieldReport block>{briefing}</FieldReport>
           </div>
         </div>
@@ -431,7 +436,9 @@ export const GlassCard: React.FC<GlassCardProps> = ({
         )}
       />
       <div className="relative z-10 space-y-4">
-        <OperationalTitle as="h3" block>{title}</OperationalTitle>
+        <OperationalTitle as="h3" block>
+          {title}
+        </OperationalTitle>
         <StrategicBody block className="text-strategic-200">
           {children || content}
         </StrategicBody>
@@ -487,7 +494,9 @@ export const MissionCard: React.FC<MissionCardProps> = ({
           <div className="flex items-start justify-between">
             <div className="space-y-1">
               <IntelligenceBrief>Mission {missionId}</IntelligenceBrief>
-              <OperationalTitle as="h3" block>{title}</OperationalTitle>
+              <OperationalTitle as="h3" block>
+                {title}
+              </OperationalTitle>
             </div>
             <div className="space-y-1 text-right">
               <BrandTypography
@@ -587,7 +596,9 @@ export const HeroCard: React.FC<HeroCardProps> = ({
             {icon && <div className="flex-shrink-0 text-4xl">{icon}</div>}
             <div className="flex-1 space-y-3">
               <div className="flex items-center justify-between">
-                <CommandDirective as="h3">{title}</CommandDirective>
+                <BrandTypography variant="headline" as="h3">
+                  {title}
+                </BrandTypography>
                 {badge && (
                   <StatusIndicator className="rounded-full bg-command-500/20 px-3 py-1 text-command-300">
                     {badge}
@@ -755,7 +766,9 @@ export const AlertCard: React.FC<AlertCardProps> = ({
             {severityIcons[severity]}
           </div>
           <div className="flex-1 space-y-3">
-            <OperationalTitle as="h3" block>{title}</OperationalTitle>
+            <OperationalTitle as="h3" block>
+              {title}
+            </OperationalTitle>
             <FieldReport block>{message}</FieldReport>
           </div>
         </div>
@@ -812,7 +825,9 @@ export const StatsCard: React.FC<StatsCardProps> = ({
     <BrandCard variant="stats" className={className} {...props}>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <OperationalTitle as="h3" block>{title}</OperationalTitle>
+          <OperationalTitle as="h3" block>
+            {title}
+          </OperationalTitle>
           {period && <IntelligenceBrief>{period}</IntelligenceBrief>}
         </div>
 

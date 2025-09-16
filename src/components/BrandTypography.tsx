@@ -68,7 +68,7 @@ const BrandTypography = React.forwardRef<HTMLElement, TypographyProps>(
   ) => {
     // Base classes for all typography
     const baseClasses = 'font-inter';
-    
+
     // Add block display when requested
     const displayClass = block ? 'block' : '';
 
@@ -159,7 +159,12 @@ export const MissionBriefing: React.FC<MissionBriefingProps> = ({
   block,
   ...props
 }) => (
-  <BrandTypography variant="mission-briefing" className={className} block={block} {...props}>
+  <BrandTypography
+    variant="mission-briefing"
+    className={className}
+    block={block}
+    {...props}
+  >
     {children}
   </BrandTypography>
 );
@@ -176,7 +181,12 @@ export const CommandDirective: React.FC<CommandDirectiveProps> = ({
   block,
   ...props
 }) => (
-  <BrandTypography variant="command-directive" className={className} block={block} {...props}>
+  <BrandTypography
+    variant="command-directive"
+    className={className}
+    block={block}
+    {...props}
+  >
     {children}
   </BrandTypography>
 );
@@ -193,7 +203,12 @@ export const TacticalHeading: React.FC<TacticalHeadingProps> = ({
   block,
   ...props
 }) => (
-  <BrandTypography variant="tactical-heading" className={className} block={block} {...props}>
+  <BrandTypography
+    variant="tactical-heading"
+    className={className}
+    block={block}
+    {...props}
+  >
     {children}
   </BrandTypography>
 );
@@ -225,7 +240,12 @@ export const StrategicBody: React.FC<StrategicBodyProps> = ({
   block,
   ...props
 }) => (
-  <BrandTypography variant="strategic-body" className={className} block={block} {...props}>
+  <BrandTypography
+    variant="strategic-body"
+    className={className}
+    block={block}
+    {...props}
+  >
     {children}
   </BrandTypography>
 );
@@ -276,7 +296,12 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   block,
   ...props
 }) => (
-  <BrandTypography variant="status-indicator" className={className} block={block} {...props}>
+  <BrandTypography
+    variant="status-indicator"
+    className={className}
+    block={block}
+    {...props}
+  >
     {children}
   </BrandTypography>
 );
@@ -574,5 +599,4 @@ export const TypographyShowcase: React.FC<TypographyShowcaseProps> = ({
 export { BrandTypography };
 
 // Export types
-    export type { TypographyProps, TypographyVariant };
-
+export type { TypographyProps, TypographyVariant };
