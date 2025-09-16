@@ -265,6 +265,7 @@ public
 
 # TanStack Router generated files (keep in repo for deployment)
 # src/routeTree.gen.ts
+.tanstack/tmp/*
 
 # Local development
 *.local

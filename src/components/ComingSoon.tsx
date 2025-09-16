@@ -23,10 +23,10 @@ const ToolCard: React.FC<ToolCardProps> = ({ icon, title, description }) => (
     <div className="mb-4 text-4xl transition-transform duration-300 group-hover:scale-110">
       {icon}
     </div>
-    <h3 className="text-title mb-3 font-bold text-command-100 transition-colors group-hover:text-command-200">
+    <h3 className="mb-3 text-title font-bold text-command-100 transition-colors group-hover:text-command-200">
       {title}
     </h3>
-    <p className="text-body leading-relaxed text-strategic-300">
+    <p className="leading-relaxed text-strategic-300 text-body">
       {description}
     </p>
   </InfoCard>
@@ -60,7 +60,7 @@ export const ComingSoon: React.FC = () => {
               <h1 className="text-gradient-brand text-hero font-black">
                 SPEARYX SUITE
               </h1>
-              <p className="text-display mx-auto max-w-5xl font-light leading-tight text-strategic-200">
+              <p className="mx-auto max-w-5xl text-display font-light leading-tight text-strategic-200">
                 Precision-engineered microtools for project leaders who demand
                 <span className="font-medium text-command-300">
                   {' '}
@@ -74,15 +74,15 @@ export const ComingSoon: React.FC = () => {
           <div className="mx-auto max-w-5xl">
             <InfoCard className="relative overflow-hidden text-center">
               <div className="via-brand-spear-500 absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-command-600 to-command-600" />
-              <h2 className="text-headline mb-6 font-bold text-command-100">
+              <h2 className="mb-6 text-headline font-bold text-command-100">
                 TARGET ACQUIRED: PROJECT CLARITY
               </h2>
-              <p className="text-body-lg mx-auto max-w-3xl leading-relaxed text-strategic-200">
+              <p className="mx-auto max-w-3xl text-body-lg leading-relaxed text-strategic-200">
                 Eliminate project management chaos with laser-focused,
                 AI-powered tools. Engineered for precision, built for speed,
                 designed for results.
               </p>
-              <div className="text-caption text-brand-spear-400 mt-6 font-mono tracking-wider">
+              <div className="text-brand-spear-400 mt-6 font-mono text-caption tracking-wider">
                 ENGAGEMENT TIME: &lt; 60 SECONDS
               </div>
             </InfoCard>
@@ -91,7 +91,7 @@ export const ComingSoon: React.FC = () => {
           {/* Tactical Arsenal */}
           <div className="space-y-12">
             <div className="text-center">
-              <h2 className="text-display mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-display font-bold text-command-100">
                 TACTICAL ARSENAL
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -123,7 +123,7 @@ export const ComingSoon: React.FC = () => {
           {/* Tactical Advantages */}
           <div className="mx-auto max-w-6xl">
             <InfoCard>
-              <h2 className="text-headline mb-12 text-center font-bold text-command-100">
+              <h2 className="mb-12 text-center text-headline font-bold text-command-100">
                 TACTICAL ADVANTAGES
               </h2>
               <div className="grid grid-cols-1 gap-12 text-center md:grid-cols-3">
@@ -131,10 +131,10 @@ export const ComingSoon: React.FC = () => {
                   <div className="mb-6 text-5xl transition-transform duration-300 group-hover:scale-110">
                     ⚡
                   </div>
-                  <h3 className="text-title mb-4 font-bold text-command-200">
+                  <h3 className="mb-4 text-title font-bold text-command-200">
                     RAPID DEPLOYMENT
                   </h3>
-                  <p className="text-body leading-relaxed text-strategic-300">
+                  <p className="leading-relaxed text-strategic-300 text-body">
                     From chaos to clarity in under 60 seconds. No lengthy setup,
                     no complex configurations.
                   </p>
@@ -143,10 +143,10 @@ export const ComingSoon: React.FC = () => {
                   <div className="mb-6 text-5xl transition-transform duration-300 group-hover:scale-110">
                     🧠
                   </div>
-                  <h3 className="text-title mb-4 font-bold text-command-200">
+                  <h3 className="mb-4 text-title font-bold text-command-200">
                     AI INTELLIGENCE
                   </h3>
-                  <p className="text-body leading-relaxed text-strategic-300">
+                  <p className="leading-relaxed text-strategic-300 text-body">
                     Advanced pattern recognition and predictive insights for
                     superior decision-making.
                   </p>
@@ -155,10 +155,10 @@ export const ComingSoon: React.FC = () => {
                   <div className="mb-6 text-5xl transition-transform duration-300 group-hover:scale-110">
                     🎯
                   </div>
-                  <h3 className="text-title mb-4 font-bold text-command-200">
+                  <h3 className="mb-4 text-title font-bold text-command-200">
                     PRECISION FOCUS
                   </h3>
-                  <p className="text-body leading-relaxed text-strategic-300">
+                  <p className="leading-relaxed text-strategic-300 text-body">
                     Zero bloat, maximum impact. Every feature engineered for
                     tactical effectiveness.
                   </p>
@@ -172,12 +172,12 @@ export const ComingSoon: React.FC = () => {
             <InfoCard className="relative text-center">
               <div className="bg-gradient-brand absolute inset-0 rounded-2xl opacity-20" />
               <div className="relative">
-                <h2 className="text-display mb-6 font-bold text-command-100">
+                <h2 className="mb-6 text-display font-bold text-command-100">
                   MISSION BRIEFING: COMING SOON
                 </h2>
 
                 <div className="space-y-6">
-                  <p className="text-body-lg mx-auto max-w-3xl text-strategic-200">
+                  <p className="mx-auto max-w-3xl text-body-lg text-strategic-200">
                     We're finalizing operations. Detailed information and early
                     access sign‑up will be available soon.
                   </p>
@@ -186,7 +186,7 @@ export const ComingSoon: React.FC = () => {
                     <p className="text-title font-bold text-command-300">
                       🚀 DEPLOYMENT: Q4 2025
                     </p>
-                    <p className="text-label font-mono tracking-wide text-strategic-400">
+                    <p className="font-mono text-label tracking-wide text-strategic-400">
                       CLASSIFIED ACCESS // FIRST 100 OPERATIVES ONLY
                     </p>
                   </div>

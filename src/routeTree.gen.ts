@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root';
 import { Route as DataRouteImport } from './routes/data';
 import { Route as BrandTypographyLibraryRouteImport } from './routes/brand-typography-library';
 import { Route as BrandStyleGuideRouteImport } from './routes/brand-style-guide';
+import { Route as BrandLanguageGuideRouteImport } from './routes/brand-language-guide';
 import { Route as BrandCardsLibraryRouteImport } from './routes/brand-cards-library';
 import { Route as IndexRouteImport } from './routes/index';
 
@@ -30,6 +31,11 @@ const BrandStyleGuideRoute = BrandStyleGuideRouteImport.update({
   path: '/brand-style-guide',
   getParentRoute: () => rootRouteImport,
 } as any);
+const BrandLanguageGuideRoute = BrandLanguageGuideRouteImport.update({
+  id: '/brand-language-guide',
+  path: '/brand-language-guide',
+  getParentRoute: () => rootRouteImport,
+} as any);
 const BrandCardsLibraryRoute = BrandCardsLibraryRouteImport.update({
   id: '/brand-cards-library',
   path: '/brand-cards-library',
@@ -44,6 +50,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/brand-cards-library': typeof BrandCardsLibraryRoute;
+  '/brand-language-guide': typeof BrandLanguageGuideRoute;
   '/brand-style-guide': typeof BrandStyleGuideRoute;
   '/brand-typography-library': typeof BrandTypographyLibraryRoute;
   '/data': typeof DataRoute;
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/brand-cards-library': typeof BrandCardsLibraryRoute;
+  '/brand-language-guide': typeof BrandLanguageGuideRoute;
   '/brand-style-guide': typeof BrandStyleGuideRoute;
   '/brand-typography-library': typeof BrandTypographyLibraryRoute;
   '/data': typeof DataRoute;
@@ -59,6 +67,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
   '/brand-cards-library': typeof BrandCardsLibraryRoute;
+  '/brand-language-guide': typeof BrandLanguageGuideRoute;
   '/brand-style-guide': typeof BrandStyleGuideRoute;
   '/brand-typography-library': typeof BrandTypographyLibraryRoute;
   '/data': typeof DataRoute;
@@ -68,6 +77,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/brand-cards-library'
+    | '/brand-language-guide'
     | '/brand-style-guide'
     | '/brand-typography-library'
     | '/data';
@@ -75,6 +85,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/brand-cards-library'
+    | '/brand-language-guide'
     | '/brand-style-guide'
     | '/brand-typography-library'
     | '/data';
@@ -82,6 +93,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/brand-cards-library'
+    | '/brand-language-guide'
     | '/brand-style-guide'
     | '/brand-typography-library'
     | '/data';
@@ -90,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   BrandCardsLibraryRoute: typeof BrandCardsLibraryRoute;
+  BrandLanguageGuideRoute: typeof BrandLanguageGuideRoute;
   BrandStyleGuideRoute: typeof BrandStyleGuideRoute;
   BrandTypographyLibraryRoute: typeof BrandTypographyLibraryRoute;
   DataRoute: typeof DataRoute;
@@ -118,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandStyleGuideRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/brand-language-guide': {
+      id: '/brand-language-guide';
+      path: '/brand-language-guide';
+      fullPath: '/brand-language-guide';
+      preLoaderRoute: typeof BrandLanguageGuideRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/brand-cards-library': {
       id: '/brand-cards-library';
       path: '/brand-cards-library';
@@ -138,6 +158,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrandCardsLibraryRoute: BrandCardsLibraryRoute,
+  BrandLanguageGuideRoute: BrandLanguageGuideRoute,
   BrandStyleGuideRoute: BrandStyleGuideRoute,
   BrandTypographyLibraryRoute: BrandTypographyLibraryRoute,
   DataRoute: DataRoute,

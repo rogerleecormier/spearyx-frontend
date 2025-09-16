@@ -132,7 +132,7 @@ export const BrandStyleLibrary: React.FC = () => {
             <h1 className="text-gradient-brand text-hero font-black">
               SPEARYX BRAND STYLE LIBRARY
             </h1>
-            <p className="text-body-lg mx-auto max-w-4xl text-strategic-200">
+            <p className="mx-auto max-w-4xl text-body-lg text-strategic-200">
               Comprehensive design system for precision-engineered microtools.
               Tactical clarity through consistent visual language.
             </p>
@@ -141,7 +141,7 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Primary Brand Colors */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-headline font-bold text-command-100">
                 PRIMARY BRAND COLORS
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -150,7 +150,7 @@ export const BrandStyleLibrary: React.FC = () => {
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {/* Target Colors */}
               <div className="space-y-4">
-                <h3 className="text-title mb-4 font-semibold text-command-200">
+                <h3 className="mb-4 text-title font-semibold text-command-200">
                   TARGET BLUE
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -179,7 +179,7 @@ export const BrandStyleLibrary: React.FC = () => {
 
               {/* Spear Colors */}
               <div className="space-y-4">
-                <h3 className="text-title text-brand-spear-200 mb-4">
+                <h3 className="text-brand-spear-200 mb-4 text-title">
                   SPEAR ORANGE
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -208,7 +208,7 @@ export const BrandStyleLibrary: React.FC = () => {
 
               {/* Precision Grays */}
               <div className="space-y-4">
-                <h3 className="text-title mb-4 text-strategic-200">
+                <h3 className="mb-4 text-title text-strategic-200">
                   PRECISION GRAYS
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -240,7 +240,7 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Typography Scale */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-headline font-bold text-command-100">
                 TYPOGRAPHY SCALE
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -279,7 +279,7 @@ export const BrandStyleLibrary: React.FC = () => {
               />
               <TypographyExample
                 variant="text-body (Body Regular)"
-                className="!text-body text-strategic-300"
+                className="text-strategic-300 !text-body"
                 example="Advanced pattern recognition and predictive insights"
                 description="Standard body text and descriptions"
               />
@@ -301,7 +301,7 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Design Tokens */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-headline font-bold text-command-100">
                 DESIGN TOKENS
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -414,7 +414,7 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Card Components */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-headline font-bold text-command-100">
                 CARD COMPONENTS
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -433,7 +433,7 @@ export const BrandStyleLibrary: React.FC = () => {
                     </h4>
                     <span className="badge-brand-primary">ACTIVE</span>
                   </div>
-                  <p className="text-body mb-4 text-strategic-600">
+                  <p className="mb-4 text-strategic-600 text-body">
                     Precision-engineered microtools for advanced pattern
                     recognition and deployment.
                   </p>
@@ -467,7 +467,7 @@ export const BrandStyleLibrary: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  <p className="text-body mb-4 text-strategic-600">
+                  <p className="mb-4 text-strategic-600 text-body">
                     Advanced targeting system with real-time analytics and
                     predictive insights.
                   </p>
@@ -488,10 +488,10 @@ export const BrandStyleLibrary: React.FC = () => {
                   GLASS CARD
                 </h3>
                 <div className="card-brand-glass p-6">
-                  <h4 className="text-gradient-brand text-headline mb-3">
+                  <h4 className="text-gradient-brand mb-3 text-headline">
                     RAPID DEPLOY
                   </h4>
-                  <p className="text-body mb-4 text-strategic-300">
+                  <p className="mb-4 text-strategic-300 text-body">
                     Instant deployment with zero-downtime updates and automatic
                     scaling.
                   </p>
@@ -521,10 +521,10 @@ export const BrandStyleLibrary: React.FC = () => {
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-command-500/10">
                     <div className="h-6 w-6 rounded bg-command-500"></div>
                   </div>
-                  <h4 className="text-title mb-2 text-strategic-900">
+                  <h4 className="mb-2 text-title text-strategic-900">
                     Pattern Recognition
                   </h4>
-                  <p className="text-body mb-4 text-strategic-600">
+                  <p className="mb-4 text-strategic-600 text-body">
                     Advanced ML algorithms for intelligent data processing and
                     analysis.
                   </p>
@@ -588,10 +588,10 @@ export const BrandStyleLibrary: React.FC = () => {
                       <div className="bg-brand-spear-500 h-2 w-2 rounded-full"></div>
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-title mb-1 text-strategic-900">
+                      <h4 className="mb-1 text-title text-strategic-900">
                         System Alert
                       </h4>
-                      <p className="text-body mb-3 text-strategic-600">
+                      <p className="mb-3 text-strategic-600 text-body">
                         High CPU usage detected on server cluster. Consider
                         scaling resources.
                       </p>
@@ -613,7 +613,7 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Button Components */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-headline font-bold text-command-100">
                 BUTTON COMPONENTS
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -683,7 +683,7 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Form Components */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-headline font-bold text-command-100">
                 FORM COMPONENTS
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -691,12 +691,12 @@ export const BrandStyleLibrary: React.FC = () => {
 
             <div className="mx-auto max-w-2xl">
               <div className="card-brand p-8">
-                <h3 className="text-title mb-6 text-strategic-900">
+                <h3 className="mb-6 text-title text-strategic-900">
                   Configuration Form
                 </h3>
                 <div className="space-y-6">
                   <div>
-                    <label className="text-label mb-2 block text-strategic-700">
+                    <label className="mb-2 block text-label text-strategic-700">
                       Project Name
                     </label>
                     <input
@@ -706,7 +706,7 @@ export const BrandStyleLibrary: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="text-label mb-2 block text-strategic-700">
+                    <label className="mb-2 block text-label text-strategic-700">
                       Environment
                     </label>
                     <select className="input-brand">
@@ -716,7 +716,7 @@ export const BrandStyleLibrary: React.FC = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="text-label mb-2 block text-strategic-700">
+                    <label className="mb-2 block text-label text-strategic-700">
                       Error State Example
                     </label>
                     <input
@@ -724,7 +724,7 @@ export const BrandStyleLibrary: React.FC = () => {
                       placeholder="This field has an error..."
                       defaultValue="Invalid input"
                     />
-                    <p className="text-caption mt-1 text-red-500">
+                    <p className="mt-1 text-caption text-red-500">
                       This field is required
                     </p>
                   </div>
@@ -742,7 +742,7 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Badge Components */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-headline font-bold text-command-100">
                 BADGE COMPONENTS
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -785,7 +785,7 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Effect Examples */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-headline font-bold text-command-100">
                 VISUAL EFFECTS
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -843,7 +843,7 @@ export const BrandStyleLibrary: React.FC = () => {
           {/* Usage Guidelines */}
           <section className="space-y-8">
             <div className="text-center">
-              <h2 className="text-headline mb-4 font-bold text-command-100">
+              <h2 className="mb-4 text-headline font-bold text-command-100">
                 USAGE GUIDELINES
               </h2>
               <div className="accent-line mx-auto w-24" />
@@ -851,7 +851,7 @@ export const BrandStyleLibrary: React.FC = () => {
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               <div className="rounded-2xl border border-strategic-800/30 bg-strategic-950/50 p-8">
-                <h3 className="text-title mb-4 font-semibold text-command-200">
+                <h3 className="mb-4 text-title font-semibold text-command-200">
                   COLOR USAGE
                 </h3>
                 <ul className="space-y-2 text-strategic-300">
@@ -863,7 +863,7 @@ export const BrandStyleLibrary: React.FC = () => {
               </div>
 
               <div className="rounded-2xl border border-strategic-800/30 bg-strategic-950/50 p-8">
-                <h3 className="text-title mb-4 font-semibold text-command-200">
+                <h3 className="mb-4 text-title font-semibold text-command-200">
                   TYPOGRAPHY RULES
                 </h3>
                 <ul className="space-y-2 text-strategic-300">
@@ -875,7 +875,7 @@ export const BrandStyleLibrary: React.FC = () => {
               </div>
 
               <div className="rounded-2xl border border-strategic-800/30 bg-strategic-950/50 p-8">
-                <h3 className="text-title mb-4 font-semibold text-command-200">
+                <h3 className="mb-4 text-title font-semibold text-command-200">
                   SPACING SYSTEM
                 </h3>
                 <ul className="space-y-2 text-strategic-300">
@@ -887,7 +887,7 @@ export const BrandStyleLibrary: React.FC = () => {
               </div>
 
               <div className="rounded-2xl border border-strategic-800/30 bg-strategic-950/50 p-8">
-                <h3 className="text-title mb-4 font-semibold text-command-200">
+                <h3 className="mb-4 text-title font-semibold text-command-200">
                   COMPONENT PATTERNS
                 </h3>
                 <ul className="space-y-2 text-strategic-300">
