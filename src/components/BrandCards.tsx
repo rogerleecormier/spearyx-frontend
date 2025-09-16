@@ -38,7 +38,7 @@ interface BrandCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 
-const BrandCard = React.forwardRef<HTMLDivElement, BrandCardProps>(
+export const BrandCard = React.forwardRef<HTMLDivElement, BrandCardProps>(
   ({ className, variant = 'command', status, children, ...props }, ref) => {
     // Simplified styling to match ComingSoon component
     const baseClasses = 'card-brand group';
