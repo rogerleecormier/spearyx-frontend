@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import { Layout } from '@/components/layout';
+
 import { ComingSoon } from '../components/ComingSoon';
 import { useLogger } from '../lib/useLogger';
 
@@ -14,5 +16,9 @@ function Home() {
   log.pageView('/');
   log.info('Home page loaded');
 
-  return <ComingSoon />;
+  return (
+    <Layout isDev={false}>
+      <ComingSoon />
+    </Layout>
+  );
 }

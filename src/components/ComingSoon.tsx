@@ -1,219 +1,389 @@
-import React from 'react';
-
-import { BrandCard, FeaturedHeroCard, HeroCard } from './BrandCards';
 import {
-  BrandTypography,
-  FieldReport,
-  GradientHero,
-  IntelligenceBrief,
-  OperationalTitle,
-  StatusIndicator,
-  StrategicBody,
-} from './BrandTypography';
-import { Logo } from './logo';
+  AccentText,
+  Body,
+  BodyLarge,
+  Caption,
+  ComingSoonCard,
+  Display,
+  FeatureCard,
+  Headline,
+  HeroCard,
+  InfoCard,
+  PrimaryAccent,
+  StatsCard,
+  SuccessText,
+  Title,
+  ToolCard,
+} from '@/components/brand';
+import { Button } from '@/components/ui/button';
 
-interface ToolCardProps {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-const ToolCard: React.FC<ToolCardProps> = ({ icon, title, description }) => (
-  <BrandCard className="group text-center transition-transform duration-300 hover:scale-105">
-    <div className="mb-4 text-4xl transition-transform duration-300 group-hover:scale-110">
-      {icon}
-    </div>
-    <OperationalTitle
-      as="h3"
-      className="mb-3 transition-colors group-hover:text-command-200"
-    >
-      {title}
-    </OperationalTitle>
-    <FieldReport className="leading-relaxed">{description}</FieldReport>
-  </BrandCard>
-);
-
-export const ComingSoon: React.FC = () => {
+export function ComingSoon() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-strategic-950 via-strategic-900 to-strategic-950">
-      {/* Targeting grid background */}
-      {/* Targeting grid background */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[linear-gradient(theme(colors.brand.precision.700)_1px,transparent_1px),linear-gradient(90deg,theme(colors.brand.precision.700)_1px,transparent_1px)] bg-[length:40px_40px]" />
-      </div>
-
-      {/* Precision accent lines */}
-      <div className="absolute left-1/4 top-0 h-full w-px bg-gradient-to-b from-transparent via-command-600/20 to-transparent" />
-      <div className="via-brand-spear-600/20 absolute right-1/4 top-0 h-full w-px bg-gradient-to-b from-transparent to-transparent" />
-
-      <div className="container relative mx-auto px-6 py-20">
-        <div className="mx-auto max-w-7xl space-y-20">
-          {/* Hero Section */}
-          <div className="space-y-12 text-center">
-            <div className="flex justify-center">
-              <div className="relative">
-                <Logo size={160} className="text-command-400" />
-                <div className="absolute -inset-4 animate-pulse rounded-full bg-command-600/10 blur-xl" />
-              </div>
-            </div>
-
-            <div className="space-y-8">
-              <GradientHero className="text-hero">SPEARYX SUITE</GradientHero>
-              <StrategicBody
-                block
-                className="mx-auto max-w-5xl text-lg leading-tight"
-              >
-                Advanced project management tools engineered for precision and
-                efficiency.
-                <span className="font-medium text-command-300">
-                  {' '}
-                  Streamline operations, optimize workflows, deliver results.
-                </span>
-              </StrategicBody>
-            </div>
-          </div>
-
-          {/* Mission Statement Card */}
-          <div className="mx-auto max-w-5xl">
-            <FeaturedHeroCard
-              title="PRECISION PROJECT MANAGEMENT"
-              tagline="Clear Vision, Streamlined Execution"
-              description="Transform project management challenges into strategic advantages with intelligent, precision-engineered tools. Built for project managers who demand clarity, efficiency, and results."
-              features={[
-                'Intelligent workflow optimization',
-                'Real-time performance analytics',
-                'Strategic resource allocation',
-                'Automated progress tracking',
-              ]}
-              metrics={[
-                { label: 'Setup Time', value: '< 60s' },
-                { label: 'Efficiency Gain', value: '300%' },
-                { label: 'Error Reduction', value: '95%' },
-                { label: 'Time Saved', value: '40%' },
-              ]}
-              gradient="command"
-            />
-          </div>
-
-          {/* Core Tools */}
-          <div className="space-y-12">
-            <div className="text-center">
-              <BrandTypography variant="display" as="h2" className="mb-4">
-                CORE PROJECT TOOLS
-              </BrandTypography>
-              <StrategicBody
-                block
-                className="mx-auto max-w-5xl text-lg leading-tight"
-              >
-               Essential project tools—more innovative features arriving soon.
-                
-              </StrategicBody>
-              <div className="accent-line mx-auto w-24" />
-            </div>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4">
-              <ToolCard
-                icon="🎯"
-                title="PROJECT CHARTER"
-                description="AI-assisted project definition with clear objectives, scope, and success criteria for maximum clarity"
-              />
-              <ToolCard
-                icon="👥"
-                title="RACI MATRIX"
-                description="Intelligent responsibility mapping that eliminates confusion and optimizes team accountability"
-              />
-              <ToolCard
-                icon="📊"
-                title="PRIORITY MATRIX"
-                description="Smart priority assessment using proven frameworks to focus efforts on high-impact activities"
-              />
-              <ToolCard
-                icon="⚠️"
-                title="RISK ASSESSMENT"
-                description="Comprehensive risk analysis with probability scoring and proactive mitigation strategies"
+    <div className="min-h-screen">
+      {/* Hero Section - Light gradient background */}
+      <section className="dark:to-precision-850 relative bg-gradient-to-br from-precision-50 via-white to-precision-100 dark:from-precision-900 dark:via-precision-800">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-50/30 via-transparent to-accent-50/30 dark:from-primary-900/20 dark:via-transparent dark:to-accent-900/20"></div>
+        <div className="container relative mx-auto px-4 py-24">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="mb-8 flex justify-center">
+              <img
+                src="/images/spearyx-logo.svg"
+                alt="Spearyx"
+                className="h-20 w-auto"
               />
             </div>
-          </div>
 
-          {/* Key Advantages */}
-          <div className="mx-auto max-w-6xl">
-            <BrandCard>
-              <BrandTypography
-                variant="display"
-                as="h2"
-                className="mb-12 text-center"
-              >
-                COMPETITIVE ADVANTAGES
-              </BrandTypography>
-              <div className="grid grid-cols-1 gap-12 text-center md:grid-cols-3">
-                <div className="group">
-                  <div className="mb-6 text-5xl transition-transform duration-300 group-hover:scale-110">
-                    ⚡
-                  </div>
-                  <OperationalTitle as="h3" className="mb-4">
-                    RAPID IMPLEMENTATION
-                  </OperationalTitle>
-                  <FieldReport className="leading-relaxed">
-                    From setup to execution in under 60 seconds. Streamlined
-                    onboarding with intelligent configuration recommendations.
-                  </FieldReport>
-                </div>
-                <div className="group">
-                  <div className="mb-6 text-5xl transition-transform duration-300 group-hover:scale-110">
-                    🧠
-                  </div>
-                  <OperationalTitle as="h3" className="mb-4">
-                    INTELLIGENT AUTOMATION
-                  </OperationalTitle>
-                  <FieldReport className="leading-relaxed">
-                    Advanced analytics and pattern recognition provide
-                    actionable insights for superior project outcomes.
-                  </FieldReport>
-                </div>
-                <div className="group">
-                  <div className="mb-6 text-5xl transition-transform duration-300 group-hover:scale-110">
-                    🎯
-                  </div>
-                  <OperationalTitle as="h3" className="mb-4">
-                    FOCUSED EFFICIENCY
-                  </OperationalTitle>
-                  <FieldReport className="leading-relaxed">
-                    Purpose-built tools with zero bloat. Every feature designed
-                    for maximum project management effectiveness.
-                  </FieldReport>
-                </div>
-              </div>
-            </BrandCard>
-          </div>
+            <Display className="mb-8 text-precision-700 dark:text-precision-300">
+              Precision PM Tools
+            </Display>
 
-          {/* Launch Information */}
-          <div className="mx-auto max-w-5xl">
-            <HeroCard
-              title="LAUNCH PREPARATION IN PROGRESS"
-              subtitle="Project Management Excellence Coming Soon"
-              description="We're fine-tuning our precision-engineered tools to ensure maximum effectiveness for project managers. Early access registration and detailed feature information will be available soon."
-              icon="🚀"
-              badge="BETA ACCESS"
-              actions={
-                <div className="space-y-4">
-                  <StatusIndicator
-                    block
-                    className="rounded-full bg-command-500/20 px-4 py-2 text-command-300"
-                  >
-                    LAUNCH TARGET: Q4 2025
-                  </StatusIndicator>
-                  <IntelligenceBrief
-                    block
-                    className="font-mono tracking-wide text-strategic-400"
-                  >
-                    PRIORITY ACCESS • LIMITED TO FIRST 100 PROJECT MANAGERS
-                  </IntelligenceBrief>
-                </div>
-              }
-              gradient="command"
-            />
+            <BodyLarge className="mx-auto mb-12 max-w-2xl text-precision-600 dark:text-precision-400">
+              The future of project management is here. AI-augmented tools that
+              just work, without the complexity of traditional PM suites like
+              Jira or Asana.
+            </BodyLarge>
+
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
+              <Button size="lg" className="btn-primary">
+                Join Early Access
+              </Button>
+              <Button size="lg" variant="outline" className="btn-secondary">
+                Learn More
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Features Section - Clean white background */}
+      <section className="bg-white dark:bg-precision-900">
+        <div className="container mx-auto px-4 py-20">
+          <div className="mb-16 text-center">
+            <Headline className="mb-4">What Makes Spearyx Different</Headline>
+            <Body className="mx-auto max-w-2xl text-precision-600 dark:text-precision-400">
+              Our tools are designed with precision and clarity in mind, helping
+              project managers deliver results efficiently without getting lost
+              in complexity.
+            </Body>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            <FeatureCard>
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/20">
+                  <svg
+                    className="h-6 w-6 text-primary-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </div>
+                <Title>AI-Augmented</Title>
+                <Body className="mt-2">
+                  Smart automation and intelligent suggestions to streamline
+                  your workflow.
+                </Body>
+              </div>
+            </FeatureCard>
+
+            <FeatureCard>
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-accent-100 dark:bg-accent-900/20">
+                  <svg
+                    className="h-6 w-6 text-accent-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <Title>Precision Focused</Title>
+                <Body className="mt-2">
+                  Every tool is designed for accuracy, clarity, and professional
+                  results.
+                </Body>
+              </div>
+            </FeatureCard>
+
+            <FeatureCard>
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-success-100 dark:bg-success-900/20">
+                  <svg
+                    className="h-6 w-6 text-success-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"
+                    />
+                  </svg>
+                </div>
+                <Title>Simple & Effective</Title>
+                <Body className="mt-2">
+                  No complex setups or overwhelming features. Just tools that
+                  work.
+                </Body>
+              </div>
+            </FeatureCard>
+          </div>
+        </div>
+      </section>
+
+      {/* Tools Section - Light grey background with subtle gradient */}
+      <section className="dark:from-precision-850 dark:to-precision-850 relative bg-gradient-to-br from-precision-50 via-precision-100/50 to-precision-50 dark:via-precision-800">
+        <div className="absolute inset-0 bg-gradient-to-r from-accent-50/20 via-transparent to-primary-50/20 dark:from-accent-900/10 dark:via-transparent dark:to-primary-900/10"></div>
+        <div className="container relative mx-auto px-4 py-20">
+          <div className="mb-16 text-center">
+            <Headline className="mb-4">
+              Coming Soon: Essential PM Tools
+            </Headline>
+            <Body className="mx-auto max-w-2xl text-precision-600 dark:text-precision-400">
+              A comprehensive suite of project management tools designed for
+              modern teams.
+            </Body>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <ToolCard>
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <Title>RACI Chart Generator</Title>
+                  <Body className="mt-2">
+                    Create clear responsibility matrices with AI-powered
+                    suggestions for optimal team structure.
+                  </Body>
+                  <PrimaryAccent className="mt-4 block">
+                    Available Q4 2025
+                  </PrimaryAccent>
+                </div>
+              </div>
+            </ToolCard>
+
+            <ComingSoonCard>
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <Title>Project Charter Builder</Title>
+                  <Body className="mt-2">
+                    Generate comprehensive project charters with structured
+                    templates and smart recommendations.
+                  </Body>
+                  <AccentText className="mt-4 block">In Development</AccentText>
+                </div>
+              </div>
+            </ComingSoonCard>
+
+            <ComingSoonCard>
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <Title>Risk Assessment Tool</Title>
+                  <Body className="mt-2">
+                    Identify and mitigate project risks with intelligent
+                    analysis and mitigation strategies.
+                  </Body>
+                  <AccentText className="mt-4 block">Coming Soon</AccentText>
+                </div>
+              </div>
+            </ComingSoonCard>
+
+            <ComingSoonCard>
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <Title>Resource Planning</Title>
+                  <Body className="mt-2">
+                    Advanced resource allocation and capacity planning with
+                    real-time insights.
+                  </Body>
+                  <AccentText className="mt-4 block">In Development</AccentText>
+                </div>
+              </div>
+            </ComingSoonCard>
+
+            <ComingSoonCard>
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <Title>Stakeholder Mapping</Title>
+                  <Body className="mt-2">
+                    Visualize stakeholder relationships and communication
+                    strategies for better engagement.
+                  </Body>
+                  <AccentText className="mt-4 block">Coming Soon</AccentText>
+                </div>
+              </div>
+            </ComingSoonCard>
+
+            <ComingSoonCard>
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <Title>Progress Tracking</Title>
+                  <Body className="mt-2">
+                    Real-time project progress monitoring with intelligent
+                    milestone tracking.
+                  </Body>
+                  <AccentText className="mt-4 block">In Development</AccentText>
+                </div>
+              </div>
+            </ComingSoonCard>
+          </div>
+        </div>
+      </section>
+
+      {/* Target Audience Section - Clean white background */}
+      <section className="bg-white dark:bg-precision-900">
+        <div className="container mx-auto px-4 py-20">
+          <div className="mb-16 text-center">
+            <Headline className="mb-4">Built for Modern Project Teams</Headline>
+            <Body className="mx-auto max-w-2xl text-precision-600 dark:text-precision-400">
+              Spearyx is designed for project managers, team leads, and
+              organizations seeking precision tools that deliver results without
+              complexity.
+            </Body>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            <InfoCard>
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900/20">
+                  <svg
+                    className="h-8 w-8 text-primary-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                </div>
+                <Title>Project Managers</Title>
+                <Body className="mt-2">
+                  Streamline workflows and deliver projects on time with
+                  precision tools designed for efficiency.
+                </Body>
+              </div>
+            </InfoCard>
+
+            <InfoCard>
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent-100 dark:bg-accent-900/20">
+                  <svg
+                    className="h-8 w-8 text-accent-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                    />
+                  </svg>
+                </div>
+                <Title>Team Leads</Title>
+                <Body className="mt-2">
+                  Improve collaboration and team coordination with tools that
+                  enhance communication and clarity.
+                </Body>
+              </div>
+            </InfoCard>
+
+            <InfoCard>
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-success-100 dark:bg-success-900/20">
+                  <svg
+                    className="h-8 w-8 text-success-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
+                  </svg>
+                </div>
+                <Title>Organizations</Title>
+                <Body className="mt-2">
+                  Scale efficiently across teams and departments with
+                  enterprise-ready project management solutions.
+                </Body>
+              </div>
+            </InfoCard>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Dramatic gradient background */}
+      <section className="dark:from-precision-850 dark:to-precision-850 relative bg-gradient-to-br from-precision-100 via-precision-50 to-precision-100 dark:via-precision-900">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-50/40 via-accent-50/30 to-primary-50/40 dark:from-primary-900/30 dark:via-accent-900/20 dark:to-primary-900/30"></div>
+        <div className="container relative mx-auto px-4 py-24">
+          <HeroCard>
+            <div className="text-center">
+              <Title className="mb-6">
+                Ready to Transform Your Project Management?
+              </Title>
+              <BodyLarge className="mx-auto mb-8 max-w-2xl">
+                Join our exclusive early access program and be among the first
+                to experience the future of project management tools.
+              </BodyLarge>
+
+              <div className="mb-8 grid gap-8 md:grid-cols-2">
+                <StatsCard>
+                  <SuccessText className="text-3xl font-bold">
+                    Q4 2025
+                  </SuccessText>
+                  <Body>Early Access Launch</Body>
+                  <Caption className="mt-2">Limited spots available</Caption>
+                </StatsCard>
+
+                <StatsCard>
+                  <AccentText className="text-3xl font-bold">
+                    Q1 2026
+                  </AccentText>
+                  <Body>Full Release</Body>
+                  <Caption className="mt-2">Complete feature set</Caption>
+                </StatsCard>
+              </div>
+
+              <div className="flex flex-col justify-center gap-4 sm:flex-row">
+                <Button size="lg" className="btn-primary">
+                  Join Early Access
+                </Button>
+                <Button size="lg" variant="outline" className="btn-secondary">
+                  Get Notified
+                </Button>
+              </div>
+
+              <Caption className="mt-6 text-precision-500 dark:text-precision-500">
+                Be the first to experience precision project management tools
+                that just work.
+              </Caption>
+            </div>
+          </HeroCard>
+        </div>
+      </section>
     </div>
   );
-};
+}

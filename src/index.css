@@ -4,66 +4,66 @@
 
 @layer base {
   :root {
-    /* Light mode - using brand colors */
+    /* Light mode - Professional Precision Theme */
     --background: 0 0% 100%;
-    --foreground: 210 40% 8%; /* strategic-900 */
+    --foreground: 215 25% 27%; /* precision-700 */
     --card: 0 0% 100%;
-    --card-foreground: 210 40% 8%; /* strategic-900 */
+    --card-foreground: 215 25% 27%; /* precision-700 */
     --popover: 0 0% 100%;
-    --popover-foreground: 210 40% 8%; /* strategic-900 */
-    --primary: 199 89% 48%; /* command-500 */
+    --popover-foreground: 215 25% 27%; /* precision-700 */
+    --primary: 0 84% 60%; /* primary-500 - brand red */
     --primary-foreground: 0 0% 98%;
-    --secondary: 210 40% 96%; /* strategic-100 */
-    --secondary-foreground: 210 40% 8%; /* strategic-900 */
-    --muted: 210 40% 96%; /* strategic-100 */
-    --muted-foreground: 215 16% 47%; /* strategic-500 */
-    --accent: 199 89% 48%; /* command-500 */
+    --secondary: 215 25% 96%; /* precision-100 */
+    --secondary-foreground: 215 25% 27%; /* precision-700 */
+    --muted: 215 25% 96%; /* precision-100 */
+    --muted-foreground: 215 16% 47%; /* precision-500 */
+    --accent: 217 91% 60%; /* accent-500 - professional blue */
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 215 16% 47%; /* strategic-500 */
-    --input: 215 16% 47%; /* strategic-500 */
-    --ring: 199 89% 48%; /* command-500 */
+    --border: 215 16% 47%; /* precision-500 */
+    --input: 215 16% 47%; /* precision-500 */
+    --ring: 0 84% 60%; /* primary-500 */
     --radius: 0.5rem;
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-foreground: 215 25% 27%;
+    --sidebar-primary: 0 84% 60%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 215 25% 96%;
+    --sidebar-accent-foreground: 215 25% 27%;
+    --sidebar-border: 215 16% 91%;
+    --sidebar-ring: 0 84% 60%;
   }
 
   .dark {
-    /* Dark mode - using brand precision grays */
-    --background: 210 40% 8%; /* strategic-900 */
-    --foreground: 210 40% 98%; /* strategic-50 */
-    --card: 210 40% 8%; /* strategic-900 */
-    --card-foreground: 210 40% 98%; /* strategic-50 */
-    --popover: 210 40% 8%; /* strategic-900 */
-    --popover-foreground: 210 40% 98%; /* strategic-50 */
-    --primary: 199 89% 48%; /* command-500 */
-    --primary-foreground: 210 40% 8%; /* strategic-900 */
-    --secondary: 215 16% 15%; /* strategic-800 */
-    --secondary-foreground: 210 40% 98%; /* strategic-50 */
-    --muted: 215 16% 15%; /* strategic-800 */
-    --muted-foreground: 215 16% 47%; /* strategic-500 */
-    --accent: 199 89% 48%; /* command-500 */
-    --accent-foreground: 210 40% 8%; /* strategic-900 */
-    --destructive: 0 62.8% 30.6%;
+    /* Dark mode - Professional Dark Theme */
+    --background: 215 28% 17%; /* precision-900 */
+    --foreground: 215 25% 97%; /* precision-50 */
+    --card: 215 28% 17%; /* precision-900 */
+    --card-foreground: 215 25% 97%; /* precision-50 */
+    --popover: 215 28% 17%; /* precision-900 */
+    --popover-foreground: 215 25% 97%; /* precision-50 */
+    --primary: 0 84% 60%; /* primary-500 */
+    --primary-foreground: 215 28% 17%; /* precision-900 */
+    --secondary: 215 25% 20%; /* precision-800 */
+    --secondary-foreground: 215 25% 97%; /* precision-50 */
+    --muted: 215 25% 20%; /* precision-800 */
+    --muted-foreground: 215 16% 47%; /* precision-500 */
+    --accent: 217 91% 60%; /* accent-500 */
+    --accent-foreground: 215 28% 17%; /* precision-900 */
+    --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
-    --border: 215 16% 15%; /* strategic-800 */
-    --input: 215 16% 15%; /* strategic-800 */
-    --ring: 199 89% 48%; /* command-500 */
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 215 25% 20%; /* precision-800 */
+    --input: 215 25% 20%; /* precision-800 */
+    --ring: 0 84% 60%; /* primary-500 */
+    --sidebar-background: 215 28% 17%;
+    --sidebar-foreground: 215 25% 97%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 215 28% 17%;
+    --sidebar-accent: 215 25% 20%;
+    --sidebar-accent-foreground: 215 25% 97%;
+    --sidebar-border: 215 25% 20%;
+    --sidebar-ring: 217 91% 60%;
   }
 }
 
@@ -73,20 +73,5 @@
   }
   body {
     @apply bg-background font-sans text-foreground antialiased;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-@layer components {
-  .card-brand {
-    @apply relative rounded-2xl border border-strategic-700/30 bg-gradient-to-br from-strategic-900/80 to-strategic-950/90 p-8 backdrop-blur-sm transition-all duration-300 hover:border-command-500/30 hover:shadow-lg;
   }
 }

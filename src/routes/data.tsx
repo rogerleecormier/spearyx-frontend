@@ -1,6 +1,9 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
+import { Body, Card, ElevatedCard, Hero, Title } from '@/components/brand';
+import { Layout } from '@/components/layout';
+
 import { Button } from '../components/ui/button';
 import { useLogger } from '../lib/useLogger';
 import { getServerData } from './server-data';
@@ -63,103 +66,95 @@ function DataPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8 dark:from-slate-900 dark:to-slate-800">
-      <div className="mx-auto max-w-4xl space-y-8">
-        <div className="text-center">
-          <h1 className="mb-4 text-4xl font-bold text-slate-900 dark:text-slate-100">
-            Server-Side Rendering Demo
-          </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400">
-            This page demonstrates SSR capabilities with TanStack Start
-          </p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* Server-Side Data (from loader) */}
-          <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-slate-800">
-            <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-100">
-              Server-Side Data (SSR)
-            </h2>
-            <div className="space-y-2 text-sm">
-              <p>
-                <strong>Message:</strong> {serverData.message}
-              </p>
-              <p>
-                <strong>Timestamp:</strong>{' '}
-                {new Date(serverData.timestamp).toLocaleString()}
-              </p>
-              <p>
-                <strong>Server-Side:</strong>{' '}
-                {serverData.isServerSide ? '✅ Yes' : '❌ No'}
-              </p>
-            </div>
+    <Layout isDev={true}>
+      <div className="min-h-screen bg-precision-50 py-12 dark:bg-precision-900">
+        <div className="container mx-auto max-w-4xl px-4">
+          <div className="mb-12 text-center">
+            <Hero>Server-Side Rendering Demo</Hero>
+            <Body className="mt-4">
+              This page demonstrates SSR capabilities with TanStack Start
+            </Body>
           </div>
 
-          {/* Server Function Data */}
-          <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-slate-800">
-            <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-100">
-              Server Function Data
-            </h2>
-            <div className="space-y-2 text-sm">
-              <p>
-                <strong>Total Items:</strong> {serverFunctionData.total}
-              </p>
-              <p>
-                <strong>Server Time:</strong>{' '}
-                {new Date(serverFunctionData.serverTime).toLocaleString()}
-              </p>
-              <div className="mt-4">
-                <strong>Items:</strong>
-                <ul className="mt-2 list-inside list-disc space-y-1">
-                  {serverFunctionData.items.map((item: ServerItem) => (
-                    <li key={item.id}>{item.name}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Client-Side Data */}
-          <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-slate-800 md:col-span-2">
-            <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-100">
-              Client-Side Data (Hydrated)
-            </h2>
-            <div className="flex items-center gap-4">
-              <div className="flex-1 space-y-2 text-sm">
-                <p>
-                  <strong>Message:</strong> {clientData.message}
-                </p>
-                <p>
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Server-Side Data (from loader) */}
+            <Card>
+              <Title>Server-Side Data (SSR)</Title>
+              <div className="mt-4 space-y-2">
+                <Body>
+                  <strong>Message:</strong> {serverData.message}
+                </Body>
+                <Body>
                   <strong>Timestamp:</strong>{' '}
-                  {new Date(clientData.timestamp).toLocaleString()}
-                </p>
-                <p>
+                  {new Date(serverData.timestamp).toLocaleString()}
+                </Body>
+                <Body>
                   <strong>Server-Side:</strong>{' '}
-                  {clientData.isServerSide ? '✅ Yes' : '❌ No'}
-                </p>
+                  {serverData.isServerSide ? '✅ Yes' : '❌ No'}
+                </Body>
               </div>
-              <Button
-                onClick={() => {
-                  log.userAction('refresh_client_data');
-                  refetch();
-                }}
-                className="shrink-0"
-              >
-                Refresh Client Data
-              </Button>
-            </div>
-          </div>
-        </div>
+            </Card>
 
-        <div className="text-center">
-          <a
-            href="/"
-            className="text-blue-600 hover:underline dark:text-blue-400"
-          >
-            ← Back to Home
-          </a>
+            {/* Server Function Data */}
+            <Card>
+              <Title>Server Function Data</Title>
+              <div className="mt-4 space-y-2">
+                <Body>
+                  <strong>Total Items:</strong> {serverFunctionData.total}
+                </Body>
+                <Body>
+                  <strong>Server Time:</strong>{' '}
+                  {new Date(serverFunctionData.serverTime).toLocaleString()}
+                </Body>
+                <div className="mt-4">
+                  <Body>
+                    <strong>Items:</strong>
+                  </Body>
+                  <ul className="mt-2 list-inside list-disc space-y-1">
+                    {serverFunctionData.items.map((item: ServerItem) => (
+                      <li
+                        key={item.id}
+                        className="text-precision-600 dark:text-precision-400"
+                      >
+                        {item.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </Card>
+
+            {/* Client-Side Data */}
+            <ElevatedCard className="md:col-span-2">
+              <Title>Client-Side Data (Hydrated)</Title>
+              <div className="mt-4 flex items-center gap-4">
+                <div className="flex-1 space-y-2">
+                  <Body>
+                    <strong>Message:</strong> {clientData.message}
+                  </Body>
+                  <Body>
+                    <strong>Timestamp:</strong>{' '}
+                    {new Date(clientData.timestamp).toLocaleString()}
+                  </Body>
+                  <Body>
+                    <strong>Server-Side:</strong>{' '}
+                    {clientData.isServerSide ? '✅ Yes' : '❌ No'}
+                  </Body>
+                </div>
+                <Button
+                  onClick={() => {
+                    log.userAction('refresh_client_data');
+                    refetch();
+                  }}
+                  className="shrink-0"
+                >
+                  Refresh Client Data
+                </Button>
+              </div>
+            </ElevatedCard>
+          </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
