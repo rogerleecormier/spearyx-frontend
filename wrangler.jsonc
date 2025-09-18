@@ -2,8 +2,7 @@
   "name": "spearyx-frontend",
   "compatibility_date": "2025-09-15",
   "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS"
+    "directory": "./dist"
   },
   "logging": {
     "level": "info"
