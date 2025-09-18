@@ -68,7 +68,7 @@ export function Header({ isDev = false }: HeaderProps) {
                     <Link to="/cards-guide">Cards</Link>
                   </Button>
                   <Button variant="ghost" size="sm" asChild>
-                    <Link to="/server-data">Server Data</Link>
+                    <Link to="/data">Server Data</Link>
                   </Button>
                 </div>
               </div>
@@ -151,7 +151,7 @@ export function Header({ isDev = false }: HeaderProps) {
                       className="w-full justify-start"
                       asChild
                     >
-                      <Link to="/server-data" onClick={toggleMobileMenu}>
+                      <Link to="/data" onClick={toggleMobileMenu}>
                         Server Data
                       </Link>
                     </Button>

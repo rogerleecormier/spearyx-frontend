@@ -1,38 +1,38 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import {
-  AccentCard,
-  AccentText,
-  Body,
-  BodyLarge,
-  Caption,
-  Card,
-  ComingSoonCard,
-  CompactCard,
-  ElevatedCard,
-  FeatureCard,
-  GlassCard,
-  Headline,
-  Hero,
-  HeroCard,
-  InfoCard,
-  InteractiveCard,
-  Label,
-  PrimaryAccent,
-  PrimaryCard,
-  StatsCard,
-  SuccessCard,
-  SuccessText,
-  Title,
-  ToolCard,
-  WarningCard,
-  WarningText,
+    AccentCard,
+    AccentText,
+    Body,
+    BodyLarge,
+    Caption,
+    Card,
+    ComingSoonCard,
+    CompactCard,
+    ElevatedCard,
+    FeatureCard,
+    GlassCard,
+    Headline,
+    Hero,
+    HeroCard,
+    InfoCard,
+    InteractiveCard,
+    Label,
+    PrimaryAccent,
+    PrimaryCard,
+    StatsCard,
+    SuccessCard,
+    SuccessText,
+    Title,
+    ToolCard,
+    WarningCard,
+    WarningText,
 } from '@/components/brand';
 import { Layout } from '@/components/layout';
 
 function CardsGuide() {
   return (
-    <Layout isDev={true}>
+    <Layout>
       <div className="min-h-screen bg-precision-50 py-12 dark:bg-precision-900">
         <div className="container mx-auto max-w-6xl px-4">
           <Hero className="mb-12 text-center">Cards Guide</Hero>
