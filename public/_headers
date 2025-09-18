@@ -1,0 +1,22 @@
+# CORS headers for localhost development
+/*
+  Access-Control-Allow-Origin: http://localhost:5173
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+  Access-Control-Allow-Credentials: true
+  Access-Control-Max-Age: 86400
+
+# Security headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Cache headers for static assets
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML files
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
