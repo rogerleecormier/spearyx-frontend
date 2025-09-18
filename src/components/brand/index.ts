@@ -38,5 +38,5 @@ export {
 } from './BrandCards';
 
 // Logo Components
-export { Logo, LogoSvg } from './Logo';
+export { Logo } from './Logo';
 
