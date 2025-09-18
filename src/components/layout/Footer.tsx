@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router';
+import { Logo } from '@/components/brand';
 
 import { Body, Caption, Title } from '@/components/brand';
 
@@ -10,11 +11,7 @@ export function Footer() {
           {/* Brand Section */}
           <div className="md:col-span-2">
             <div className="mb-4 flex items-center space-x-3">
-              <img
-                src="/images/spearyx-logo.svg"
-                alt="Spearyx"
-                className="h-8 w-auto"
-              />
+            <Logo size="sm" showText={false} />
             </div>
             <Body className="mb-4 text-precision-600 dark:text-precision-400">
               Precision project management tools that just work. AI-augmented

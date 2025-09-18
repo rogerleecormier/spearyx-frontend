@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
+import { Logo } from '@/components/brand';
 import { Button } from '@/components/ui/button';
 
 interface HeaderProps {
@@ -20,12 +21,8 @@ export function Header({ isDev = false }: HeaderProps) {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <img
-              src="/images/spearyx-logo.svg"
-              alt="Spearyx"
-              className="h-10 w-auto"
-            />
+          <Link to="/" className="flex items-center">
+            <Logo size="md" showText={false} />
           </Link>
 
           {/* Desktop Navigation */}

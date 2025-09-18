@@ -1,19 +1,20 @@
 import {
-  AccentText,
-  Body,
-  BodyLarge,
-  Caption,
-  ComingSoonCard,
-  Display,
-  FeatureCard,
-  Headline,
-  HeroCard,
-  InfoCard,
-  PrimaryAccent,
-  StatsCard,
-  SuccessText,
-  Title,
-  ToolCard,
+    AccentText,
+    Body,
+    BodyLarge,
+    Caption,
+    ComingSoonCard,
+    Display,
+    FeatureCard,
+    Headline,
+    HeroCard,
+    InfoCard,
+    Logo,
+    PrimaryAccent,
+    StatsCard,
+    SuccessText,
+    Title,
+    ToolCard,
 } from '@/components/brand';
 import { Button } from '@/components/ui/button';
 
@@ -26,11 +27,7 @@ export function ComingSoon() {
         <div className="container relative mx-auto px-4 py-24">
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-8 flex justify-center">
-              <img
-                src="/images/spearyx-logo.svg"
-                alt="Spearyx"
-                className="h-20 w-auto"
-              />
+              <Logo size="xl" showText={false} />
             </div>
 
             <Display className="mb-8 text-precision-700 dark:text-precision-300">
