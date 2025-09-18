@@ -1,0 +1,3 @@
+# Static asset handling for SSR
+/images/* /images/:splat 200
+/assets/* /assets/:splat 200
