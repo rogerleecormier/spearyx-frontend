@@ -68,6 +68,9 @@ export function Header({ isDev = false }: HeaderProps) {
                     <Link to="/cards-guide">Cards</Link>
                   </Button>
                   <Button variant="ghost" size="sm" asChild>
+                    <Link to="/styles-guide">Styles</Link>
+                  </Button>
+                  <Button variant="ghost" size="sm" asChild>
                     <Link to="/data">Server Data</Link>
                   </Button>
                 </div>
@@ -143,6 +146,16 @@ export function Header({ isDev = false }: HeaderProps) {
                     >
                       <Link to="/cards-guide" onClick={toggleMobileMenu}>
                         Cards Guide
+                      </Link>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
+                      asChild
+                    >
+                      <Link to="/styles-guide" onClick={toggleMobileMenu}>
+                        Styles Guide
                       </Link>
                     </Button>
                     <Button

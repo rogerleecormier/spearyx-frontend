@@ -27,7 +27,7 @@ export function Logo({
       {/* Image Logo */}
       <div className="relative">
         <img
-          src="/images/spearyx-logo.png"
+          src="/images/spearyx-logo.svg"
           alt="Spearyx"
           className={cn(
             sizeClass,
