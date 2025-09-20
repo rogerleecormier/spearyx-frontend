@@ -35,7 +35,7 @@ export interface RaciState {
 export interface LogoData {
   dataUrl: string;
   fileName: string;
-  mimeType: string;
+  mimeType: 'image/png' | 'image/jpeg' | 'image/svg+xml' | 'image/webp';
 }
 
 export interface AIInferenceResult {
@@ -46,7 +46,11 @@ export interface AIInferenceResult {
 }
 
 export interface ValidationError {
-  type: 'missing_accountable' | 'multiple_selections' | 'duplicate_role' | 'duplicate_task';
+  type:
+    | 'missing_accountable'
+    | 'multiple_selections'
+    | 'duplicate_role'
+    | 'duplicate_task';
   message: string;
   taskId?: string;
   roleName?: string;
@@ -62,4 +66,3 @@ export interface MermaidConfig {
   enabled: boolean;
   direction: 'TD' | 'LR';
 }
-

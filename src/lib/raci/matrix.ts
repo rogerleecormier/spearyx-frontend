@@ -39,7 +39,7 @@ export function setSingleRaciValue(value: RaciValue, key: RaciKey): RaciValue {
     R: key === 'R',
     A: key === 'A',
     C: key === 'C',
-    I: key === 'I'
+    I: key === 'I',
   };
 }
 
@@ -61,14 +61,14 @@ export function toggleRaciValue(value: RaciValue, key: RaciKey): RaciValue {
  */
 export function createEmptyMatrix(roles: Role[], tasks: Task[]): Matrix {
   const matrix: Matrix = {};
-  
-  tasks.forEach(task => {
+
+  tasks.forEach((task) => {
     matrix[task.id] = {};
-    roles.forEach(role => {
+    roles.forEach((role) => {
       matrix[task.id][role.name] = createEmptyRaciValue();
     });
   });
-  
+
   return matrix;
 }
 
@@ -83,36 +83,40 @@ export function updateMatrixCell(
   toggle = false
 ): Matrix {
   const newMatrix = { ...matrix };
-  
+
   if (!newMatrix[taskId]) {
     newMatrix[taskId] = {};
   }
-  
+
   if (!newMatrix[taskId][roleName]) {
     newMatrix[taskId][roleName] = createEmptyRaciValue();
   }
-  
+
   const currentValue = newMatrix[taskId][roleName];
-  newMatrix[taskId][roleName] = toggle 
+  newMatrix[taskId][roleName] = toggle
     ? toggleRaciValue(currentValue, key)
     : setSingleRaciValue(currentValue, key);
-  
+
   return newMatrix;
 }
 
 /**
  * Adds a new role to the matrix
  */
-export function addRoleToMatrix(matrix: Matrix, roleName: string, taskIds: string[]): Matrix {
+export function addRoleToMatrix(
+  matrix: Matrix,
+  roleName: string,
+  taskIds: string[]
+): Matrix {
   const newMatrix = { ...matrix };
-  
-  taskIds.forEach(taskId => {
+
+  taskIds.forEach((taskId) => {
     if (!newMatrix[taskId]) {
       newMatrix[taskId] = {};
     }
     newMatrix[taskId][roleName] = createEmptyRaciValue();
   });
-  
+
   return newMatrix;
 }
 
@@ -121,44 +125,52 @@ export function addRoleToMatrix(matrix: Matrix, roleName: string, taskIds: strin
  */
 export function removeRoleFromMatrix(matrix: Matrix, roleName: string): Matrix {
   const newMatrix = { ...matrix };
-  
-  Object.keys(newMatrix).forEach(taskId => {
+
+  Object.keys(newMatrix).forEach((taskId) => {
     if (newMatrix[taskId][roleName]) {
       const { [roleName]: removed, ...rest } = newMatrix[taskId];
       newMatrix[taskId] = rest;
     }
   });
-  
+
   return newMatrix;
 }
 
 /**
  * Renames a role in the matrix
  */
-export function renameRoleInMatrix(matrix: Matrix, oldName: string, newName: string): Matrix {
+export function renameRoleInMatrix(
+  matrix: Matrix,
+  oldName: string,
+  newName: string
+): Matrix {
   const newMatrix = { ...matrix };
-  
-  Object.keys(newMatrix).forEach(taskId => {
+
+  Object.keys(newMatrix).forEach((taskId) => {
     if (newMatrix[taskId][oldName]) {
       newMatrix[taskId][newName] = newMatrix[taskId][oldName];
       delete newMatrix[taskId][oldName];
     }
   });
-  
+
   return newMatrix;
 }
 
 /**
  * Adds a new task to the matrix
  */
-export function addTaskToMatrix(matrix: Matrix, taskId: string, roleNames: string[]): Matrix {
+export function addTaskToMatrix(
+  matrix: Matrix,
+  taskId: string,
+  roleNames: string[]
+): Matrix {
   const newMatrix = { ...matrix };
-  
+
   newMatrix[taskId] = {};
-  roleNames.forEach(roleName => {
+  roleNames.forEach((roleName) => {
     newMatrix[taskId][roleName] = createEmptyRaciValue();
   });
-  
+
   return newMatrix;
 }
 
@@ -182,52 +194,55 @@ export function migrateMatrix(
   newTasks: Task[]
 ): Matrix {
   let newMatrix = { ...matrix };
-  
+
   // Handle role changes
-  const oldRoleNames = new Set(oldRoles.map(r => r.name));
-  const newRoleNames = new Set(newRoles.map(r => r.name));
-  
+  const oldRoleNames = new Set(oldRoles.map((r) => r.name));
+  const newRoleNames = new Set(newRoles.map((r) => r.name));
+
   // Remove deleted roles
-  oldRoleNames.forEach(roleName => {
+  oldRoleNames.forEach((roleName) => {
     if (!newRoleNames.has(roleName)) {
       newMatrix = removeRoleFromMatrix(newMatrix, roleName);
     }
   });
-  
+
   // Add new roles
-  const newTaskIds = newTasks.map(t => t.id);
-  newRoleNames.forEach(roleName => {
+  const newTaskIds = newTasks.map((t) => t.id);
+  newRoleNames.forEach((roleName) => {
     if (!oldRoleNames.has(roleName)) {
       newMatrix = addRoleToMatrix(newMatrix, roleName, newTaskIds);
     }
   });
-  
+
   // Handle task changes
-  const oldTaskIds = new Set(oldTasks.map(t => t.id));
-  const newTaskIds2 = new Set(newTasks.map(t => t.id));
-  
+  const oldTaskIds = new Set(oldTasks.map((t) => t.id));
+  const newTaskIds2 = new Set(newTasks.map((t) => t.id));
+
   // Remove deleted tasks
-  oldTaskIds.forEach(taskId => {
+  oldTaskIds.forEach((taskId) => {
     if (!newTaskIds2.has(taskId)) {
       newMatrix = removeTaskFromMatrix(newMatrix, taskId);
     }
   });
-  
+
   // Add new tasks
-  const currentRoleNames = newRoles.map(r => r.name);
-  newTaskIds2.forEach(taskId => {
+  const currentRoleNames = newRoles.map((r) => r.name);
+  newTaskIds2.forEach((taskId) => {
     if (!oldTaskIds.has(taskId)) {
       newMatrix = addTaskToMatrix(newMatrix, taskId, currentRoleNames);
     }
   });
-  
+
   return newMatrix;
 }
 
 /**
  * Gets a summary of RACI assignments for a task
  */
-export function getTaskSummary(matrix: Matrix, taskId: string): {
+export function getTaskSummary(
+  matrix: Matrix,
+  taskId: string
+): {
   responsible: string[];
   accountable: string[];
   consulted: string[];
@@ -238,23 +253,26 @@ export function getTaskSummary(matrix: Matrix, taskId: string): {
     responsible: [] as string[],
     accountable: [] as string[],
     consulted: [] as string[],
-    informed: [] as string[]
+    informed: [] as string[],
   };
-  
+
   Object.entries(taskMatrix).forEach(([roleName, raciValue]) => {
     if (raciValue.R) summary.responsible.push(roleName);
     if (raciValue.A) summary.accountable.push(roleName);
     if (raciValue.C) summary.consulted.push(roleName);
     if (raciValue.I) summary.informed.push(roleName);
   });
-  
+
   return summary;
 }
 
 /**
  * Gets a summary of RACI assignments for a role
  */
-export function getRoleSummary(matrix: Matrix, roleName: string): {
+export function getRoleSummary(
+  matrix: Matrix,
+  roleName: string
+): {
   responsible: string[];
   accountable: string[];
   consulted: string[];
@@ -264,19 +282,19 @@ export function getRoleSummary(matrix: Matrix, roleName: string): {
     responsible: [] as string[],
     accountable: [] as string[],
     consulted: [] as string[],
-    informed: [] as string[]
+    informed: [] as string[],
   };
-  
+
   Object.entries(matrix).forEach(([taskId, taskMatrix]) => {
     const raciValue = taskMatrix[roleName];
     if (!raciValue) return;
-    
+
     if (raciValue.R) summary.responsible.push(taskId);
     if (raciValue.A) summary.accountable.push(taskId);
     if (raciValue.C) summary.consulted.push(taskId);
     if (raciValue.I) summary.informed.push(taskId);
   });
-  
+
   return summary;
 }
 
@@ -293,12 +311,12 @@ export function getMatrixStats(matrix: Matrix): {
   let filledCells = 0;
   let emptyTasks = 0;
   let tasksWithoutAccountable = 0;
-  
-  Object.entries(matrix).forEach(([taskId, taskMatrix]) => {
+
+  Object.entries(matrix).forEach(([_taskId, taskMatrix]) => {
     let taskHasAssignments = false;
     let taskHasAccountable = false;
-    
-    Object.values(taskMatrix).forEach(raciValue => {
+
+    Object.values(taskMatrix).forEach((raciValue) => {
       totalCells++;
       const hasAssignment = Object.values(raciValue).some(Boolean);
       if (hasAssignment) {
@@ -309,16 +327,15 @@ export function getMatrixStats(matrix: Matrix): {
         taskHasAccountable = true;
       }
     });
-    
+
     if (!taskHasAssignments) emptyTasks++;
     if (!taskHasAccountable) tasksWithoutAccountable++;
   });
-  
+
   return {
     totalCells,
     filledCells,
     emptyTasks,
-    tasksWithoutAccountable
+    tasksWithoutAccountable,
   };
 }
-

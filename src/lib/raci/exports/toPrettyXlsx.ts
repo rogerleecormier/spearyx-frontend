@@ -3,6 +3,7 @@
  */
 
 import ExcelJS from 'exceljs';
+
 import type { ExportOptions, RaciKey, RaciState } from '../../../types/raci';
 import { getActiveRaciKey } from '../matrix';
 
@@ -13,7 +14,7 @@ const RACI_COLORS: Record<RaciKey, string> = {
   R: 'FF90EE90', // Light green
   A: 'FFFFD700', // Light gold
   C: 'FF87CEEB', // Light sky blue
-  I: 'FFD3D3D3'  // Light gray
+  I: 'FFD3D3D3', // Light gray
 };
 
 /**
@@ -36,22 +37,21 @@ export async function exportToPrettyXlsx(
   // Add logo if present
   if (state.logo) {
     try {
-      // Convert data URL to buffer
+      // Use base64 data directly to avoid Buffer type issues
       const base64Data = state.logo.dataUrl.split(',')[1];
-      const imageBuffer = Buffer.from(base64Data, 'base64');
-      
-      // Add image to workbook
+
+      // Add image to workbook using base64 data
       const imageId = workbook.addImage({
-        buffer: imageBuffer,
-        extension: state.logo.mimeType.split('/')[1] as 'png' | 'jpeg'
+        base64: base64Data,
+        extension: state.logo.mimeType.split('/')[1] as 'png' | 'jpeg',
       });
-      
+
       // Insert image with optimal sizing
       worksheet.addImage(imageId, {
         tl: { col: 0, row: 0 },
-        ext: { width: 120, height: 60 } // Slightly larger for better visibility in Excel
+        ext: { width: 120, height: 60 }, // Slightly larger for better visibility in Excel
       });
-      
+
       currentRow = 4; // Leave space for logo
     } catch (error) {
       console.warn('Failed to add logo to XLSX:', error);
@@ -63,16 +63,16 @@ export async function exportToPrettyXlsx(
   titleCell.value = state.title;
   titleCell.font = { bold: true, size: 18, color: { argb: 'FF2D3748' } };
   titleCell.alignment = { horizontal: 'left', vertical: 'middle' };
-  
+
   // Merge cells for title
   worksheet.mergeCells(currentRow, 1, currentRow, state.roles.length + 1);
-  
+
   // Add border to title
   const titleRange = worksheet.getCell(currentRow, 1);
   titleRange.border = {
-    bottom: { style: 'thick', color: { argb: 'FF4A5568' } }
+    bottom: { style: 'thick', color: { argb: 'FF4A5568' } },
   };
-  
+
   currentRow += 1;
 
   // Date row if requested
@@ -89,7 +89,7 @@ export async function exportToPrettyXlsx(
 
   // Header row with styling
   const headerRow = currentRow;
-  
+
   // Task header
   const taskHeaderCell = worksheet.getCell(headerRow, 1);
   taskHeaderCell.value = 'Task';
@@ -97,14 +97,14 @@ export async function exportToPrettyXlsx(
   taskHeaderCell.fill = {
     type: 'pattern',
     pattern: 'solid',
-    fgColor: { argb: 'FF4A5568' }
+    fgColor: { argb: 'FF4A5568' },
   };
   taskHeaderCell.alignment = { horizontal: 'center', vertical: 'middle' };
   taskHeaderCell.border = {
     top: { style: 'thin', color: { argb: 'FF2D3748' } },
     left: { style: 'thin', color: { argb: 'FF2D3748' } },
     bottom: { style: 'thin', color: { argb: 'FF2D3748' } },
-    right: { style: 'thin', color: { argb: 'FF2D3748' } }
+    right: { style: 'thin', color: { argb: 'FF2D3748' } },
   };
 
   // Role headers
@@ -115,14 +115,14 @@ export async function exportToPrettyXlsx(
     cell.fill = {
       type: 'pattern',
       pattern: 'solid',
-      fgColor: { argb: 'FF4A5568' }
+      fgColor: { argb: 'FF4A5568' },
     };
     cell.alignment = { horizontal: 'center', vertical: 'middle' };
     cell.border = {
       top: { style: 'thin', color: { argb: 'FF2D3748' } },
       left: { style: 'thin', color: { argb: 'FF2D3748' } },
       bottom: { style: 'thin', color: { argb: 'FF2D3748' } },
-      right: { style: 'thin', color: { argb: 'FF2D3748' } }
+      right: { style: 'thin', color: { argb: 'FF2D3748' } },
     };
   });
 
@@ -131,7 +131,7 @@ export async function exportToPrettyXlsx(
   // Data rows with RACI styling
   state.tasks.forEach((task, taskIndex) => {
     const row = currentRow + taskIndex;
-    
+
     // Task name cell
     const taskCell = worksheet.getCell(row, 1);
     taskCell.value = task.name;
@@ -141,24 +141,24 @@ export async function exportToPrettyXlsx(
       top: { style: 'thin', color: { argb: 'FFE2E8F0' } },
       left: { style: 'thin', color: { argb: 'FFE2E8F0' } },
       bottom: { style: 'thin', color: { argb: 'FFE2E8F0' } },
-      right: { style: 'thin', color: { argb: 'FFE2E8F0' } }
+      right: { style: 'thin', color: { argb: 'FFE2E8F0' } },
     };
-    
+
     // Alternate row background
     if (taskIndex % 2 === 1) {
       taskCell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'FFF7FAFC' }
+        fgColor: { argb: 'FFF7FAFC' },
       };
     }
-    
+
     // RACI cells
     state.roles.forEach((role, roleIndex) => {
       const cell = worksheet.getCell(row, roleIndex + 2);
       const cellValue = state.matrix[task.id]?.[role.name];
       const activeKey = cellValue ? getActiveRaciKey(cellValue) : null;
-      
+
       cell.value = activeKey || '';
       cell.font = { bold: true, size: 12 };
       cell.alignment = { horizontal: 'center', vertical: 'middle' };
@@ -166,15 +166,15 @@ export async function exportToPrettyXlsx(
         top: { style: 'thin', color: { argb: 'FFE2E8F0' } },
         left: { style: 'thin', color: { argb: 'FFE2E8F0' } },
         bottom: { style: 'thin', color: { argb: 'FFE2E8F0' } },
-        right: { style: 'thin', color: { argb: 'FFE2E8F0' } }
+        right: { style: 'thin', color: { argb: 'FFE2E8F0' } },
       };
-      
+
       // Apply RACI-specific styling
       if (activeKey && RACI_COLORS[activeKey]) {
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
-          fgColor: { argb: RACI_COLORS[activeKey] }
+          fgColor: { argb: RACI_COLORS[activeKey] },
         };
         cell.font = { ...cell.font, color: { argb: 'FF2D3748' } };
       } else if (taskIndex % 2 === 1) {
@@ -182,7 +182,7 @@ export async function exportToPrettyXlsx(
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
-          fgColor: { argb: 'FFF7FAFC' }
+          fgColor: { argb: 'FFF7FAFC' },
         };
       }
     });
@@ -207,21 +207,21 @@ export async function exportToPrettyXlsx(
 
   // Add RACI legend at the bottom
   const legendStartRow = currentRow + state.tasks.length + 2;
-  
+
   const legendTitle = worksheet.getCell(legendStartRow, 1);
   legendTitle.value = 'RACI Legend:';
   legendTitle.font = { bold: true, size: 12 };
-  
+
   const legendItems = [
     { key: 'R', desc: 'Responsible - Does the work' },
     { key: 'A', desc: 'Accountable - Ultimately answerable' },
     { key: 'C', desc: 'Consulted - Provides input' },
-    { key: 'I', desc: 'Informed - Needs to know' }
+    { key: 'I', desc: 'Informed - Needs to know' },
   ];
-  
+
   legendItems.forEach((item, index) => {
     const row = legendStartRow + index + 1;
-    
+
     // RACI key cell
     const keyCell = worksheet.getCell(row, 1);
     keyCell.value = item.key;
@@ -230,15 +230,15 @@ export async function exportToPrettyXlsx(
     keyCell.fill = {
       type: 'pattern',
       pattern: 'solid',
-      fgColor: { argb: RACI_COLORS[item.key as RaciKey] }
+      fgColor: { argb: RACI_COLORS[item.key as RaciKey] },
     };
     keyCell.border = {
       top: { style: 'thin', color: { argb: 'FFE2E8F0' } },
       left: { style: 'thin', color: { argb: 'FFE2E8F0' } },
       bottom: { style: 'thin', color: { argb: 'FFE2E8F0' } },
-      right: { style: 'thin', color: { argb: 'FFE2E8F0' } }
+      right: { style: 'thin', color: { argb: 'FFE2E8F0' } },
     };
-    
+
     // Description cell
     const descCell = worksheet.getCell(row, 2);
     descCell.value = item.desc;
@@ -248,26 +248,31 @@ export async function exportToPrettyXlsx(
 
   // Generate buffer
   const buffer = await workbook.xlsx.writeBuffer();
-  return new Blob([buffer], { 
-    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+  return new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   });
 }
 
 /**
  * Downloads the formatted XLSX file
  */
-export function downloadPrettyXlsx(state: RaciState, options: ExportOptions = {}): void {
-  exportToPrettyXlsx(state, options).then(blob => {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = options.filename || 'raci-formatted.xlsx';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }).catch(error => {
-    console.error('Failed to export formatted XLSX:', error);
-    throw error;
-  });
+export function downloadPrettyXlsx(
+  state: RaciState,
+  options: ExportOptions = {}
+): void {
+  exportToPrettyXlsx(state, options)
+    .then((blob) => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = options.filename || 'raci-formatted.xlsx';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    })
+    .catch((error) => {
+      console.error('Failed to export formatted XLSX:', error);
+      throw error;
+    });
 }

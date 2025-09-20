@@ -3,19 +3,20 @@
  */
 
 import {
-    AlertCircle,
-    Check,
-    Copy,
-    Download,
-    FileSpreadsheet,
-    FileText,
-    Image,
-    Link,
-    Loader2,
-    Users,
-    X
+  AlertCircle,
+  Check,
+  Copy,
+  Download,
+  FileSpreadsheet,
+  FileText,
+  Image,
+  Link,
+  Loader2,
+  Users,
+  X,
 } from 'lucide-react';
 import React, { useState } from 'react';
+
 import { downloadCsv } from '../../lib/raci/exports/toCsv';
 import { downloadDocx } from '../../lib/raci/exports/toDocx';
 import { downloadPdf } from '../../lib/raci/exports/toPdf';
@@ -24,9 +25,9 @@ import { downloadPptx } from '../../lib/raci/exports/toPptx';
 import { downloadPrettyXlsx } from '../../lib/raci/exports/toPrettyXlsx';
 import { downloadSvg } from '../../lib/raci/exports/toSvg';
 import {
-    copyShareableUrl,
-    extractStateFromUrl,
-    hasSharedStateInUrl
+  copyShareableUrl,
+  extractStateFromUrl,
+  hasSharedStateInUrl,
 } from '../../lib/sharing/shareLink';
 import type { RaciState } from '../../types/raci';
 
@@ -42,7 +43,7 @@ interface ExportButton {
   id: string;
   label: string;
   description: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   color: string;
   action: () => Promise<void> | void;
   disabled?: boolean;
@@ -54,7 +55,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
   canvasRef,
   onStateImport,
   validationErrors = [],
-  className = ''
+  className = '',
 }) => {
   const [exportingType, setExportingType] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
@@ -66,7 +67,10 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
   const canExport = state.roles.length > 0 && state.tasks.length > 0;
   const hasCanvas = canvasRef?.current;
 
-  const handleExport = async (type: string, exportFn: () => Promise<void> | void) => {
+  const handleExport = async (
+    type: string,
+    exportFn: () => Promise<void> | void
+  ) => {
     if (!canExport) return;
 
     setExportingType(type);
@@ -87,10 +91,10 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       setExportingType('share');
       setShareSuccess(false);
       setExportError(null);
-      
+
       await copyShareableUrl(state);
       setShareSuccess(true);
-      
+
       // Auto-hide success message after 3 seconds
       setTimeout(() => setShareSuccess(false), 3000);
     } catch (error) {
@@ -105,7 +109,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
     try {
       setImportError(null);
       const sharedState = extractStateFromUrl();
-      
+
       if (sharedState && onStateImport) {
         onStateImport(sharedState);
         setShareSuccess(true);
@@ -128,9 +132,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
     try {
       setImportError(null);
       setExportingType('import');
-      
+
       const sharedState = extractStateFromUrl(importUrl.trim());
-      
+
       if (sharedState && onStateImport) {
         onStateImport(sharedState);
         setShareSuccess(true);
@@ -141,12 +145,13 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       }
     } catch (error) {
       console.error('Import from pasted URL failed:', error);
-      setImportError('Failed to import state from the provided URL. Please check the URL and try again.');
+      setImportError(
+        'Failed to import state from the provided URL. Please check the URL and try again.'
+      );
     } finally {
       setExportingType(null);
     }
   };
-
 
   const exportButtons: ExportButton[] = [
     {
@@ -155,7 +160,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Wide format spreadsheet',
       icon: FileSpreadsheet,
       color: 'text-green-600 bg-green-50 hover:bg-green-100 border-green-200',
-      action: () => downloadCsv(state, { filename: 'raci.csv' })
+      action: () => downloadCsv(state, { filename: 'raci.csv' }),
     },
     {
       id: 'xlsx',
@@ -163,7 +168,8 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Styled spreadsheet with colors',
       icon: FileSpreadsheet,
       color: 'text-blue-600 bg-blue-50 hover:bg-blue-100 border-blue-200',
-      action: () => downloadPrettyXlsx(state, { filename: 'raci-formatted.xlsx' })
+      action: () =>
+        downloadPrettyXlsx(state, { filename: 'raci-formatted.xlsx' }),
     },
     {
       id: 'pdf',
@@ -171,43 +177,46 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Professional document',
       icon: FileText,
       color: 'text-red-600 bg-red-50 hover:bg-red-100 border-red-200',
-      action: () => downloadPdf(state, { filename: 'raci.pdf' })
+      action: () => downloadPdf(state, { filename: 'raci.pdf' }),
     },
     {
       id: 'png',
       label: 'PNG (Canvas)',
       description: 'High-quality image capture',
       icon: Image,
-      color: 'text-purple-600 bg-purple-50 hover:bg-purple-100 border-purple-200',
+      color:
+        'text-purple-600 bg-purple-50 hover:bg-purple-100 border-purple-200',
       action: async () => {
         if (!hasCanvas) throw new Error('Canvas not available');
         // Small delay to ensure canvas is fully rendered and all content is visible
-        await new Promise(resolve => setTimeout(resolve, 200));
+        await new Promise((resolve) => setTimeout(resolve, 200));
         downloadPng(canvasRef!.current!, { filename: 'raci.png' });
       },
-      requiresCanvas: true
+      requiresCanvas: true,
     },
     {
       id: 'svg',
       label: 'SVG (Canvas)',
       description: 'Scalable vector graphic',
       icon: Image,
-      color: 'text-indigo-600 bg-indigo-50 hover:bg-indigo-100 border-indigo-200',
+      color:
+        'text-indigo-600 bg-indigo-50 hover:bg-indigo-100 border-indigo-200',
       action: async () => {
         if (!hasCanvas) throw new Error('Canvas not available');
         // Small delay to ensure canvas is fully rendered and all content is visible
-        await new Promise(resolve => setTimeout(resolve, 200));
+        await new Promise((resolve) => setTimeout(resolve, 200));
         downloadSvg(canvasRef!.current!, { filename: 'raci.svg' });
       },
-      requiresCanvas: true
+      requiresCanvas: true,
     },
     {
       id: 'pptx',
       label: 'PPTX (1-Slide)',
       description: 'PowerPoint presentation',
       icon: FileText,
-      color: 'text-orange-600 bg-orange-50 hover:bg-orange-100 border-orange-200',
-      action: () => downloadPptx(state, { filename: 'raci.pptx' })
+      color:
+        'text-orange-600 bg-orange-50 hover:bg-orange-100 border-orange-200',
+      action: () => downloadPptx(state, { filename: 'raci.pptx' }),
     },
     {
       id: 'docx',
@@ -215,35 +224,39 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Word document',
       icon: FileText,
       color: 'text-teal-600 bg-teal-50 hover:bg-teal-100 border-teal-200',
-      action: () => downloadDocx(state, { filename: 'raci.docx' })
-    }
+      action: () => downloadDocx(state, { filename: 'raci.docx' }),
+    },
   ];
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-6 ${className}`}>
+    <div
+      className={`rounded-lg border border-gray-200 bg-white p-6 shadow-sm ${className}`}
+    >
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">Export & Share</h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Export & Share
+            </h2>
+            <p className="mt-1 text-sm text-gray-600">
               Download your RACI matrix in various formats or share with others
             </p>
           </div>
-          <Download className="w-5 h-5 text-gray-500" />
+          <Download className="h-5 w-5 text-gray-500" />
         </div>
 
         {/* Validation Warnings */}
         {hasErrors && (
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
             <div className="flex items-start gap-2">
-              <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5" />
+              <AlertCircle className="mt-0.5 h-5 w-5 text-amber-600" />
               <div>
                 <p className="text-sm font-medium text-amber-800">
                   Validation Issues Detected
                 </p>
                 <div className="mt-2 text-xs text-amber-700">
-                  <ul className="list-disc list-inside space-y-1">
+                  <ul className="list-inside list-disc space-y-1">
                     {validationErrors.slice(0, 3).map((error, index) => (
                       <li key={index}>{error.message}</li>
                     ))}
@@ -259,13 +272,16 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
 
         {/* Success Messages */}
         {shareSuccess && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="rounded-lg border border-green-200 bg-green-50 p-4">
             <div className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-green-600" />
+              <Check className="h-4 w-4 text-green-600" />
               <p className="text-sm text-green-800">
-                {exportingType === 'share' ? 'Shareable link copied to clipboard!' : 
-                 shareSuccess && (exportingType === 'import' || exportingType === null) ? 'State imported successfully!' : 
-                 'Operation completed successfully!'}
+                {exportingType === 'share'
+                  ? 'Shareable link copied to clipboard!'
+                  : shareSuccess &&
+                      (exportingType === 'import' || exportingType === null)
+                    ? 'State imported successfully!'
+                    : 'Operation completed successfully!'}
               </p>
             </div>
           </div>
@@ -273,48 +289,54 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
 
         {/* Error Messages */}
         {(exportError || importError) && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="rounded-lg border border-red-200 bg-red-50 p-4">
             <div className="flex items-center gap-2">
-              <X className="w-4 h-4 text-red-600" />
-              <p className="text-sm text-red-800">{exportError || importError}</p>
+              <X className="h-4 w-4 text-red-600" />
+              <p className="text-sm text-red-800">
+                {exportError || importError}
+              </p>
             </div>
           </div>
         )}
 
         {/* Export Buttons Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {exportButtons.map((button) => {
             const isExporting = exportingType === button.id;
-            const isDisabled = !canExport || button.disabled || isExporting || 
-                              (button.requiresCanvas && !hasCanvas);
-            
+            const isDisabled =
+              !canExport ||
+              button.disabled ||
+              isExporting ||
+              (button.requiresCanvas && !hasCanvas);
+
             return (
               <button
                 key={button.id}
                 onClick={() => handleExport(button.id, button.action)}
                 disabled={isDisabled}
-                className={`
-                  relative flex flex-col items-center p-4 rounded-lg border-2 transition-all
-                  ${isDisabled 
-                    ? 'opacity-50 cursor-not-allowed bg-gray-50 border-gray-200' 
-                    : button.color + ' focus:outline-none focus:ring-2 focus:ring-offset-2'
-                  }
-                `}
-                title={button.requiresCanvas && !hasCanvas ? 'Canvas not available' : button.description}
+                className={`relative flex flex-col items-center rounded-lg border-2 p-4 transition-all ${
+                  isDisabled
+                    ? 'cursor-not-allowed border-gray-200 bg-gray-50 opacity-50'
+                    : button.color +
+                      ' focus:outline-none focus:ring-2 focus:ring-offset-2'
+                } `}
+                title={
+                  button.requiresCanvas && !hasCanvas
+                    ? 'Canvas not available'
+                    : button.description
+                }
               >
-                <div className="flex items-center justify-center w-8 h-8 mb-2">
+                <div className="mb-2 flex h-8 w-8 items-center justify-center">
                   {isExporting ? (
-                    <Loader2 className="w-6 h-6 animate-spin" />
+                    <Loader2 className="h-6 w-6 animate-spin" />
                   ) : (
-                    <button.icon className="w-6 h-6" />
+                    <button.icon className="h-6 w-6" />
                   )}
                 </div>
-                
-                <span className="text-sm font-medium mb-1">
-                  {button.label}
-                </span>
-                
-                <span className="text-xs text-center leading-tight opacity-75">
+
+                <span className="mb-1 text-sm font-medium">{button.label}</span>
+
+                <span className="text-center text-xs leading-tight opacity-75">
                   {button.description}
                 </span>
               </button>
@@ -324,27 +346,31 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
 
         {/* Sharing Section */}
         <div className="border-t border-gray-200 pt-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Users className="w-5 h-5 text-gray-500" />
-            <h3 className="text-sm font-semibold text-gray-900">Share & Import</h3>
+          <div className="mb-4 flex items-center gap-2">
+            <Users className="h-5 w-5 text-gray-500" />
+            <h3 className="text-sm font-semibold text-gray-900">
+              Share & Import
+            </h3>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Share Link */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Link className="w-4 h-4 text-gray-500" />
-                <span className="text-sm font-medium text-gray-700">Share Link</span>
+                <Link className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-medium text-gray-700">
+                  Share Link
+                </span>
               </div>
               <button
                 onClick={handleShareLink}
                 disabled={!canExport || exportingType === 'share'}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex w-full items-center justify-center gap-2 rounded-md border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {exportingType === 'share' ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  <Copy className="w-4 h-4" />
+                  <Copy className="h-4 w-4" />
                 )}
                 Copy Shareable Link
               </button>
@@ -353,66 +379,69 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
               </p>
             </div>
 
-             {/* Import Options */}
-             <div className="space-y-3">
-               <div className="flex items-center gap-2">
-                 <Link className="w-4 h-4 text-gray-500" />
-                 <span className="text-sm font-medium text-gray-700">Import from Share Link</span>
-               </div>
-               
-               {/* Import from current URL if available */}
-               {hasSharedStateInUrl() && (
-                 <button
-                   onClick={handleImportLink}
-                   className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-green-600 bg-green-50 border border-green-200 rounded-md hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                 >
-                   <Link className="w-4 h-4" />
-                   Import from Current URL
-                 </button>
-               )}
-               
-               {/* Import from pasted URL */}
-               <div className="space-y-2">
-                 <input
-                   type="url"
-                   value={importUrl}
-                   onChange={(e) => setImportUrl(e.target.value)}
-                   placeholder="Paste a shareable RACI link here..."
-                   className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                   onKeyDown={(e) => {
-                     if (e.key === 'Enter') {
-                       handleImportFromPastedUrl();
-                     }
-                   }}
-                 />
-                 <button
-                   onClick={handleImportFromPastedUrl}
-                   disabled={!importUrl.trim() || exportingType === 'import'}
-                   className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                 >
-                   {exportingType === 'import' ? (
-                     <Loader2 className="w-4 h-4 animate-spin" />
-                   ) : (
-                     <Link className="w-4 h-4" />
-                   )}
-                   Import from Link
-                 </button>
-               </div>
-               
-               <p className="text-xs text-gray-500">
-                 Paste a shareable RACI link to import and overwrite current data
-               </p>
-             </div>
+            {/* Import Options */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Link className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-medium text-gray-700">
+                  Import from Share Link
+                </span>
+              </div>
+
+              {/* Import from current URL if available */}
+              {hasSharedStateInUrl() && (
+                <button
+                  onClick={handleImportLink}
+                  className="flex w-full items-center justify-center gap-2 rounded-md border border-green-200 bg-green-50 px-4 py-2 text-sm font-medium text-green-600 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                >
+                  <Link className="h-4 w-4" />
+                  Import from Current URL
+                </button>
+              )}
+
+              {/* Import from pasted URL */}
+              <div className="space-y-2">
+                <input
+                  type="url"
+                  value={importUrl}
+                  onChange={(e) => setImportUrl(e.target.value)}
+                  placeholder="Paste a shareable RACI link here..."
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleImportFromPastedUrl();
+                    }
+                  }}
+                />
+                <button
+                  onClick={handleImportFromPastedUrl}
+                  disabled={!importUrl.trim() || exportingType === 'import'}
+                  className="flex w-full items-center justify-center gap-2 rounded-md border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {exportingType === 'import' ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Link className="h-4 w-4" />
+                  )}
+                  Import from Link
+                </button>
+              </div>
+
+              <p className="text-xs text-gray-500">
+                Paste a shareable RACI link to import and overwrite current data
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Canvas Warning */}
         {!hasCanvas && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4">
             <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-yellow-600" />
+              <AlertCircle className="h-4 w-4 text-yellow-600" />
               <p className="text-sm text-yellow-800">
-                PNG and SVG exports require the matrix preview to be visible. Make sure the canvas preview is loaded.
+                PNG and SVG exports require the matrix preview to be visible.
+                Make sure the canvas preview is loaded.
               </p>
             </div>
           </div>
@@ -420,14 +449,13 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
 
         {/* Disabled State Message */}
         {!canExport && (
-          <div className="text-center py-4">
+          <div className="py-4 text-center">
             <p className="text-sm text-gray-500">
-              {state.roles.length === 0 && state.tasks.length === 0 
+              {state.roles.length === 0 && state.tasks.length === 0
                 ? 'Add roles and tasks to enable exports'
-                : state.roles.length === 0 
+                : state.roles.length === 0
                   ? 'Add roles to enable exports'
-                  : 'Add tasks to enable exports'
-              }
+                  : 'Add tasks to enable exports'}
             </p>
           </div>
         )}

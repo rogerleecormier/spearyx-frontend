@@ -1,17 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import {
-    Body,
-    BodyLarge,
-    Caption,
-    Card,
-    ElevatedCard,
-    GlassCard,
-    Headline,
-    Hero,
-    Label,
-    PrimaryAccent,
-    Title
+  Body,
+  BodyLarge,
+  Caption,
+  Card,
+  ElevatedCard,
+  GlassCard,
+  Headline,
+  Hero,
+  Label,
+  PrimaryAccent,
+  Title,
 } from '@/components/brand';
 import { Layout } from '@/components/layout';
 import { Badge } from '@/components/ui/badge';
@@ -26,7 +26,8 @@ function StylesGuide() {
         <div className="container mx-auto max-w-6xl px-4">
           <Hero className="mb-12 text-center">Styles Guide</Hero>
           <BodyLarge className="mb-16 text-center text-precision-600 dark:text-precision-400">
-            Additional brand elements, effects, and utility styles not covered in Typography or Cards guides
+            Additional brand elements, effects, and utility styles not covered
+            in Typography or Cards guides
           </BodyLarge>
 
           <div className="space-y-16">
@@ -45,7 +46,7 @@ function StylesGuide() {
                         <Body>Content below</Body>
                       </div>
                     </div>
-                    
+
                     <div>
                       <Label>Thick Separator</Label>
                       <div className="mt-2">
@@ -100,7 +101,7 @@ function StylesGuide() {
                       <Label>Dotted Divider</Label>
                       <div className="mt-2">
                         <Body>Content above</Body>
-                        <hr className="my-4 border-dotted border-2 border-precision-300 dark:border-precision-600" />
+                        <hr className="my-4 border-2 border-dotted border-precision-300 dark:border-precision-600" />
                         <Body>Content below</Body>
                       </div>
                     </div>
@@ -119,14 +120,18 @@ function StylesGuide() {
                     <div>
                       <Label>Primary Brand Gradient</Label>
                       <div className="mt-2 h-16 rounded-lg bg-gradient-to-r from-primary-500 to-primary-600 p-4 text-white">
-                        <Body className="text-white">Primary gradient background</Body>
+                        <Body className="text-white">
+                          Primary gradient background
+                        </Body>
                       </div>
                     </div>
 
                     <div>
                       <Label>Accent Gradient</Label>
                       <div className="mt-2 h-16 rounded-lg bg-gradient-to-r from-accent-500 to-accent-600 p-4 text-white">
-                        <Body className="text-white">Accent gradient background</Body>
+                        <Body className="text-white">
+                          Accent gradient background
+                        </Body>
                       </div>
                     </div>
 
@@ -140,7 +145,9 @@ function StylesGuide() {
                     <div>
                       <Label>Success Gradient</Label>
                       <div className="mt-2 h-16 rounded-lg bg-gradient-to-r from-success-500 to-success-600 p-4 text-white">
-                        <Body className="text-white">Success state gradient</Body>
+                        <Body className="text-white">
+                          Success state gradient
+                        </Body>
                       </div>
                     </div>
                   </div>
@@ -196,14 +203,18 @@ function StylesGuide() {
                 <Card>
                   <Title className="mb-4">Status Badges</Title>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="default" className="bg-primary-500">Primary</Badge>
+                    <Badge variant="default" className="bg-primary-500">
+                      Primary
+                    </Badge>
                     <Badge variant="secondary">Secondary</Badge>
                     <Badge variant="outline">Outline</Badge>
                     <Badge variant="destructive">Error</Badge>
                     <Badge className="bg-success-500">Success</Badge>
                     <Badge className="bg-warning-500">Warning</Badge>
                   </div>
-                  <Caption className="mt-4">Various badge styles for different states</Caption>
+                  <Caption className="mt-4">
+                    Various badge styles for different states
+                  </Caption>
                 </Card>
 
                 <Card>
@@ -237,11 +248,15 @@ function StylesGuide() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <Body>Messages</Body>
-                      <Badge className="h-5 w-5 rounded-full bg-primary-500 p-0 text-xs">3</Badge>
+                      <Badge className="h-5 w-5 rounded-full bg-primary-500 p-0 text-xs">
+                        3
+                      </Badge>
                     </div>
                     <div className="flex items-center gap-3">
                       <Body>Alerts</Body>
-                      <Badge className="h-5 w-5 rounded-full bg-warning-500 p-0 text-xs">!</Badge>
+                      <Badge className="h-5 w-5 rounded-full bg-warning-500 p-0 text-xs">
+                        !
+                      </Badge>
                     </div>
                     <div className="flex items-center gap-3">
                       <Body>Updates</Body>
@@ -265,8 +280,12 @@ function StylesGuide() {
                       <Button size="lg">Large</Button>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <Button className="bg-primary-500 hover:bg-primary-600">Brand Primary</Button>
-                      <Button className="bg-accent-500 hover:bg-accent-600">Accent</Button>
+                      <Button className="bg-primary-500 hover:bg-primary-600">
+                        Brand Primary
+                      </Button>
+                      <Button className="bg-accent-500 hover:bg-accent-600">
+                        Accent
+                      </Button>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <Button className="bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700">
@@ -285,16 +304,24 @@ function StylesGuide() {
                       <Button variant="ghost">Ghost</Button>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <Button variant="outline" className="border-primary-500 text-primary-500 hover:bg-primary-50">
+                      <Button
+                        variant="outline"
+                        className="border-primary-500 text-primary-500 hover:bg-primary-50"
+                      >
                         Primary Outline
                       </Button>
-                      <Button variant="outline" className="border-accent-500 text-accent-500 hover:bg-accent-50">
+                      <Button
+                        variant="outline"
+                        className="border-accent-500 text-accent-500 hover:bg-accent-50"
+                      >
                         Accent Outline
                       </Button>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <Button variant="destructive">Destructive</Button>
-                      <Button className="bg-success-500 hover:bg-success-600">Success</Button>
+                      <Button className="bg-success-500 hover:bg-success-600">
+                        Success
+                      </Button>
                     </div>
                   </div>
                 </Card>
@@ -325,11 +352,15 @@ function StylesGuide() {
                   <div className="space-y-4">
                     <GlassCard>
                       <Body>Standard Glass Card</Body>
-                      <Caption className="mt-2">Backdrop blur with transparency</Caption>
+                      <Caption className="mt-2">
+                        Backdrop blur with transparency
+                      </Caption>
                     </GlassCard>
                     <div className="rounded-lg bg-white/10 p-4 backdrop-blur-md dark:bg-black/10">
                       <Body>Custom Glass Effect</Body>
-                      <Caption className="mt-2">Manual backdrop blur implementation</Caption>
+                      <Caption className="mt-2">
+                        Manual backdrop blur implementation
+                      </Caption>
                     </div>
                   </div>
                 </Card>
@@ -367,15 +398,24 @@ function StylesGuide() {
                     </div>
                     <div>
                       <Label>Success Progress</Label>
-                      <Progress value={100} className="mt-2 [&>div]:bg-success-500" />
+                      <Progress
+                        value={100}
+                        className="mt-2 [&>div]:bg-success-500"
+                      />
                     </div>
                     <div>
                       <Label>Warning Progress</Label>
-                      <Progress value={45} className="mt-2 [&>div]:bg-warning-500" />
+                      <Progress
+                        value={45}
+                        className="mt-2 [&>div]:bg-warning-500"
+                      />
                     </div>
                     <div>
                       <Label>Primary Progress</Label>
-                      <Progress value={60} className="mt-2 [&>div]:bg-primary-500" />
+                      <Progress
+                        value={60}
+                        className="mt-2 [&>div]:bg-primary-500"
+                      />
                     </div>
                   </div>
                 </Card>
@@ -416,33 +456,57 @@ function StylesGuide() {
                     <div>
                       <Label>Primary Red</Label>
                       <div className="mt-2 space-y-1">
-                        <div className="flex h-8 items-center justify-center rounded bg-primary-400 text-white text-sm">400</div>
-                        <div className="flex h-8 items-center justify-center rounded bg-primary-500 text-white text-sm">500</div>
-                        <div className="flex h-8 items-center justify-center rounded bg-primary-600 text-white text-sm">600</div>
+                        <div className="flex h-8 items-center justify-center rounded bg-primary-400 text-sm text-white">
+                          400
+                        </div>
+                        <div className="flex h-8 items-center justify-center rounded bg-primary-500 text-sm text-white">
+                          500
+                        </div>
+                        <div className="flex h-8 items-center justify-center rounded bg-primary-600 text-sm text-white">
+                          600
+                        </div>
                       </div>
                     </div>
                     <div>
                       <Label>Accent Blue</Label>
                       <div className="mt-2 space-y-1">
-                        <div className="flex h-8 items-center justify-center rounded bg-accent-400 text-white text-sm">400</div>
-                        <div className="flex h-8 items-center justify-center rounded bg-accent-500 text-white text-sm">500</div>
-                        <div className="flex h-8 items-center justify-center rounded bg-accent-600 text-white text-sm">600</div>
+                        <div className="flex h-8 items-center justify-center rounded bg-accent-400 text-sm text-white">
+                          400
+                        </div>
+                        <div className="flex h-8 items-center justify-center rounded bg-accent-500 text-sm text-white">
+                          500
+                        </div>
+                        <div className="flex h-8 items-center justify-center rounded bg-accent-600 text-sm text-white">
+                          600
+                        </div>
                       </div>
                     </div>
                     <div>
                       <Label>Success Green</Label>
                       <div className="mt-2 space-y-1">
-                        <div className="flex h-8 items-center justify-center rounded bg-success-400 text-white text-sm">400</div>
-                        <div className="flex h-8 items-center justify-center rounded bg-success-500 text-white text-sm">500</div>
-                        <div className="flex h-8 items-center justify-center rounded bg-success-600 text-white text-sm">600</div>
+                        <div className="flex h-8 items-center justify-center rounded bg-success-400 text-sm text-white">
+                          400
+                        </div>
+                        <div className="flex h-8 items-center justify-center rounded bg-success-500 text-sm text-white">
+                          500
+                        </div>
+                        <div className="flex h-8 items-center justify-center rounded bg-success-600 text-sm text-white">
+                          600
+                        </div>
                       </div>
                     </div>
                     <div>
                       <Label>Warning Yellow</Label>
                       <div className="mt-2 space-y-1">
-                        <div className="flex h-8 items-center justify-center rounded bg-warning-400 text-white text-sm">400</div>
-                        <div className="flex h-8 items-center justify-center rounded bg-warning-500 text-white text-sm">500</div>
-                        <div className="flex h-8 items-center justify-center rounded bg-warning-600 text-white text-sm">600</div>
+                        <div className="flex h-8 items-center justify-center rounded bg-warning-400 text-sm text-white">
+                          400
+                        </div>
+                        <div className="flex h-8 items-center justify-center rounded bg-warning-500 text-sm text-white">
+                          500
+                        </div>
+                        <div className="flex h-8 items-center justify-center rounded bg-warning-600 text-sm text-white">
+                          600
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -524,7 +588,9 @@ function StylesGuide() {
                   <Title>Style System Best Practices</Title>
                   <div className="grid gap-6 md:grid-cols-2">
                     <div>
-                      <Label className="text-success-600">Recommended Usage:</Label>
+                      <Label className="text-success-600">
+                        Recommended Usage:
+                      </Label>
                       <ul className="mt-2 space-y-1 text-sm text-precision-700 dark:text-precision-300">
                         <li>• Use gradients sparingly for emphasis</li>
                         <li>• Maintain consistent spacing (8px grid)</li>
@@ -554,11 +620,16 @@ function StylesGuide() {
                         <div className="flex items-center justify-between">
                           <div>
                             <Title>Project Status</Title>
-                            <Body className="mt-1">Combining multiple style elements effectively</Body>
+                            <Body className="mt-1">
+                              Combining multiple style elements effectively
+                            </Body>
                           </div>
                           <div className="flex items-center gap-2">
                             <Badge className="bg-success-500">Active</Badge>
-                            <Button size="sm" className="bg-primary-500 hover:bg-primary-600">
+                            <Button
+                              size="sm"
+                              className="bg-primary-500 hover:bg-primary-600"
+                            >
                               View
                             </Button>
                           </div>
@@ -568,7 +639,10 @@ function StylesGuide() {
                           <Label>Progress</Label>
                           <PrimaryAccent>75% Complete</PrimaryAccent>
                         </div>
-                        <Progress value={75} className="mt-2 [&>div]:bg-primary-500" />
+                        <Progress
+                          value={75}
+                          className="mt-2 [&>div]:bg-primary-500"
+                        />
                       </div>
                     </div>
                   </div>

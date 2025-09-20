@@ -16,17 +16,19 @@ The project phases are: design strategy definition, wireframe creation, content 
 
   softwareMigration: `We're migrating our legacy CRM system to a modern cloud-based solution. The technical team includes a solutions architect defining the target architecture, senior developers handling data migration, DevOps engineers managing infrastructure, and QA specialists ensuring data integrity.
 
-Key activities include system analysis, architecture design, data migration planning, development of migration scripts, testing and validation, and production cutover. The solutions architect has technical decision-making authority.`
+Key activities include system analysis, architecture design, data migration planning, development of migration scripts, testing and validation, and production cutover. The solutions architect has technical decision-making authority.`,
 };
 
-export const createDemoState = (type: keyof typeof DEMO_DESCRIPTIONS = 'mobileApp'): RaciState => {
+export const createDemoState = (
+  type: keyof typeof DEMO_DESCRIPTIONS = 'mobileApp'
+): RaciState => {
   const baseState: RaciState = {
     title: 'RACI Chart - Demo Project',
     description: DEMO_DESCRIPTIONS[type],
     roles: [],
     tasks: [],
     matrix: {},
-    logo: undefined
+    logo: undefined,
   };
 
   switch (type) {
@@ -47,7 +49,7 @@ function createMobileAppDemo(baseState: RaciState): RaciState {
     { id: 'mobile-po', name: 'Product Owner' },
     { id: 'mobile-dev', name: 'Senior Developer' },
     { id: 'mobile-qa', name: 'QA Engineer' },
-    { id: 'mobile-designer', name: 'UI/UX Designer' }
+    { id: 'mobile-designer', name: 'UI/UX Designer' },
   ];
 
   const tasks = [
@@ -56,7 +58,7 @@ function createMobileAppDemo(baseState: RaciState): RaciState {
     { id: 'mobile-architecture', name: 'System Architecture' },
     { id: 'mobile-development', name: 'Feature Development' },
     { id: 'mobile-testing', name: 'Quality Assurance' },
-    { id: 'mobile-deployment', name: 'Production Deployment' }
+    { id: 'mobile-deployment', name: 'Production Deployment' },
   ];
 
   const matrix = createEmptyMatrix(roles, tasks);
@@ -108,7 +110,7 @@ function createMobileAppDemo(baseState: RaciState): RaciState {
     title: 'Mobile E-commerce App - RACI Chart',
     roles,
     tasks,
-    matrix
+    matrix,
   };
 }
 
@@ -117,7 +119,7 @@ function createWebRedesignDemo(baseState: RaciState): RaciState {
     { id: 'web-marketing', name: 'Marketing Manager' },
     { id: 'web-developer', name: 'Web Developer' },
     { id: 'web-agency', name: 'Design Agency' },
-    { id: 'web-writer', name: 'Content Writer' }
+    { id: 'web-writer', name: 'Content Writer' },
   ];
 
   const tasks = [
@@ -125,7 +127,7 @@ function createWebRedesignDemo(baseState: RaciState): RaciState {
     { id: 'web-wireframes', name: 'Wireframe Creation' },
     { id: 'web-content', name: 'Content Development' },
     { id: 'web-implementation', name: 'Frontend Implementation' },
-    { id: 'web-launch', name: 'Website Launch' }
+    { id: 'web-launch', name: 'Website Launch' },
   ];
 
   const matrix = createEmptyMatrix(roles, tasks);
@@ -165,7 +167,7 @@ function createWebRedesignDemo(baseState: RaciState): RaciState {
     title: 'Website Redesign - RACI Chart',
     roles,
     tasks,
-    matrix
+    matrix,
   };
 }
 
@@ -175,7 +177,7 @@ function createSoftwareMigrationDemo(baseState: RaciState): RaciState {
     { id: 'crm-developer', name: 'Senior Developer' },
     { id: 'crm-devops', name: 'DevOps Engineer' },
     { id: 'crm-qa', name: 'QA Specialist' },
-    { id: 'crm-pm', name: 'Project Manager' }
+    { id: 'crm-pm', name: 'Project Manager' },
   ];
 
   const tasks = [
@@ -184,7 +186,7 @@ function createSoftwareMigrationDemo(baseState: RaciState): RaciState {
     { id: 'crm-migration', name: 'Data Migration' },
     { id: 'crm-infrastructure', name: 'Infrastructure Setup' },
     { id: 'crm-testing', name: 'Testing & Validation' },
-    { id: 'crm-cutover', name: 'Production Cutover' }
+    { id: 'crm-cutover', name: 'Production Cutover' },
   ];
 
   const matrix = createEmptyMatrix(roles, tasks);
@@ -236,12 +238,12 @@ function createSoftwareMigrationDemo(baseState: RaciState): RaciState {
     title: 'CRM Migration - RACI Chart',
     roles,
     tasks,
-    matrix
+    matrix,
   };
 }
 
 export const DEMO_STATES = {
   mobileApp: () => createDemoState('mobileApp'),
   webRedesign: () => createDemoState('webRedesign'),
-  softwareMigration: () => createDemoState('softwareMigration')
+  softwareMigration: () => createDemoState('softwareMigration'),
 } as const;

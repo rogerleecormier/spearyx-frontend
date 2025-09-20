@@ -236,9 +236,13 @@ function TypographyGuide() {
                     <Label>Target Audience</Label>
                     <Body className="mt-2">
                       Project managers, team leads, and organizations seeking{' '}
-                      <AccentText className="inline">precision tools</AccentText>{' '}
+                      <AccentText className="inline">
+                        precision tools
+                      </AccentText>{' '}
                       that{' '}
-                      <SuccessText className="inline">deliver results</SuccessText>{' '}
+                      <SuccessText className="inline">
+                        deliver results
+                      </SuccessText>{' '}
                       without complexity.
                     </Body>
                   </div>

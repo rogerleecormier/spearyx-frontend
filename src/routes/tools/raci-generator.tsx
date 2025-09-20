@@ -8,6 +8,10 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 // Components
+import {
+  assignRaciFromDescription,
+  type InferenceOptions,
+} from '../../ai/assignRaciFromDescription';
 import { Layout } from '../../components/layout';
 import { DescriptionPanel } from '../../components/raci/DescriptionPanel';
 import { ExportCenter } from '../../components/raci/ExportCenter';
@@ -15,24 +19,33 @@ import { RaciCanvasPreview } from '../../components/raci/RaciCanvasPreview';
 import { RaciMatrixEditor } from '../../components/raci/RaciMatrixEditor';
 import { RolesEditor } from '../../components/raci/RolesEditor';
 import { TasksEditor } from '../../components/raci/TasksEditor';
-
 // Types and utilities
-import { assignRaciFromDescription, type InferenceOptions } from '../../ai/assignRaciFromDescription';
 import { DEMO_DESCRIPTIONS, DEMO_STATES } from '../../lib/raci/demo-data';
 import {
-    addRoleToMatrix,
-    addTaskToMatrix,
-    migrateMatrix,
-    removeRoleFromMatrix,
-    removeTaskFromMatrix,
-    renameRoleInMatrix
+  addRoleToMatrix,
+  addTaskToMatrix,
+  migrateMatrix,
+  removeRoleFromMatrix,
+  removeTaskFromMatrix,
+  renameRoleInMatrix,
 } from '../../lib/raci/matrix';
 import { RaciStateSchema, validateRaciState } from '../../lib/raci/schema';
-import { clearSharedStateFromUrl, extractStateFromUrl, hasSharedStateInUrl } from '../../lib/sharing/shareLink';
-import type { LogoData, RaciState, Role, Task, ValidationError } from '../../types/raci';
+import {
+  clearSharedStateFromUrl,
+  extractStateFromUrl,
+  hasSharedStateInUrl,
+} from '../../lib/sharing/shareLink';
+import type {
+  LogoData,
+  RaciState,
+  Role,
+  Task,
+  ValidationError,
+} from '../../types/raci';
 
 // Generate unique IDs
-const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+const generateId = () =>
+  `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
 // Default state
 const createDefaultState = (): RaciState => ({
@@ -41,7 +54,7 @@ const createDefaultState = (): RaciState => ({
   roles: [],
   tasks: [],
   matrix: {},
-  logo: undefined
+  logo: undefined,
 });
 
 // Demo data for quick start - using imported demo descriptions
@@ -52,17 +65,19 @@ export const Route = createFileRoute('/tools/raci-generator')({
 
 function RaciGeneratorPage() {
   const [state, setState] = useState<RaciState>(createDefaultState);
-  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
+    []
+  );
   const [isGenerating, setIsGenerating] = useState(false);
   const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([]);
   const matrixCanvasRef = useRef<HTMLDivElement>(null);
   const matrixExportRef = useRef<HTMLDivElement>(null);
 
   // Form for validation
-  const form = useForm<RaciState>({
+  const _form = useForm<RaciState>({
     resolver: zodResolver(RaciStateSchema),
     defaultValues: state,
-    mode: 'onChange'
+    mode: 'onChange',
   });
 
   // Update validation errors when state changes
@@ -90,149 +105,176 @@ function RaciGeneratorPage() {
 
   // Handlers
   const handleTitleChange = useCallback((title: string) => {
-    setState(prev => ({ ...prev, title }));
+    setState((prev) => ({ ...prev, title }));
   }, []);
 
   const handleLogoChange = useCallback((logo: LogoData | undefined) => {
-    setState(prev => ({ ...prev, logo }));
+    setState((prev) => ({ ...prev, logo }));
   }, []);
 
   const handleDescriptionChange = useCallback((description: string) => {
-    setState(prev => ({ ...prev, description }));
+    setState((prev) => ({ ...prev, description }));
   }, []);
 
   const handleAddRole = useCallback((name: string) => {
     const newRole: Role = { id: generateId(), name };
-    setState(prev => {
+    setState((prev) => {
       const newRoles = [...prev.roles, newRole];
-      const newMatrix = addRoleToMatrix(prev.matrix, name, prev.tasks.map(t => t.id));
+      const newMatrix = addRoleToMatrix(
+        prev.matrix,
+        name,
+        prev.tasks.map((t) => t.id)
+      );
       return { ...prev, roles: newRoles, matrix: newMatrix };
     });
   }, []);
 
   const handleUpdateRole = useCallback((id: string, newName: string) => {
-    setState(prev => {
-      const role = prev.roles.find(r => r.id === id);
+    setState((prev) => {
+      const role = prev.roles.find((r) => r.id === id);
       if (!role) return prev;
 
-      const updatedRoles = prev.roles.map(r => 
+      const updatedRoles = prev.roles.map((r) =>
         r.id === id ? { ...r, name: newName } : r
       );
       const newMatrix = renameRoleInMatrix(prev.matrix, role.name, newName);
-      
+
       return { ...prev, roles: updatedRoles, matrix: newMatrix };
     });
   }, []);
 
   const handleDeleteRole = useCallback((id: string) => {
-    setState(prev => {
-      const role = prev.roles.find(r => r.id === id);
+    setState((prev) => {
+      const role = prev.roles.find((r) => r.id === id);
       if (!role) return prev;
 
-      const newRoles = prev.roles.filter(r => r.id !== id);
+      const newRoles = prev.roles.filter((r) => r.id !== id);
       const newMatrix = removeRoleFromMatrix(prev.matrix, role.name);
-      
+
       return { ...prev, roles: newRoles, matrix: newMatrix };
     });
   }, []);
 
   const handleAddTask = useCallback((name: string) => {
     const newTask: Task = { id: generateId(), name };
-    setState(prev => {
+    setState((prev) => {
       const newTasks = [...prev.tasks, newTask];
-      const newMatrix = addTaskToMatrix(prev.matrix, newTask.id, prev.roles.map(r => r.name));
+      const newMatrix = addTaskToMatrix(
+        prev.matrix,
+        newTask.id,
+        prev.roles.map((r) => r.name)
+      );
       return { ...prev, tasks: newTasks, matrix: newMatrix };
     });
   }, []);
 
   const handleUpdateTask = useCallback((id: string, newName: string) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      tasks: prev.tasks.map(t => t.id === id ? { ...t, name: newName } : t)
+      tasks: prev.tasks.map((t) => (t.id === id ? { ...t, name: newName } : t)),
     }));
   }, []);
 
   const handleDeleteTask = useCallback((id: string) => {
-    setState(prev => {
-      const newTasks = prev.tasks.filter(t => t.id !== id);
+    setState((prev) => {
+      const newTasks = prev.tasks.filter((t) => t.id !== id);
       const newMatrix = removeTaskFromMatrix(prev.matrix, id);
       return { ...prev, tasks: newTasks, matrix: newMatrix };
     });
   }, []);
 
-  const handleMatrixChange = useCallback((matrix: typeof state.matrix) => {
-    setState(prev => ({ ...prev, matrix }));
-  }, []);
+  const handleMatrixChange = useCallback(
+    (matrix: typeof state.matrix) => {
+      setState((prev) => ({ ...prev, matrix }));
+    },
+    [state]
+  );
 
-  const handleGenerateRaci = useCallback(async (description: string, answers?: Record<string, string>) => {
-    if (!description.trim()) return;
+  const handleGenerateRaci = useCallback(
+    async (description: string, answers?: Record<string, string>) => {
+      if (!description.trim()) return;
 
-    setIsGenerating(true);
-    setFollowUpQuestions([]);
+      setIsGenerating(true);
+      setFollowUpQuestions([]);
 
-    try {
-      const options: InferenceOptions = {
-        description,
-        previousAnswers: answers,
-        keepExistingData: state.roles.length > 0 || state.tasks.length > 0,
-        existingRoles: state.roles,
-        existingTasks: state.tasks,
-        existingMatrix: state.matrix
-      };
+      try {
+        const options: InferenceOptions = {
+          description,
+          previousAnswers: answers,
+          keepExistingData: state.roles.length > 0 || state.tasks.length > 0,
+          existingRoles: state.roles,
+          existingTasks: state.tasks,
+          existingMatrix: state.matrix,
+        };
 
-      const result = await assignRaciFromDescription(options);
+        const result = await assignRaciFromDescription(options);
 
-      // Update state with AI results
-      setState(prev => {
-        const oldRoles = prev.roles;
-        const oldTasks = prev.tasks;
-        const newMatrix = migrateMatrix(prev.matrix, oldRoles, result.roles, oldTasks, result.tasks);
-        
-        // Merge AI-generated matrix with existing matrix
-        const finalMatrix = { ...newMatrix };
-        Object.entries(result.matrix).forEach(([taskId, taskMatrix]) => {
-          if (!finalMatrix[taskId]) finalMatrix[taskId] = {};
-          Object.entries(taskMatrix).forEach(([roleName, raciValue]) => {
-            // Only overwrite if cell is empty or if it's a new role/task combination
-            if (!finalMatrix[taskId][roleName] || 
-                !Object.values(finalMatrix[taskId][roleName]).some(Boolean)) {
-              finalMatrix[taskId][roleName] = raciValue;
-            }
+        // Update state with AI results
+        setState((prev) => {
+          const oldRoles = prev.roles;
+          const oldTasks = prev.tasks;
+          const newMatrix = migrateMatrix(
+            prev.matrix,
+            oldRoles,
+            result.roles,
+            oldTasks,
+            result.tasks
+          );
+
+          // Merge AI-generated matrix with existing matrix
+          const finalMatrix = { ...newMatrix };
+          Object.entries(result.matrix).forEach(([taskId, taskMatrix]) => {
+            if (!finalMatrix[taskId]) finalMatrix[taskId] = {};
+            Object.entries(taskMatrix).forEach(([roleName, raciValue]) => {
+              // Only overwrite if cell is empty or if it's a new role/task combination
+              if (
+                !finalMatrix[taskId][roleName] ||
+                !Object.values(finalMatrix[taskId][roleName]).some(Boolean)
+              ) {
+                finalMatrix[taskId][roleName] = raciValue;
+              }
+            });
           });
+
+          return {
+            ...prev,
+            roles: result.roles,
+            tasks: result.tasks,
+            matrix: finalMatrix,
+          };
         });
 
-        return {
-          ...prev,
-          roles: result.roles,
-          tasks: result.tasks,
-          matrix: finalMatrix
-        };
-      });
-
-      // Set follow-up questions if any
-      if (result.followUpQuestions && result.followUpQuestions.length > 0) {
-        setFollowUpQuestions(result.followUpQuestions);
+        // Set follow-up questions if any
+        if (result.followUpQuestions && result.followUpQuestions.length > 0) {
+          setFollowUpQuestions(result.followUpQuestions);
+        }
+      } catch (error) {
+        console.error('Failed to generate RACI:', error);
+        // You could add a toast notification here
+      } finally {
+        setIsGenerating(false);
       }
-
-    } catch (error) {
-      console.error('Failed to generate RACI:', error);
-      // You could add a toast notification here
-    } finally {
-      setIsGenerating(false);
-    }
-  }, [state.roles, state.tasks, state.matrix]);
+    },
+    [state.roles, state.tasks, state.matrix]
+  );
 
   // Quick start with demo data
-  const handleLoadDemo = useCallback((demoType: keyof typeof DEMO_STATES = 'mobileApp') => {
-    const demoState = DEMO_STATES[demoType]();
-    setState(demoState);
-  }, []);
+  const handleLoadDemo = useCallback(
+    (demoType: keyof typeof DEMO_STATES = 'mobileApp') => {
+      const demoState = DEMO_STATES[demoType]();
+      setState(demoState);
+    },
+    []
+  );
 
-  const handleLoadDemoDescription = useCallback((demoType: keyof typeof DEMO_DESCRIPTIONS = 'mobileApp') => {
-    const description = DEMO_DESCRIPTIONS[demoType];
-    setState(prev => ({ ...prev, description }));
-    handleGenerateRaci(description);
-  }, [handleGenerateRaci]);
+  const _handleLoadDemoDescription = useCallback(
+    (demoType: keyof typeof DEMO_DESCRIPTIONS = 'mobileApp') => {
+      const description = DEMO_DESCRIPTIONS[demoType];
+      setState((prev) => ({ ...prev, description }));
+      handleGenerateRaci(description);
+    },
+    [handleGenerateRaci]
+  );
 
   // Handle state import from sharing
   const handleStateImport = useCallback((importedState: RaciState) => {
@@ -243,41 +285,46 @@ function RaciGeneratorPage() {
 
   // Memoized validation errors for components
   const matrixValidationErrors = useMemo(() => {
-    return validationErrors.map(error => ({
+    return validationErrors.map((error) => ({
       taskId: error.taskId,
       roleName: error.roleName,
-      message: error.message
+      message: error.message,
     }));
   }, [validationErrors]);
 
   const exportValidationErrors = useMemo(() => {
-    return validationErrors.map(error => ({ message: error.message }));
+    return validationErrors.map((error) => ({ message: error.message }));
   }, [validationErrors]);
 
   return (
     <Layout>
       {/* Page Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="border-b border-gray-200 bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="space-y-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">RACI Chart Generator</h1>
-              <p className="text-gray-600 mt-2">
-                Create and manage your RACI (Responsible, Accountable, Consulted, Informed) matrix.
-                {' '}
-                <a 
-                  href="#" 
-                  className="text-blue-600 hover:text-blue-800 underline"
+              <h1 className="text-3xl font-bold text-gray-900">
+                RACI Chart Generator
+              </h1>
+              <p className="mt-2 text-gray-600">
+                Create and manage your RACI (Responsible, Accountable,
+                Consulted, Informed) matrix.{' '}
+                <a
+                  href="#"
+                  className="text-blue-600 underline hover:text-blue-800"
                   onClick={(e) => e.preventDefault()}
                 >
                   Learn about RACI methodology
                 </a>
               </p>
             </div>
-            
+
             {/* Editable Title */}
             <div>
-              <label htmlFor="chart-title" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="chart-title"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
                 Chart Title
               </label>
               <input
@@ -285,7 +332,7 @@ function RaciGeneratorPage() {
                 type="text"
                 value={state.title}
                 onChange={(e) => handleTitleChange(e.target.value)}
-                className="text-xl font-semibold text-gray-900 bg-white border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full max-w-md"
+                className="w-full max-w-md rounded-md border border-gray-300 bg-white px-3 py-2 text-xl font-semibold text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter chart title"
               />
             </div>
@@ -294,9 +341,8 @@ function RaciGeneratorPage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="space-y-8">
-          
           {/* Description Panel */}
           <DescriptionPanel
             description={state.description}
@@ -307,51 +353,68 @@ function RaciGeneratorPage() {
           />
 
           {/* Quick Start */}
-          {state.roles.length === 0 && state.tasks.length === 0 && !state.description && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-sm font-medium text-blue-900">Quick Start</h3>
-                  <p className="text-sm text-blue-700 mt-1">
-                    Try one of our demo projects to see how the RACI generator works
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <button
-                    onClick={() => handleLoadDemo('mobileApp')}
-                    className="p-3 text-left text-sm bg-blue-100 rounded-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    <div className="font-medium text-blue-900">Mobile App</div>
-                    <div className="text-blue-700 text-xs mt-1">E-commerce development team</div>
-                  </button>
-                  <button
-                    onClick={() => handleLoadDemo('webRedesign')}
-                    className="p-3 text-left text-sm bg-blue-100 rounded-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    <div className="font-medium text-blue-900">Web Redesign</div>
-                    <div className="text-blue-700 text-xs mt-1">Marketing & design project</div>
-                  </button>
-                  <button
-                    onClick={() => handleLoadDemo('softwareMigration')}
-                    className="p-3 text-left text-sm bg-blue-100 rounded-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    <div className="font-medium text-blue-900">CRM Migration</div>
-                    <div className="text-blue-700 text-xs mt-1">Legacy system upgrade</div>
-                  </button>
+          {state.roles.length === 0 &&
+            state.tasks.length === 0 &&
+            !state.description && (
+              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-sm font-medium text-blue-900">
+                      Quick Start
+                    </h3>
+                    <p className="mt-1 text-sm text-blue-700">
+                      Try one of our demo projects to see how the RACI generator
+                      works
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                    <button
+                      onClick={() => handleLoadDemo('mobileApp')}
+                      className="rounded-md bg-blue-100 p-3 text-left text-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                      <div className="font-medium text-blue-900">
+                        Mobile App
+                      </div>
+                      <div className="mt-1 text-xs text-blue-700">
+                        E-commerce development team
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => handleLoadDemo('webRedesign')}
+                      className="rounded-md bg-blue-100 p-3 text-left text-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                      <div className="font-medium text-blue-900">
+                        Web Redesign
+                      </div>
+                      <div className="mt-1 text-xs text-blue-700">
+                        Marketing & design project
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => handleLoadDemo('softwareMigration')}
+                      className="rounded-md bg-blue-100 p-3 text-left text-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                      <div className="font-medium text-blue-900">
+                        CRM Migration
+                      </div>
+                      <div className="mt-1 text-xs text-blue-700">
+                        Legacy system upgrade
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Editors Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <RolesEditor
               roles={state.roles}
               onAddRole={handleAddRole}
               onUpdateRole={handleUpdateRole}
               onDeleteRole={handleDeleteRole}
             />
-            
+
             <TasksEditor
               tasks={state.tasks}
               onAddTask={handleAddTask}
@@ -371,11 +434,19 @@ function RaciGeneratorPage() {
 
           {/* Validation Summary */}
           {validationErrors.length > 0 && (
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
               <div className="flex items-start gap-2">
                 <div className="flex-shrink-0">
-                  <svg className="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  <svg
+                    className="h-5 w-5 text-amber-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 </div>
                 <div>
@@ -383,12 +454,14 @@ function RaciGeneratorPage() {
                     Validation Issues ({validationErrors.length})
                   </h3>
                   <div className="mt-2 text-sm text-amber-700">
-                    <ul className="list-disc list-inside space-y-1">
+                    <ul className="list-inside list-disc space-y-1">
                       {validationErrors.slice(0, 5).map((error, index) => (
                         <li key={index}>{error.message}</li>
                       ))}
                       {validationErrors.length > 5 && (
-                        <li>... and {validationErrors.length - 5} more issues</li>
+                        <li>
+                          ... and {validationErrors.length - 5} more issues
+                        </li>
                       )}
                     </ul>
                   </div>

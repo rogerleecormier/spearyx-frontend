@@ -2,8 +2,17 @@
  * PDF export functionality using @react-pdf/renderer
  */
 
-import { Document, Image, Page, StyleSheet, Text, View, pdf } from '@react-pdf/renderer';
+import {
+  Document,
+  Image,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+  pdf,
+} from '@react-pdf/renderer';
 import React from 'react';
+
 import type { ExportOptions, RaciKey, RaciState } from '../../../types/raci';
 import { getActiveRaciKey } from '../matrix';
 
@@ -14,7 +23,7 @@ const RACI_COLORS: Record<RaciKey, string> = {
   R: '#90EE90', // Light green
   A: '#FFD700', // Light gold
   C: '#87CEEB', // Light sky blue
-  I: '#D3D3D3'  // Light gray
+  I: '#D3D3D3', // Light gray
 };
 
 /**
@@ -26,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     padding: 30,
     fontSize: 10,
-    fontFamily: 'Helvetica'
+    fontFamily: 'Helvetica',
   },
   header: {
     flexDirection: 'row',
@@ -34,36 +43,36 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingBottom: 10,
     borderBottomWidth: 2,
-    borderBottomColor: '#4A5568'
+    borderBottomColor: '#4A5568',
   },
   logo: {
     width: 80,
     height: 40,
     marginRight: 15,
-    objectFit: 'contain'
+    objectFit: 'contain',
   },
   headerText: {
-    flex: 1
+    flex: 1,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#2D3748',
-    marginBottom: 5
+    marginBottom: 5,
   },
   subtitle: {
     fontSize: 10,
-    color: '#718096'
+    color: '#718096',
   },
   tableContainer: {
     flexDirection: 'column',
-    marginTop: 20
+    marginTop: 20,
   },
   tableHeader: {
     flexDirection: 'row',
     backgroundColor: '#4A5568',
     paddingVertical: 8,
-    paddingHorizontal: 4
+    paddingHorizontal: 4,
   },
   tableHeaderCell: {
     color: '#FFFFFF',
@@ -71,33 +80,33 @@ const styles = StyleSheet.create({
     fontSize: 9,
     textAlign: 'center',
     paddingVertical: 2,
-    paddingHorizontal: 2
+    paddingHorizontal: 2,
   },
   taskHeaderCell: {
     width: '35%',
     textAlign: 'left',
-    paddingLeft: 8
+    paddingLeft: 8,
   },
   roleHeaderCell: {
     flex: 1,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: '#E2E8F0',
     paddingVertical: 6,
-    paddingHorizontal: 4
+    paddingHorizontal: 4,
   },
   tableRowAlt: {
-    backgroundColor: '#F7FAFC'
+    backgroundColor: '#F7FAFC',
   },
   taskCell: {
     width: '35%',
     fontSize: 9,
     textAlign: 'left',
     paddingLeft: 8,
-    paddingVertical: 4
+    paddingVertical: 4,
   },
   raciCell: {
     flex: 1,
@@ -106,29 +115,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 4,
     marginHorizontal: 1,
-    borderRadius: 2
+    borderRadius: 2,
   },
   legend: {
     marginTop: 30,
     paddingTop: 15,
     borderTopWidth: 1,
-    borderTopColor: '#E2E8F0'
+    borderTopColor: '#E2E8F0',
   },
   legendTitle: {
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#2D3748'
+    color: '#2D3748',
   },
   legendGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: 20,
-    marginBottom: 5
+    marginBottom: 5,
   },
   legendKey: {
     width: 20,
@@ -139,34 +148,29 @@ const styles = StyleSheet.create({
     color: '#2D3748',
     marginRight: 8,
     paddingVertical: 2,
-    borderRadius: 2
+    borderRadius: 2,
   },
   legendDesc: {
     fontSize: 9,
-    color: '#4A5568'
-  }
+    color: '#4A5568',
+  },
 });
 
 /**
  * RACI PDF Document Component
  */
-const RaciPdfDocument: React.FC<{ state: RaciState; options: ExportOptions }> = ({ 
-  state, 
-  options 
-}) => (
+const RaciPdfDocument: React.FC<{
+  state: RaciState;
+  options: ExportOptions;
+}> = ({ state, options }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       {/* Header */}
       <View style={styles.header}>
-        {state.logo && (
-          <Image 
-            style={styles.logo}
-            src={state.logo.dataUrl}
-          />
-        )}
+        {state.logo && <Image style={styles.logo} src={state.logo.dataUrl} />}
         <View style={styles.headerText}>
           <Text style={styles.title}>{state.title}</Text>
-          {(options.includeDate !== false) && (
+          {options.includeDate !== false && (
             <Text style={styles.subtitle}>
               Generated: {new Date().toLocaleDateString()}
             </Text>
@@ -182,8 +186,8 @@ const RaciPdfDocument: React.FC<{ state: RaciState; options: ExportOptions }> = 
             Task
           </Text>
           {state.roles.map((role) => (
-            <Text 
-              key={role.id} 
+            <Text
+              key={role.id}
               style={[styles.tableHeaderCell, styles.roleHeaderCell]}
             >
               {role.name}
@@ -193,30 +197,30 @@ const RaciPdfDocument: React.FC<{ state: RaciState; options: ExportOptions }> = 
 
         {/* Table Rows */}
         {state.tasks.map((task, index) => (
-          <View 
-            key={task.id} 
+          <View
+            key={task.id}
             style={[
-              styles.tableRow, 
-              index % 2 === 1 && styles.tableRowAlt
+              styles.tableRow,
+              ...(index % 2 === 1 ? [styles.tableRowAlt] : []),
             ]}
           >
-            <Text style={styles.taskCell}>
-              {task.name}
-            </Text>
+            <Text style={styles.taskCell}>{task.name}</Text>
             {state.roles.map((role) => {
               const cellValue = state.matrix[task.id]?.[role.name];
               const activeKey = cellValue ? getActiveRaciKey(cellValue) : null;
-              
+
               return (
                 <View key={role.id} style={styles.raciCell}>
-                  <Text 
+                  <Text
                     style={{
-                      backgroundColor: activeKey ? RACI_COLORS[activeKey] : 'transparent',
+                      backgroundColor: activeKey
+                        ? RACI_COLORS[activeKey]
+                        : 'transparent',
                       color: '#2D3748',
                       width: '100%',
                       textAlign: 'center',
                       paddingVertical: 2,
-                      borderRadius: 2
+                      borderRadius: 2,
                     }}
                   >
                     {activeKey || ''}
@@ -233,25 +237,35 @@ const RaciPdfDocument: React.FC<{ state: RaciState; options: ExportOptions }> = 
         <Text style={styles.legendTitle}>RACI Legend</Text>
         <View style={styles.legendGrid}>
           <View style={styles.legendItem}>
-            <Text style={[styles.legendKey, { backgroundColor: RACI_COLORS.R }]}>
+            <Text
+              style={[styles.legendKey, { backgroundColor: RACI_COLORS.R }]}
+            >
               R
             </Text>
             <Text style={styles.legendDesc}>Responsible - Does the work</Text>
           </View>
           <View style={styles.legendItem}>
-            <Text style={[styles.legendKey, { backgroundColor: RACI_COLORS.A }]}>
+            <Text
+              style={[styles.legendKey, { backgroundColor: RACI_COLORS.A }]}
+            >
               A
             </Text>
-            <Text style={styles.legendDesc}>Accountable - Ultimately answerable</Text>
+            <Text style={styles.legendDesc}>
+              Accountable - Ultimately answerable
+            </Text>
           </View>
           <View style={styles.legendItem}>
-            <Text style={[styles.legendKey, { backgroundColor: RACI_COLORS.C }]}>
+            <Text
+              style={[styles.legendKey, { backgroundColor: RACI_COLORS.C }]}
+            >
               C
             </Text>
             <Text style={styles.legendDesc}>Consulted - Provides input</Text>
           </View>
           <View style={styles.legendItem}>
-            <Text style={[styles.legendKey, { backgroundColor: RACI_COLORS.I }]}>
+            <Text
+              style={[styles.legendKey, { backgroundColor: RACI_COLORS.I }]}
+            >
               I
             </Text>
             <Text style={styles.legendDesc}>Informed - Needs to know</Text>
@@ -276,18 +290,23 @@ export async function exportToPdf(
 /**
  * Downloads the PDF file
  */
-export function downloadPdf(state: RaciState, options: ExportOptions = {}): void {
-  exportToPdf(state, options).then(blob => {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = options.filename || 'raci.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }).catch(error => {
-    console.error('Failed to export PDF:', error);
-    throw error;
-  });
+export function downloadPdf(
+  state: RaciState,
+  options: ExportOptions = {}
+): void {
+  exportToPdf(state, options)
+    .then((blob) => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = options.filename || 'raci.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    })
+    .catch((error) => {
+      console.error('Failed to export PDF:', error);
+      throw error;
+    });
 }

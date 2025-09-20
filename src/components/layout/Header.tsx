@@ -32,7 +32,7 @@ export function Header({ isDev = false }: HeaderProps) {
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/tools/raci-generator">RACI Generator</Link>
               </Button>
-              
+
               {/* Search bar placeholder - to be added later */}
               <div className="relative">
                 <input
@@ -114,7 +114,7 @@ export function Header({ isDev = false }: HeaderProps) {
                   </Link>
                 </Button>
               </div>
-              
+
               {/* Search bar for mobile */}
               <div className="relative">
                 <input
