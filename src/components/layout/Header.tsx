@@ -27,8 +27,12 @@ export function Header({ isDev = false }: HeaderProps) {
 
           {/* Desktop Navigation */}
           <nav className="hidden items-center space-x-8 md:flex">
-            {/* Main Navigation Links - Placeholder for future */}
+            {/* Main Navigation Links */}
             <div className="flex items-center space-x-6">
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/tools/raci-generator">RACI Generator</Link>
+              </Button>
+
               {/* Search bar placeholder - to be added later */}
               <div className="relative">
                 <input
@@ -68,7 +72,10 @@ export function Header({ isDev = false }: HeaderProps) {
                     <Link to="/cards-guide">Cards</Link>
                   </Button>
                   <Button variant="ghost" size="sm" asChild>
-                    <Link to="/server-data">Server Data</Link>
+                    <Link to="/styles-guide">Styles</Link>
+                  </Button>
+                  <Button variant="ghost" size="sm" asChild>
+                    <Link to="/data">Server Data</Link>
                   </Button>
                 </div>
               </div>
@@ -94,6 +101,20 @@ export function Header({ isDev = false }: HeaderProps) {
         {isMobileMenuOpen && (
           <div className="border-t border-precision-200 py-4 dark:border-precision-800 md:hidden">
             <div className="space-y-4">
+              {/* Main Navigation for mobile */}
+              <div className="space-y-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start"
+                  asChild
+                >
+                  <Link to="/tools/raci-generator" onClick={toggleMobileMenu}>
+                    RACI Generator
+                  </Link>
+                </Button>
+              </div>
+
               {/* Search bar for mobile */}
               <div className="relative">
                 <input
@@ -151,7 +172,17 @@ export function Header({ isDev = false }: HeaderProps) {
                       className="w-full justify-start"
                       asChild
                     >
-                      <Link to="/server-data" onClick={toggleMobileMenu}>
+                      <Link to="/styles-guide" onClick={toggleMobileMenu}>
+                        Styles Guide
+                      </Link>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
+                      asChild
+                    >
+                      <Link to="/data" onClick={toggleMobileMenu}>
                         Server Data
                       </Link>
                     </Button>

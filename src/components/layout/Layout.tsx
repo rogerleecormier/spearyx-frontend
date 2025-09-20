@@ -8,10 +8,13 @@ interface LayoutProps {
   isDev?: boolean;
 }
 
-export function Layout({ children, isDev = false }: LayoutProps) {
+export function Layout({ children, isDev }: LayoutProps) {
+  // Automatically detect dev mode if not explicitly set
+  const isDevMode = isDev ?? import.meta.env.DEV;
+
   return (
     <div className="flex min-h-screen flex-col">
-      <Header isDev={isDev} />
+      <Header isDev={isDevMode} />
       <main className="flex-1">{children}</main>
       <Footer />
     </div>

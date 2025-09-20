@@ -17,7 +17,7 @@ function Home() {
   log.info('Home page loaded');
 
   return (
-    <Layout isDev={false}>
+    <Layout>
       <ComingSoon />
     </Layout>
   );

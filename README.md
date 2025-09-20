@@ -11,6 +11,16 @@ A modern React application built with TanStack Start, featuring TypeScript, Tail
 - 🚀 **Vite** - Fast build tool and development server
 - 🎯 **Custom Logo** - SVG logo with targeting reticle and spear design
 - 🔄 **Server-Side Rendering** - SSR with route loaders and server functions
+- 📊 **RACI Chart Generator** - Interactive tool for creating project responsibility matrices
+
+## Architecture
+
+This repository contains the **frontend application only**. Backend services and Cloudflare Workers are maintained in a separate private repository:
+
+- 🌍 **Frontend**: `spearyx-frontend` (this repository)
+- 🔒 **Backend**: `spearyx-backend` (private repository)
+
+The frontend communicates with backend services via configured API endpoints in `src/config/workers.ts`.
 
 ## Getting Started
 

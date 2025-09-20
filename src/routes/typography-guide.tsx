@@ -24,7 +24,7 @@ import { Layout } from '@/components/layout';
 
 function TypographyGuide() {
   return (
-    <Layout isDev={true}>
+    <Layout>
       <div className="min-h-screen bg-precision-50 py-12 dark:bg-precision-900">
         <div className="container mx-auto max-w-4xl px-4">
           <Hero className="mb-12 text-center">Typography Guide</Hero>
@@ -235,14 +235,12 @@ function TypographyGuide() {
                   <div className="border-t border-precision-200 pt-6 dark:border-precision-700">
                     <Label>Target Audience</Label>
                     <Body className="mt-2">
-                      Project managers, team leads, and organizations seeking
-                      <AccentText className="ml-1">
-                        {' '}
+                      Project managers, team leads, and organizations seeking{' '}
+                      <AccentText className="inline">
                         precision tools
                       </AccentText>{' '}
-                      that
-                      <SuccessText className="ml-1">
-                        {' '}
+                      that{' '}
+                      <SuccessText className="inline">
                         deliver results
                       </SuccessText>{' '}
                       without complexity.

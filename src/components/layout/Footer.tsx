@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import { Logo } from '@/components/brand';
 
-import { Body, Caption, Title } from '@/components/brand';
+import { Logo, Body, Caption, Title } from '@/components/brand';
 
 export function Footer() {
   return (
@@ -11,7 +10,7 @@ export function Footer() {
           {/* Brand Section */}
           <div className="md:col-span-2">
             <div className="mb-4 flex items-center space-x-3">
-            <Logo size="sm" showText={false} />
+              <Logo size="sm" showText={false} />
             </div>
             <Body className="mb-4 text-precision-600 dark:text-precision-400">
               Precision project management tools that just work. AI-augmented

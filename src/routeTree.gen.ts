@@ -10,13 +10,20 @@
 
 import { Route as rootRouteImport } from './routes/__root';
 import { Route as TypographyGuideRouteImport } from './routes/typography-guide';
+import { Route as StylesGuideRouteImport } from './routes/styles-guide';
 import { Route as DataRouteImport } from './routes/data';
 import { Route as CardsGuideRouteImport } from './routes/cards-guide';
 import { Route as IndexRouteImport } from './routes/index';
+import { Route as ToolsRaciGeneratorRouteImport } from './routes/tools/raci-generator';
 
 const TypographyGuideRoute = TypographyGuideRouteImport.update({
   id: '/typography-guide',
   path: '/typography-guide',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const StylesGuideRoute = StylesGuideRouteImport.update({
+  id: '/styles-guide',
+  path: '/styles-guide',
   getParentRoute: () => rootRouteImport,
 } as any);
 const DataRoute = DataRouteImport.update({
@@ -34,39 +41,71 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any);
+const ToolsRaciGeneratorRoute = ToolsRaciGeneratorRouteImport.update({
+  id: '/tools/raci-generator',
+  path: '/tools/raci-generator',
+  getParentRoute: () => rootRouteImport,
+} as any);
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/cards-guide': typeof CardsGuideRoute;
   '/data': typeof DataRoute;
+  '/styles-guide': typeof StylesGuideRoute;
   '/typography-guide': typeof TypographyGuideRoute;
+  '/tools/raci-generator': typeof ToolsRaciGeneratorRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/cards-guide': typeof CardsGuideRoute;
   '/data': typeof DataRoute;
+  '/styles-guide': typeof StylesGuideRoute;
   '/typography-guide': typeof TypographyGuideRoute;
+  '/tools/raci-generator': typeof ToolsRaciGeneratorRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
   '/cards-guide': typeof CardsGuideRoute;
   '/data': typeof DataRoute;
+  '/styles-guide': typeof StylesGuideRoute;
   '/typography-guide': typeof TypographyGuideRoute;
+  '/tools/raci-generator': typeof ToolsRaciGeneratorRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/cards-guide' | '/data' | '/typography-guide';
+  fullPaths:
+    | '/'
+    | '/cards-guide'
+    | '/data'
+    | '/styles-guide'
+    | '/typography-guide'
+    | '/tools/raci-generator';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/cards-guide' | '/data' | '/typography-guide';
-  id: '__root__' | '/' | '/cards-guide' | '/data' | '/typography-guide';
+  to:
+    | '/'
+    | '/cards-guide'
+    | '/data'
+    | '/styles-guide'
+    | '/typography-guide'
+    | '/tools/raci-generator';
+  id:
+    | '__root__'
+    | '/'
+    | '/cards-guide'
+    | '/data'
+    | '/styles-guide'
+    | '/typography-guide'
+    | '/tools/raci-generator';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   CardsGuideRoute: typeof CardsGuideRoute;
   DataRoute: typeof DataRoute;
+  StylesGuideRoute: typeof StylesGuideRoute;
   TypographyGuideRoute: typeof TypographyGuideRoute;
+  ToolsRaciGeneratorRoute: typeof ToolsRaciGeneratorRoute;
 }
 
 declare module '@tanstack/react-router' {
@@ -76,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/typography-guide';
       fullPath: '/typography-guide';
       preLoaderRoute: typeof TypographyGuideRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/styles-guide': {
+      id: '/styles-guide';
+      path: '/styles-guide';
+      fullPath: '/styles-guide';
+      preLoaderRoute: typeof StylesGuideRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/data': {
@@ -99,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/tools/raci-generator': {
+      id: '/tools/raci-generator';
+      path: '/tools/raci-generator';
+      fullPath: '/tools/raci-generator';
+      preLoaderRoute: typeof ToolsRaciGeneratorRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
@@ -106,7 +159,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CardsGuideRoute: CardsGuideRoute,
   DataRoute: DataRoute,
+  StylesGuideRoute: StylesGuideRoute,
   TypographyGuideRoute: TypographyGuideRoute,
+  ToolsRaciGeneratorRoute: ToolsRaciGeneratorRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

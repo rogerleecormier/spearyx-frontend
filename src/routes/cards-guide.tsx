@@ -32,7 +32,7 @@ import { Layout } from '@/components/layout';
 
 function CardsGuide() {
   return (
-    <Layout isDev={true}>
+    <Layout>
       <div className="min-h-screen bg-precision-50 py-12 dark:bg-precision-900">
         <div className="container mx-auto max-w-6xl px-4">
           <Hero className="mb-12 text-center">Cards Guide</Hero>
