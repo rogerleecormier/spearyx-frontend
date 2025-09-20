@@ -6,6 +6,13 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Backend files (moved to spearyx-backend repository)
+workers/
+deploy-workers.*
+backend-repo-files/
+*-migration.*
+wrangler.toml
+
 # Build outputs
 dist/
 dist-ssr/
