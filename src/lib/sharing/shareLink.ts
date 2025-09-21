@@ -44,7 +44,14 @@ const getSearchParams = (input?: string | URLSearchParams) => {
     return input;
   }
 
-  return new URLSearchParams(input.startsWith('?') ? input.slice(1) : input);
+  // Check if input is a full URL
+  try {
+    const url = new URL(input);
+    return url.searchParams;
+  } catch {
+    // If URL parsing fails, treat as search string
+    return new URLSearchParams(input.startsWith('?') ? input.slice(1) : input);
+  }
 };
 
 const getDefaultBaseUrl = () => {
