@@ -55,6 +55,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
   const [exportingType, setExportingType] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
   const [shareSuccess, setShareSuccess] = useState(false);
+  const [successType, setSuccessType] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
   const [importUrl, setImportUrl] = useState<string>('');
   const [canImportFromUrl, setCanImportFromUrl] = useState(
@@ -99,6 +100,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       setExportError(null);
 
       await copyShareableUrl(state);
+      setSuccessType('share');
       setShareSuccess(true);
 
       // Auto-hide success message after 3 seconds
@@ -122,6 +124,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
 
       if (sharedState && onStateImport) {
         onStateImport(sharedState);
+        setSuccessType('import');
         setShareSuccess(true);
         setTimeout(() => setShareSuccess(false), 3000);
       } else {
@@ -147,6 +150,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
 
       if (sharedState && onStateImport) {
         onStateImport(sharedState);
+        setSuccessType('import');
         setShareSuccess(true);
         setImportUrl(''); // Clear the input after successful import
         setTimeout(() => setShareSuccess(false), 3000);
@@ -302,10 +306,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
             <div className="flex items-center gap-2">
               <Check className="h-4 w-4 text-green-600" />
               <p className="text-sm text-green-800">
-                {exportingType === 'share'
+                {successType === 'share'
                   ? 'Shareable link copied to clipboard!'
-                  : shareSuccess &&
-                      (exportingType === 'import' || exportingType === null)
+                  : successType === 'import'
                     ? 'State imported successfully!'
                     : 'Operation completed successfully!'}
               </p>
