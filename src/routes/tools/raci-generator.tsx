@@ -4,13 +4,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 // Components
@@ -36,7 +30,10 @@ import {
   renameRoleInMatrix,
 } from '../../lib/raci/matrix';
 import { RaciStateSchema, validateRaciState } from '../../lib/raci/schema';
-import { clearSharedStateFromUrl, parseSharedState } from '../../lib/sharing/shareLink';
+import {
+  clearSharedStateFromUrl,
+  parseSharedState,
+} from '../../lib/sharing/shareLink';
 import type {
   LogoData,
   RaciState,
@@ -86,8 +83,7 @@ export const Route = createFileRoute('/tools/raci-generator')({
 });
 
 function RaciGeneratorPage() {
-  const { initialState, hasSharedState, generatedOn } =
-    Route.useLoaderData();
+  const { initialState, hasSharedState, generatedOn } = Route.useLoaderData();
 
   const [state, setState] = useState<RaciState>(initialState);
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>(

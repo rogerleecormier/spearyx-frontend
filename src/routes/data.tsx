@@ -3,10 +3,10 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { Body, Card, ElevatedCard, Hero, Title } from '@/components/brand';
 import { Layout } from '@/components/layout';
+import { getServerData } from '@/lib/server/server-data';
 
 import { Button } from '../components/ui/button';
 import { useLogger } from '../lib/useLogger';
-import { getServerData } from './server-data';
 
 interface ServerItem {
   id: number;

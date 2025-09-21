@@ -158,9 +158,7 @@ export function parseSharedState(
   }
 }
 
-export function hasSharedState(
-  search?: string | URLSearchParams
-): boolean {
+export function hasSharedState(search?: string | URLSearchParams): boolean {
   return getSharedStateParam(search) !== null;
 }
 
