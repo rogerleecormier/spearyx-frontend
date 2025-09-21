@@ -1,3 +1,6 @@
-# Static asset handling for SSR
+# Static asset handling for TanStack Start SSR
 /images/* /images/:splat 200
 /assets/* /assets/:splat 200
+
+# API routes (if needed)
+/api/* /api/:splat 200

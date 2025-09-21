@@ -4,7 +4,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 // Components
@@ -32,8 +32,7 @@ import {
 import { RaciStateSchema, validateRaciState } from '../../lib/raci/schema';
 import {
   clearSharedStateFromUrl,
-  extractStateFromUrl,
-  hasSharedStateInUrl,
+  parseSharedState,
 } from '../../lib/sharing/shareLink';
 import type {
   LogoData,
@@ -57,14 +56,36 @@ const createDefaultState = (): RaciState => ({
   logo: undefined,
 });
 
+const formatGeneratedOn = (iso: string) => {
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      dateStyle: 'medium',
+      timeZone: 'UTC',
+    }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+};
+
 // Demo data for quick start - using imported demo descriptions
 
 export const Route = createFileRoute('/tools/raci-generator')({
+  loader: ({ location }) => {
+    const sharedState = parseSharedState(location.searchStr);
+
+    return {
+      initialState: sharedState ?? createDefaultState(),
+      hasSharedState: Boolean(sharedState),
+      generatedOn: new Date().toISOString(),
+    };
+  },
   component: RaciGeneratorPage,
 });
 
 function RaciGeneratorPage() {
-  const [state, setState] = useState<RaciState>(createDefaultState);
+  const { initialState, hasSharedState, generatedOn } = Route.useLoaderData();
+
+  const [state, setState] = useState<RaciState>(initialState);
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
     []
   );
@@ -72,36 +93,39 @@ function RaciGeneratorPage() {
   const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([]);
   const matrixCanvasRef = useRef<HTMLDivElement>(null);
   const matrixExportRef = useRef<HTMLDivElement>(null);
+  const [generatedOnIso, setGeneratedOnIso] = useState(generatedOn);
+
+  const formattedGeneratedOn = useMemo(
+    () => formatGeneratedOn(generatedOnIso),
+    [generatedOnIso]
+  );
 
   // Form for validation
   const _form = useForm<RaciState>({
     resolver: zodResolver(RaciStateSchema),
-    defaultValues: state,
+    defaultValues: initialState,
     mode: 'onChange',
   });
 
   // Update validation errors when state changes
-  React.useEffect(() => {
+  useEffect(() => {
     const errors = validateRaciState(state);
     setValidationErrors(errors);
   }, [state]);
 
-  // Check for shared state in URL on component mount
-  React.useEffect(() => {
-    if (hasSharedStateInUrl()) {
-      try {
-        const sharedState = extractStateFromUrl();
-        if (sharedState) {
-          setState(sharedState);
-          // Clear the URL parameter to avoid confusion
-          clearSharedStateFromUrl();
-        }
-      } catch (error) {
-        console.error('Failed to load shared state from URL:', error);
-        // You could add a toast notification here to inform the user
-      }
+  useEffect(() => {
+    setState(initialState);
+  }, [initialState]);
+
+  useEffect(() => {
+    setGeneratedOnIso(generatedOn);
+  }, [generatedOn]);
+
+  useEffect(() => {
+    if (hasSharedState) {
+      clearSharedStateFromUrl();
     }
-  }, []); // Only run on mount
+  }, [hasSharedState]);
 
   // Handlers
   const handleTitleChange = useCallback((title: string) => {
@@ -248,6 +272,7 @@ function RaciGeneratorPage() {
         if (result.followUpQuestions && result.followUpQuestions.length > 0) {
           setFollowUpQuestions(result.followUpQuestions);
         }
+        setGeneratedOnIso(new Date().toISOString());
       } catch (error) {
         console.error('Failed to generate RACI:', error);
         // You could add a toast notification here
@@ -263,6 +288,7 @@ function RaciGeneratorPage() {
     (demoType: keyof typeof DEMO_STATES = 'mobileApp') => {
       const demoState = DEMO_STATES[demoType]();
       setState(demoState);
+      setGeneratedOnIso(new Date().toISOString());
     },
     []
   );
@@ -281,6 +307,7 @@ function RaciGeneratorPage() {
     setState(importedState);
     // Clear any existing validation errors
     setValidationErrors([]);
+    setGeneratedOnIso(new Date().toISOString());
   }, []);
 
   // Memoized validation errors for components
@@ -479,6 +506,7 @@ function RaciGeneratorPage() {
               matrix={state.matrix}
               logo={state.logo}
               onLogoChange={handleLogoChange}
+              generatedOnLabel={formattedGeneratedOn}
               exportRef={matrixExportRef}
             />
           </div>
@@ -489,11 +517,10 @@ function RaciGeneratorPage() {
             canvasRef={matrixExportRef}
             onStateImport={handleStateImport}
             validationErrors={exportValidationErrors}
+            hasSharedStateInSearch={hasSharedState}
           />
         </div>
       </div>
     </Layout>
   );
 }
-
-export default RaciGeneratorPage;

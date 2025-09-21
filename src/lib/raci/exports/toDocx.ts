@@ -3,17 +3,17 @@
  */
 
 import {
-    AlignmentType,
-    Document,
-    ImageRun,
-    Packer,
-    Paragraph,
-    Table,
-    TableCell,
-    TableRow,
-    TextRun,
-    WidthType,
-    type FileChild,
+  AlignmentType,
+  Document,
+  ImageRun,
+  Packer,
+  Paragraph,
+  Table,
+  TableCell,
+  TableRow,
+  TextRun,
+  WidthType,
+  type FileChild,
 } from 'docx';
 
 import type { ExportOptions, RaciKey, RaciState } from '../../../types/raci';

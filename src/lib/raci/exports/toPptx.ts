@@ -2,8 +2,12 @@
  * PPTX export functionality for RACI matrix using PptxGenJS
  */
 
+import PptxGenJS from 'pptxgenjs';
+
 import { ExportOptions, RaciKey, RaciState } from '../../../types/raci';
 import { getActiveRaciKey } from '../matrix';
+
+// Static import for PptxGenJS
 
 // Import PptxGenJS types
 interface PptxGenJSInstance {
@@ -42,9 +46,8 @@ function getImageDimensions(
   });
 }
 
-async function getPptxGen(): Promise<PptxGenJSInstance> {
-  const PptxGenJS = await import('pptxgenjs');
-  return new PptxGenJS.default() as PptxGenJSInstance;
+function getPptxGen(): PptxGenJSInstance {
+  return new PptxGenJS() as PptxGenJSInstance;
 }
 
 /**
@@ -176,7 +179,7 @@ export async function exportToPptx(
   options: ExportOptions = {}
 ): Promise<Blob> {
   try {
-    const pptx = await getPptxGen();
+    const pptx = getPptxGen();
 
     // Set presentation properties
     pptx.author = 'Spearyx RACI Generator';

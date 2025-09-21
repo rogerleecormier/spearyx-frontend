@@ -2,7 +2,7 @@
  * Pretty formatted XLSX export functionality
  */
 
-import ExcelJS from 'exceljs';
+import * as ExcelJS from 'exceljs';
 
 import type { ExportOptions, RaciKey, RaciState } from '../../../types/raci';
 import { getActiveRaciKey } from '../matrix';

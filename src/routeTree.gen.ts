@@ -8,87 +8,87 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root';
-import { Route as TypographyGuideRouteImport } from './routes/typography-guide';
-import { Route as StylesGuideRouteImport } from './routes/styles-guide';
-import { Route as DataRouteImport } from './routes/data';
-import { Route as CardsGuideRouteImport } from './routes/cards-guide';
-import { Route as IndexRouteImport } from './routes/index';
-import { Route as ToolsRaciGeneratorRouteImport } from './routes/tools/raci-generator';
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as TypographyGuideRouteImport } from './routes/typography-guide'
+import { Route as StylesGuideRouteImport } from './routes/styles-guide'
+import { Route as DataRouteImport } from './routes/data'
+import { Route as CardsGuideRouteImport } from './routes/cards-guide'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as ToolsRaciGeneratorRouteImport } from './routes/tools/raci-generator'
 
 const TypographyGuideRoute = TypographyGuideRouteImport.update({
   id: '/typography-guide',
   path: '/typography-guide',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const StylesGuideRoute = StylesGuideRouteImport.update({
   id: '/styles-guide',
   path: '/styles-guide',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DataRoute = DataRouteImport.update({
   id: '/data',
   path: '/data',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const CardsGuideRoute = CardsGuideRouteImport.update({
   id: '/cards-guide',
   path: '/cards-guide',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const ToolsRaciGeneratorRoute = ToolsRaciGeneratorRouteImport.update({
   id: '/tools/raci-generator',
   path: '/tools/raci-generator',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute;
-  '/cards-guide': typeof CardsGuideRoute;
-  '/data': typeof DataRoute;
-  '/styles-guide': typeof StylesGuideRoute;
-  '/typography-guide': typeof TypographyGuideRoute;
-  '/tools/raci-generator': typeof ToolsRaciGeneratorRoute;
+  '/': typeof IndexRoute
+  '/cards-guide': typeof CardsGuideRoute
+  '/data': typeof DataRoute
+  '/styles-guide': typeof StylesGuideRoute
+  '/typography-guide': typeof TypographyGuideRoute
+  '/tools/raci-generator': typeof ToolsRaciGeneratorRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute;
-  '/cards-guide': typeof CardsGuideRoute;
-  '/data': typeof DataRoute;
-  '/styles-guide': typeof StylesGuideRoute;
-  '/typography-guide': typeof TypographyGuideRoute;
-  '/tools/raci-generator': typeof ToolsRaciGeneratorRoute;
+  '/': typeof IndexRoute
+  '/cards-guide': typeof CardsGuideRoute
+  '/data': typeof DataRoute
+  '/styles-guide': typeof StylesGuideRoute
+  '/typography-guide': typeof TypographyGuideRoute
+  '/tools/raci-generator': typeof ToolsRaciGeneratorRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  '/': typeof IndexRoute;
-  '/cards-guide': typeof CardsGuideRoute;
-  '/data': typeof DataRoute;
-  '/styles-guide': typeof StylesGuideRoute;
-  '/typography-guide': typeof TypographyGuideRoute;
-  '/tools/raci-generator': typeof ToolsRaciGeneratorRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/cards-guide': typeof CardsGuideRoute
+  '/data': typeof DataRoute
+  '/styles-guide': typeof StylesGuideRoute
+  '/typography-guide': typeof TypographyGuideRoute
+  '/tools/raci-generator': typeof ToolsRaciGeneratorRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/cards-guide'
     | '/data'
     | '/styles-guide'
     | '/typography-guide'
-    | '/tools/raci-generator';
-  fileRoutesByTo: FileRoutesByTo;
+    | '/tools/raci-generator'
+  fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/cards-guide'
     | '/data'
     | '/styles-guide'
     | '/typography-guide'
-    | '/tools/raci-generator';
+    | '/tools/raci-generator'
   id:
     | '__root__'
     | '/'
@@ -96,62 +96,62 @@ export interface FileRouteTypes {
     | '/data'
     | '/styles-guide'
     | '/typography-guide'
-    | '/tools/raci-generator';
-  fileRoutesById: FileRoutesById;
+    | '/tools/raci-generator'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  CardsGuideRoute: typeof CardsGuideRoute;
-  DataRoute: typeof DataRoute;
-  StylesGuideRoute: typeof StylesGuideRoute;
-  TypographyGuideRoute: typeof TypographyGuideRoute;
-  ToolsRaciGeneratorRoute: typeof ToolsRaciGeneratorRoute;
+  IndexRoute: typeof IndexRoute
+  CardsGuideRoute: typeof CardsGuideRoute
+  DataRoute: typeof DataRoute
+  StylesGuideRoute: typeof StylesGuideRoute
+  TypographyGuideRoute: typeof TypographyGuideRoute
+  ToolsRaciGeneratorRoute: typeof ToolsRaciGeneratorRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/typography-guide': {
-      id: '/typography-guide';
-      path: '/typography-guide';
-      fullPath: '/typography-guide';
-      preLoaderRoute: typeof TypographyGuideRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/typography-guide'
+      path: '/typography-guide'
+      fullPath: '/typography-guide'
+      preLoaderRoute: typeof TypographyGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/styles-guide': {
-      id: '/styles-guide';
-      path: '/styles-guide';
-      fullPath: '/styles-guide';
-      preLoaderRoute: typeof StylesGuideRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/styles-guide'
+      path: '/styles-guide'
+      fullPath: '/styles-guide'
+      preLoaderRoute: typeof StylesGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/data': {
-      id: '/data';
-      path: '/data';
-      fullPath: '/data';
-      preLoaderRoute: typeof DataRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/data'
+      path: '/data'
+      fullPath: '/data'
+      preLoaderRoute: typeof DataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cards-guide': {
-      id: '/cards-guide';
-      path: '/cards-guide';
-      fullPath: '/cards-guide';
-      preLoaderRoute: typeof CardsGuideRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/cards-guide'
+      path: '/cards-guide'
+      fullPath: '/cards-guide'
+      preLoaderRoute: typeof CardsGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
-      id: '/';
-      path: '/';
-      fullPath: '/';
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/raci-generator': {
-      id: '/tools/raci-generator';
-      path: '/tools/raci-generator';
-      fullPath: '/tools/raci-generator';
-      preLoaderRoute: typeof ToolsRaciGeneratorRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/tools/raci-generator'
+      path: '/tools/raci-generator'
+      fullPath: '/tools/raci-generator'
+      preLoaderRoute: typeof ToolsRaciGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,7 +162,7 @@ const rootRouteChildren: RootRouteChildren = {
   StylesGuideRoute: StylesGuideRoute,
   TypographyGuideRoute: TypographyGuideRoute,
   ToolsRaciGeneratorRoute: ToolsRaciGeneratorRoute,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()

@@ -1,30 +1,31 @@
 /**
- * Export Center Component - Unified export and sharing interface
+ * Optimized Export Center - Enhanced lazy loading with better UX
  */
 
 import {
-  AlertCircle,
-  Check,
-  Copy,
-  Download,
-  FileSpreadsheet,
-  FileText,
-  Image,
-  Link,
-  Loader2,
-  Users,
-  X,
+    AlertCircle,
+    Check,
+    Copy,
+    Download,
+    FileSpreadsheet,
+    FileText,
+    Image,
+    Link,
+    Loader2,
+    Users,
+    X,
 } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 import {
-  copyShareableUrl,
-  hasSharedState,
-  parseSharedState,
+    copyShareableUrl,
+    hasSharedState,
+    parseSharedState,
 } from '../../lib/sharing/shareLink';
 import type { RaciState } from '../../types/raci';
+import { LazyExportButton } from './LazyExportButton';
 
-interface ExportCenterProps {
+interface OptimizedExportCenterProps {
   state: RaciState;
   canvasRef?: React.RefObject<HTMLElement>;
   onStateImport?: (newState: RaciState) => void;
@@ -33,18 +34,7 @@ interface ExportCenterProps {
   hasSharedStateInSearch?: boolean;
 }
 
-interface ExportButton {
-  id: string;
-  label: string;
-  description: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  color: string;
-  action: () => Promise<void> | void;
-  disabled?: boolean;
-  requiresCanvas?: boolean;
-}
-
-export const ExportCenter: React.FC<ExportCenterProps> = ({
+export const OptimizedExportCenter: React.FC<OptimizedExportCenterProps> = ({
   state,
   canvasRef,
   onStateImport,
@@ -63,7 +53,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
 
   const hasErrors = validationErrors.length > 0;
   const canExport = state.roles.length > 0 && state.tasks.length > 0;
-  const hasCanvas = canvasRef?.current;
+  const hasCanvas = Boolean(canvasRef?.current);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -73,23 +63,17 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
     setCanImportFromUrl(hasSharedState(window.location.search));
   }, [hasSharedStateInSearch]);
 
-  const handleExport = async (
-    type: string,
-    exportFn: () => Promise<void> | void
-  ) => {
-    if (!canExport) return;
-
+  const handleExportStart = (type: string) => {
     setExportingType(type);
     setExportError(null);
+  };
 
-    try {
-      await exportFn();
-    } catch (error) {
-      console.error(`Export failed (${type}):`, error);
-      setExportError(`Failed to export ${type}. Please try again.`);
-    } finally {
-      setExportingType(null);
-    }
+  const handleExportEnd = () => {
+    setExportingType(null);
+  };
+
+  const handleExportError = (error: string) => {
+    setExportError(error);
   };
 
   const handleShareLink = async () => {
@@ -163,17 +147,17 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
     }
   };
 
-  const exportButtons: ExportButton[] = [
+  // Export button configurations with lazy loading
+  const exportButtons = [
     {
       id: 'csv',
       label: 'CSV',
       description: 'Wide format spreadsheet',
       icon: FileSpreadsheet,
       color: 'text-green-600 bg-green-50 hover:bg-green-100 border-green-200',
-      action: async () => {
-        const { downloadCsv } = await import('../../lib/raci/exports/toCsv');
-        await downloadCsv(state, { filename: 'raci.csv' });
-      },
+      importPath: '../../lib/raci/exports/toCsv',
+      exportFunction: 'downloadCsv',
+      filename: 'raci.csv',
     },
     {
       id: 'xlsx',
@@ -181,12 +165,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Styled spreadsheet with colors',
       icon: FileSpreadsheet,
       color: 'text-blue-600 bg-blue-50 hover:bg-blue-100 border-blue-200',
-      action: async () => {
-        const { downloadPrettyXlsx } = await import(
-          '../../lib/raci/exports/toPrettyXlsx'
-        );
-        await downloadPrettyXlsx(state, { filename: 'raci-formatted.xlsx' });
-      },
+      importPath: '../../lib/raci/exports/toPrettyXlsx',
+      exportFunction: 'downloadPrettyXlsx',
+      filename: 'raci-formatted.xlsx',
     },
     {
       id: 'pdf',
@@ -194,10 +175,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Professional document',
       icon: FileText,
       color: 'text-red-600 bg-red-50 hover:bg-red-100 border-red-200',
-      action: async () => {
-        const { downloadPdf } = await import('../../lib/raci/exports/toPdf');
-        await downloadPdf(state, { filename: 'raci.pdf' });
-      },
+      importPath: '../../lib/raci/exports/toPdf',
+      exportFunction: 'downloadPdf',
+      filename: 'raci.pdf',
     },
     {
       id: 'png',
@@ -206,12 +186,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       icon: Image,
       color:
         'text-purple-600 bg-purple-50 hover:bg-purple-100 border-purple-200',
-      action: async () => {
-        if (!hasCanvas) throw new Error('Canvas not available');
-        const { downloadPng } = await import('../../lib/raci/exports/toPng');
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        downloadPng(canvasRef!.current!, { filename: 'raci.png' });
-      },
+      importPath: '../../lib/raci/exports/toPng',
+      exportFunction: 'downloadPng',
+      filename: 'raci.png',
       requiresCanvas: true,
     },
     {
@@ -221,12 +198,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       icon: Image,
       color:
         'text-indigo-600 bg-indigo-50 hover:bg-indigo-100 border-indigo-200',
-      action: async () => {
-        if (!hasCanvas) throw new Error('Canvas not available');
-        const { downloadSvg } = await import('../../lib/raci/exports/toSvg');
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        downloadSvg(canvasRef!.current!, { filename: 'raci.svg' });
-      },
+      importPath: '../../lib/raci/exports/toSvg',
+      exportFunction: 'downloadSvg',
+      filename: 'raci.svg',
       requiresCanvas: true,
     },
     {
@@ -236,10 +210,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       icon: FileText,
       color:
         'text-orange-600 bg-orange-50 hover:bg-orange-100 border-orange-200',
-      action: async () => {
-        const { downloadPptx } = await import('../../lib/raci/exports/toPptx');
-        await downloadPptx(state, { filename: 'raci.pptx' });
-      },
+      importPath: '../../lib/raci/exports/toPptx',
+      exportFunction: 'downloadPptx',
+      filename: 'raci.pptx',
     },
     {
       id: 'docx',
@@ -247,10 +220,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Word document',
       icon: FileText,
       color: 'text-teal-600 bg-teal-50 hover:bg-teal-100 border-teal-200',
-      action: async () => {
-        const { downloadDocx } = await import('../../lib/raci/exports/toDocx');
-        await downloadDocx(state, { filename: 'raci.docx' });
-      },
+      importPath: '../../lib/raci/exports/toDocx',
+      exportFunction: 'downloadDocx',
+      filename: 'raci.docx',
     },
   ];
 
@@ -325,50 +297,46 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
           </div>
         )}
 
-        {/* Export Buttons Grid */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {exportButtons.map((button) => {
-            const isExporting = exportingType === button.id;
-            const isDisabled =
-              !canExport ||
-              button.disabled ||
-              isExporting ||
-              (button.requiresCanvas && !hasCanvas);
-
-            return (
-              <button
-                key={button.id}
-                onClick={() => handleExport(button.id, button.action)}
-                disabled={isDisabled}
-                className={`relative flex flex-col items-center rounded-lg border-2 p-4 transition-all ${
-                  isDisabled
-                    ? 'cursor-not-allowed border-gray-200 bg-gray-50 opacity-50'
-                    : button.color +
-                      ' focus:outline-none focus:ring-2 focus:ring-offset-2'
-                } `}
-                title={
-                  button.requiresCanvas && !hasCanvas
-                    ? 'Canvas not available'
-                    : button.description
-                }
-              >
-                <div className="mb-2 flex h-8 w-8 items-center justify-center">
-                  {isExporting ? (
-                    <Loader2 className="h-6 w-6 animate-spin" />
-                  ) : (
-                    <button.icon className="h-6 w-6" />
-                  )}
+        {/* Export Buttons Grid with Suspense */}
+        <Suspense
+          fallback={
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {exportButtons.map((button) => (
+                <div
+                  key={button.id}
+                  className="flex flex-col items-center rounded-lg border-2 border-gray-200 bg-gray-50 p-4 opacity-50"
+                >
+                  <Loader2 className="mb-2 h-6 w-6 animate-spin" />
+                  <span className="text-sm font-medium">{button.label}</span>
                 </div>
-
-                <span className="mb-1 text-sm font-medium">{button.label}</span>
-
-                <span className="text-center text-xs leading-tight opacity-75">
-                  {button.description}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+              ))}
+            </div>
+          }
+        >
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {exportButtons.map((button) => (
+              <LazyExportButton
+                key={button.id}
+                id={button.id}
+                label={button.label}
+                description={button.description}
+                icon={button.icon}
+                color={button.color}
+                importPath={button.importPath}
+                exportFunction={button.exportFunction}
+                state={state}
+                filename={button.filename}
+                disabled={!canExport}
+                requiresCanvas={button.requiresCanvas}
+                hasCanvas={hasCanvas}
+                canvasRef={canvasRef}
+                onExportStart={handleExportStart}
+                onExportEnd={handleExportEnd}
+                onExportError={handleExportError}
+              />
+            ))}
+          </div>
+        </Suspense>
 
         {/* Sharing Section */}
         <div className="border-t border-gray-200 pt-6">

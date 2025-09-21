@@ -16,6 +16,7 @@ interface RaciCanvasPreviewProps {
   matrix: Matrix;
   logo?: LogoData;
   onLogoChange: (logo: LogoData | undefined) => void;
+  generatedOnLabel: string;
   className?: string;
   exportRef?: React.RefObject<HTMLDivElement>;
 }
@@ -34,6 +35,7 @@ export const RaciCanvasPreview: React.FC<RaciCanvasPreviewProps> = ({
   matrix,
   logo,
   onLogoChange,
+  generatedOnLabel,
   className = '',
   exportRef,
 }) => {
@@ -76,7 +78,7 @@ export const RaciCanvasPreview: React.FC<RaciCanvasPreviewProps> = ({
             <div>
               <h2 className="text-xl font-bold text-gray-900">{title}</h2>
               <p className="text-sm text-gray-600">
-                Generated on {new Date().toLocaleDateString()}
+                Generated on {generatedOnLabel}
               </p>
             </div>
           </div>
