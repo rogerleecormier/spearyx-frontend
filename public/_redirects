@@ -1,6 +1,6 @@
-# SPA fallback - redirect all non-asset requests to index.html
-/* /index.html 200
-
-# Static asset handling
+# Static asset handling for TanStack Start SSR
 /images/* /images/:splat 200
 /assets/* /assets/:splat 200
+
+# API routes (if needed)
+/api/* /api/:splat 200
