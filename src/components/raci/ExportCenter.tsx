@@ -15,19 +15,12 @@ import {
   Users,
   X,
 } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { downloadCsv } from '../../lib/raci/exports/toCsv';
-import { downloadDocx } from '../../lib/raci/exports/toDocx';
-import { downloadPdf } from '../../lib/raci/exports/toPdf';
-import { downloadPng } from '../../lib/raci/exports/toPng';
-import { downloadPptx } from '../../lib/raci/exports/toPptx';
-import { downloadPrettyXlsx } from '../../lib/raci/exports/toPrettyXlsx';
-import { downloadSvg } from '../../lib/raci/exports/toSvg';
 import {
   copyShareableUrl,
-  extractStateFromUrl,
-  hasSharedStateInUrl,
+  hasSharedState,
+  parseSharedState,
 } from '../../lib/sharing/shareLink';
 import type { RaciState } from '../../types/raci';
 
@@ -37,6 +30,7 @@ interface ExportCenterProps {
   onStateImport?: (newState: RaciState) => void;
   validationErrors?: Array<{ message: string }>;
   className?: string;
+  hasSharedStateInSearch?: boolean;
 }
 
 interface ExportButton {
@@ -56,16 +50,28 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
   onStateImport,
   validationErrors = [],
   className = '',
+  hasSharedStateInSearch = false,
 }) => {
   const [exportingType, setExportingType] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
   const [shareSuccess, setShareSuccess] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
   const [importUrl, setImportUrl] = useState<string>('');
+  const [canImportFromUrl, setCanImportFromUrl] = useState(
+    hasSharedStateInSearch
+  );
 
   const hasErrors = validationErrors.length > 0;
   const canExport = state.roles.length > 0 && state.tasks.length > 0;
   const hasCanvas = canvasRef?.current;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    setCanImportFromUrl(hasSharedState(window.location.search));
+  }, [hasSharedStateInSearch]);
 
   const handleExport = async (
     type: string,
@@ -106,9 +112,13 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
   };
 
   const handleImportLink = () => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     try {
       setImportError(null);
-      const sharedState = extractStateFromUrl();
+      const sharedState = parseSharedState(window.location.search);
 
       if (sharedState && onStateImport) {
         onStateImport(sharedState);
@@ -133,7 +143,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       setImportError(null);
       setExportingType('import');
 
-      const sharedState = extractStateFromUrl(importUrl.trim());
+      const sharedState = parseSharedState(importUrl.trim());
 
       if (sharedState && onStateImport) {
         onStateImport(sharedState);
@@ -160,7 +170,12 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Wide format spreadsheet',
       icon: FileSpreadsheet,
       color: 'text-green-600 bg-green-50 hover:bg-green-100 border-green-200',
-      action: () => downloadCsv(state, { filename: 'raci.csv' }),
+      action: async () => {
+        const { downloadCsv } = await import(
+          '../../lib/raci/exports/toCsv'
+        );
+        await downloadCsv(state, { filename: 'raci.csv' });
+      },
     },
     {
       id: 'xlsx',
@@ -168,8 +183,12 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Styled spreadsheet with colors',
       icon: FileSpreadsheet,
       color: 'text-blue-600 bg-blue-50 hover:bg-blue-100 border-blue-200',
-      action: () =>
-        downloadPrettyXlsx(state, { filename: 'raci-formatted.xlsx' }),
+      action: async () => {
+        const { downloadPrettyXlsx } = await import(
+          '../../lib/raci/exports/toPrettyXlsx'
+        );
+        await downloadPrettyXlsx(state, { filename: 'raci-formatted.xlsx' });
+      },
     },
     {
       id: 'pdf',
@@ -177,7 +196,12 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Professional document',
       icon: FileText,
       color: 'text-red-600 bg-red-50 hover:bg-red-100 border-red-200',
-      action: () => downloadPdf(state, { filename: 'raci.pdf' }),
+      action: async () => {
+        const { downloadPdf } = await import(
+          '../../lib/raci/exports/toPdf'
+        );
+        await downloadPdf(state, { filename: 'raci.pdf' });
+      },
     },
     {
       id: 'png',
@@ -188,7 +212,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
         'text-purple-600 bg-purple-50 hover:bg-purple-100 border-purple-200',
       action: async () => {
         if (!hasCanvas) throw new Error('Canvas not available');
-        // Small delay to ensure canvas is fully rendered and all content is visible
+        const { downloadPng } = await import(
+          '../../lib/raci/exports/toPng'
+        );
         await new Promise((resolve) => setTimeout(resolve, 200));
         downloadPng(canvasRef!.current!, { filename: 'raci.png' });
       },
@@ -203,7 +229,9 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
         'text-indigo-600 bg-indigo-50 hover:bg-indigo-100 border-indigo-200',
       action: async () => {
         if (!hasCanvas) throw new Error('Canvas not available');
-        // Small delay to ensure canvas is fully rendered and all content is visible
+        const { downloadSvg } = await import(
+          '../../lib/raci/exports/toSvg'
+        );
         await new Promise((resolve) => setTimeout(resolve, 200));
         downloadSvg(canvasRef!.current!, { filename: 'raci.svg' });
       },
@@ -216,7 +244,12 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       icon: FileText,
       color:
         'text-orange-600 bg-orange-50 hover:bg-orange-100 border-orange-200',
-      action: () => downloadPptx(state, { filename: 'raci.pptx' }),
+      action: async () => {
+        const { downloadPptx } = await import(
+          '../../lib/raci/exports/toPptx'
+        );
+        await downloadPptx(state, { filename: 'raci.pptx' });
+      },
     },
     {
       id: 'docx',
@@ -224,7 +257,12 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
       description: 'Word document',
       icon: FileText,
       color: 'text-teal-600 bg-teal-50 hover:bg-teal-100 border-teal-200',
-      action: () => downloadDocx(state, { filename: 'raci.docx' }),
+      action: async () => {
+        const { downloadDocx } = await import(
+          '../../lib/raci/exports/toDocx'
+        );
+        await downloadDocx(state, { filename: 'raci.docx' });
+      },
     },
   ];
 
@@ -389,7 +427,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
               </div>
 
               {/* Import from current URL if available */}
-              {hasSharedStateInUrl() && (
+              {canImportFromUrl && (
                 <button
                   onClick={handleImportLink}
                   className="flex w-full items-center justify-center gap-2 rounded-md border border-green-200 bg-green-50 px-4 py-2 text-sm font-medium text-green-600 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"

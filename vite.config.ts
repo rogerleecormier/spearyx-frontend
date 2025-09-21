@@ -1,26 +1,15 @@
-import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
+import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import react from '@vitejs/plugin-react'
-import { fileURLToPath, URL } from 'url'
 import { defineConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
+  server: {
+    fs: { allow: ['.'] },
+  },
   plugins: [
-    TanStackRouterVite({
-      routesDirectory: './src/routes',
-      generatedRouteTree: './src/routeTree.gen.ts',
-      quoteStyle: 'single',
-      semicolons: true,
-    }),
+    tsconfigPaths({ projects: ['./tsconfig.json'] }),
+    tanstackStart({ customViteReactPlugin: true }),
     react(),
   ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  },
-  server: {
-    fs: {
-      allow: ['.']
-    }
-  }
 })

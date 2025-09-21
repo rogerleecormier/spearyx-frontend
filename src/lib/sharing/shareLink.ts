@@ -15,6 +15,46 @@ const SHARING_CONFIG = {
   URL_PARAM: 's', // URL parameter name for state
 } as const;
 
+const DEFAULT_ROUTE_PATH = '/tools/raci-generator';
+
+const decodeBase64 = (value: string) => {
+  if (typeof atob === 'function') {
+    return atob(value);
+  }
+
+  const bufferCtor =
+    typeof globalThis !== 'undefined'
+      ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (globalThis as { Buffer?: any }).Buffer
+      : undefined;
+
+  if (bufferCtor) {
+    return bufferCtor.from(value, 'base64').toString('binary');
+  }
+
+  throw new Error('Base64 decoding is not supported in this environment');
+};
+
+const getSearchParams = (input?: string | URLSearchParams) => {
+  if (!input) {
+    return new URLSearchParams();
+  }
+
+  if (input instanceof URLSearchParams) {
+    return input;
+  }
+
+  return new URLSearchParams(input.startsWith('?') ? input.slice(1) : input);
+};
+
+const getDefaultBaseUrl = () => {
+  if (typeof window === 'undefined') {
+    throw new Error('A baseUrl must be provided when window is unavailable');
+  }
+
+  return `${window.location.origin}${DEFAULT_ROUTE_PATH}`;
+};
+
 /**
  * Serializes and compresses RACI state for URL sharing
  */
@@ -55,7 +95,7 @@ export function decompressRaciState(compressedState: string): RaciState {
     } catch {
       // If LZString base64 fails, try manual base64 + decompress (intermediate format)
       try {
-        const decodedCompressed = atob(compressedState);
+        const decodedCompressed = decodeBase64(compressedState);
         jsonString = LZString.decompress(decodedCompressed);
       } catch {
         // If both fail, try direct decompression (old format - backward compatibility)
@@ -94,18 +134,50 @@ export function decompressRaciState(compressedState: string): RaciState {
 /**
  * Generates a shareable URL for the current RACI state
  */
+export function getSharedStateParam(
+  search?: string | URLSearchParams
+): string | null {
+  const params = getSearchParams(search);
+  return params.get(SHARING_CONFIG.URL_PARAM);
+}
+
+export function parseSharedState(
+  search?: string | URLSearchParams
+): RaciState | null {
+  try {
+    const compressed = getSharedStateParam(search);
+
+    if (!compressed) {
+      return null;
+    }
+
+    return decompressRaciState(compressed);
+  } catch (error) {
+    console.error('Failed to extract state from URL:', error);
+    return null;
+  }
+}
+
+export function hasSharedState(
+  search?: string | URLSearchParams
+): boolean {
+  return getSharedStateParam(search) !== null;
+}
+
 export function generateShareableUrl(
   state: RaciState,
-  baseUrl?: string
+  baseUrl?: string | URL
 ): string {
   try {
     const compressed = compressRaciState(state);
-    // Always use the RACI generator route for shareable URLs
-    const targetUrl =
-      baseUrl || `${window.location.origin}/tools/raci-generator`;
-    const separator = targetUrl.includes('?') ? '&' : '?';
+    const url =
+      baseUrl instanceof URL
+        ? new URL(baseUrl.toString())
+        : new URL(baseUrl || getDefaultBaseUrl());
 
-    return `${targetUrl}${separator}${SHARING_CONFIG.URL_PARAM}=${encodeURIComponent(compressed)}`;
+    url.searchParams.set(SHARING_CONFIG.URL_PARAM, compressed);
+
+    return url.toString();
   } catch (error) {
     console.error('Failed to generate shareable URL:', error);
     throw error;
@@ -113,36 +185,22 @@ export function generateShareableUrl(
 }
 
 /**
- * Extracts RACI state from URL parameters
- */
-export function extractStateFromUrl(url?: string): RaciState | null {
-  try {
-    const targetUrl = url || window.location.href;
-    const urlObj = new URL(targetUrl);
-    const compressedState = urlObj.searchParams.get(SHARING_CONFIG.URL_PARAM);
-
-    if (!compressedState) {
-      return null;
-    }
-
-    return decompressRaciState(decodeURIComponent(compressedState));
-  } catch (error) {
-    console.error('Failed to extract state from URL:', error);
-    return null;
-  }
-}
-
-/**
  * Copies shareable URL to clipboard
  */
-export async function copyShareableUrl(state: RaciState): Promise<void> {
-  try {
-    const url = generateShareableUrl(state);
+export async function copyShareableUrl(
+  state: RaciState,
+  baseUrl?: string
+): Promise<string> {
+  const url = generateShareableUrl(state, baseUrl);
 
+  if (typeof navigator === 'undefined' || typeof window === 'undefined') {
+    return url;
+  }
+
+  try {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(url);
-    } else {
-      // Fallback for older browsers or non-secure contexts
+    } else if (typeof document !== 'undefined') {
       const textArea = document.createElement('textarea');
       textArea.value = url;
       textArea.style.position = 'fixed';
@@ -158,29 +216,19 @@ export async function copyShareableUrl(state: RaciState): Promise<void> {
     console.error('Failed to copy URL to clipboard:', error);
     throw new Error('Failed to copy link to clipboard');
   }
+
+  return url;
 }
 
-/**
- * Checks if current URL contains a shared state
- */
-export function hasSharedStateInUrl(): boolean {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.has(SHARING_CONFIG.URL_PARAM);
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Clears shared state from URL without page reload
- */
 export function clearSharedStateFromUrl(): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
   try {
     const url = new URL(window.location.href);
     url.searchParams.delete(SHARING_CONFIG.URL_PARAM);
 
-    // Update URL without reloading page
     window.history.replaceState({}, '', url.toString());
   } catch (error) {
     console.error('Failed to clear shared state from URL:', error);
