@@ -45,9 +45,9 @@ export function NotAuthorized({ loginPath = '/app' }: NotAuthorizedProps) {
             </>
           ) : (
             <Button asChild className="w-full">
-              <Link to={loginPath}>
+              <a href={loginPath}>
                 Log In
-              </Link>
+              </a>
             </Button>
           )}
           <p className="text-center text-xs text-muted-foreground">

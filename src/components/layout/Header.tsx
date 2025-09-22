@@ -116,7 +116,7 @@ export function Header({ isDev = false }: HeaderProps) {
 
             {!isLoadingSession && !isAuthenticated && (
               <Button variant="default" size="sm" asChild>
-                <Link to={LOGIN_PATH}>Log In</Link>
+                <a href={LOGIN_PATH}>Log In</a>
               </Button>
             )}
 
@@ -203,9 +203,9 @@ export function Header({ isDev = false }: HeaderProps) {
 
                 {!isLoadingSession && !isAuthenticated && (
                   <Button className="w-full" asChild>
-                    <Link to={LOGIN_PATH} onClick={closeMobileMenu}>
+                    <a href={LOGIN_PATH}>
                       Log In
-                    </Link>
+                    </a>
                   </Button>
                 )}
 
