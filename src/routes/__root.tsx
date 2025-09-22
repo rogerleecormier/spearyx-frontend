@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       },
     ],
     links: [
-      { rel: 'icon', href: '/favicon.ico' },
+      { rel: 'icon', href: '/images/spearyx-logo.svg', type: 'image/svg+xml' },
       { rel: 'stylesheet', href: appStyles },
     ],
   }),

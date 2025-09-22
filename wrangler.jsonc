@@ -1,9 +1,11 @@
 {
   "name": "spearyx-frontend",
   "compatibility_date": "2025-09-20",
+  "main": "./dist/server/index.js",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist/client"
   },
+  "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1

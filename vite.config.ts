@@ -10,7 +10,10 @@ export default defineConfig({
   },
   plugins: [
     tsconfigPaths({ projects: ['./tsconfig.json'] }),
-    tanstackStart({ customViteReactPlugin: true }),
+    tanstackStart({ 
+      customViteReactPlugin: true,
+      adapter: 'cloudflare'
+    }),
     react(),
   ],
   ssr: {
