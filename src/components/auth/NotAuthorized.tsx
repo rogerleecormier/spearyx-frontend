@@ -45,7 +45,7 @@ export function NotAuthorized({ loginPath = '/app' }: NotAuthorizedProps) {
             </>
           ) : (
             <Button asChild className="w-full">
-              <a href={loginPath}>
+              <a href="/auth/session">
                 Log In
               </a>
             </Button>
@@ -53,7 +53,7 @@ export function NotAuthorized({ loginPath = '/app' }: NotAuthorizedProps) {
           <p className="text-center text-xs text-muted-foreground">
             {import.meta.env.DEV 
               ? 'Mock auth provides admin access for testing all features.'
-              : 'The login button sends you to an Access-protected route to trigger the Access prompt.'
+              : 'The login button redirects to an Access-protected endpoint to validate your session.'
             }
           </p>
         </CardContent>

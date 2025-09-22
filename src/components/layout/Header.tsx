@@ -6,12 +6,12 @@ import { Logo } from '@/components/brand';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useSession } from '@/hooks/useSession';
 
@@ -19,7 +19,7 @@ interface HeaderProps {
   isDev?: boolean;
 }
 
-const LOGIN_PATH = '/app';
+const LOGIN_PATH = '/auth/session';
 const PROTECTED_TOOL_PATH = '/tools/raci';
 const ADMIN_PATH = '/admin/users';
 const LOGOUT_PATH = '/cdn-cgi/access/logout';
