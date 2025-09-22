@@ -1,7 +1,10 @@
 {
   "name": "spearyx-frontend",
   "compatibility_date": "2025-09-20",
-  "pages_build_output_dir": "./dist",
+  "main": "./.output/server/index.mjs",
+  "assets": {
+    "directory": "./.output/public"
+  },
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true,
