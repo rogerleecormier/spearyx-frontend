@@ -1,20 +1,20 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import {
-  HeadContent,
-  Outlet,
-  Scripts,
-  createRootRouteWithContext,
+    HeadContent,
+    Outlet,
+    Scripts,
+    createRootRouteWithContext,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import type { ReactNode } from 'react';
 
 import { Button } from '../components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from '../components/ui/card';
 import appStyles from '../index.css?url';
 import type { RouterContext } from '../router';
@@ -45,7 +45,11 @@ function NotFoundComponent() {
         </CardHeader>
         <CardContent className="text-center">
           <Button
-            onClick={() => (window.location.href = '/')}
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.location.href = '/';
+              }
+            }}
             className="w-full"
           >
             Go Home

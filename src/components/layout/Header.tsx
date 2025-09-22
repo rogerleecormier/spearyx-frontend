@@ -6,12 +6,12 @@ import { Logo } from '@/components/brand';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { getWorkerUrl } from '@/config/workers';
 import { useSession } from '@/hooks/useSession';
@@ -32,7 +32,9 @@ export function Header({ isDev = false }: HeaderProps) {
   // Get the auth API URL and construct login URL
   const authApiUrl =
     import.meta.env.VITE_AUTH_API_URL || getWorkerUrl('AUTH_API');
-  const LOGIN_PATH = `${authApiUrl}/session?redirect=${encodeURIComponent(window.location.origin + '/app')}`;
+  const LOGIN_PATH = `${authApiUrl}/session?redirect=${encodeURIComponent(
+    typeof window !== 'undefined' ? window.location.origin + '/app' : '/app'
+  )}`;
 
   const isLoadingSession = isPending || isFetching;
 
