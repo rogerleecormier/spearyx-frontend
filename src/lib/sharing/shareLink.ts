@@ -15,7 +15,7 @@ const SHARING_CONFIG = {
   URL_PARAM: 's', // URL parameter name for state
 } as const;
 
-const DEFAULT_ROUTE_PATH = '/tools/raci-generator';
+const DEFAULT_ROUTE_PATH = '/tools/raci';
 
 const decodeBase64 = (value: string) => {
   if (typeof atob === 'function') {
@@ -239,3 +239,4 @@ export function clearSharedStateFromUrl(): void {
     console.error('Failed to clear shared state from URL:', error);
   }
 }
+

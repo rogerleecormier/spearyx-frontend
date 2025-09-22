@@ -5,6 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   server: {
+    port: 5173,
     fs: { allow: ['.'] },
   },
   plugins: [
@@ -39,9 +40,14 @@ export default defineConfig({
             return 'tanstack-vendor';
           }
           
-          // UI libraries
+          // UI libraries - split Radix UI components
           if (id.includes('@radix-ui/')) {
             return 'ui-vendor';
+          }
+          
+          // Form libraries
+          if (id.includes('react-hook-form') || id.includes('@hookform/resolvers')) {
+            return 'form-vendor';
           }
           
           // Utility libraries
@@ -52,6 +58,16 @@ export default defineConfig({
           // Chart libraries
           if (id.includes('recharts')) {
             return 'chart-vendor';
+          }
+          
+          // Icon libraries
+          if (id.includes('lucide-react')) {
+            return 'icons-vendor';
+          }
+          
+          // Animation libraries
+          if (id.includes('framer-motion') || id.includes('embla-carousel')) {
+            return 'animation-vendor';
           }
           
           // Let TanStack Start handle React dependencies
@@ -67,7 +83,7 @@ export default defineConfig({
       },
     },
     // Increase chunk size warning limit since we're optimizing with manual chunks
-    chunkSizeWarningLimit: 1500,
+    chunkSizeWarningLimit: 2000,
   },
   optimizeDeps: {
     // Pre-bundle heavy dependencies

@@ -9,12 +9,18 @@
  * ROUTES CONFIGURED:
  * - spearyx.com/api/raci-ai/*
  * - www.spearyx.com/api/raci-ai/*
+ * - spearyx.com/auth/*
+ * - www.spearyx.com/auth/*
  */
 
 export const WORKER_ENDPOINTS = {
   AI_RACI_GENERATOR: {
     production: 'https://spearyx.com/api/raci-ai/',
     production_www: 'https://www.spearyx.com/api/raci-ai/',
+  },
+  AUTH_API: {
+    production: 'https://spearyx.com/auth',
+    production_www: 'https://www.spearyx.com/auth',
   },
 } as const;
 

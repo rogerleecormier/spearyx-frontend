@@ -1,11 +1,11 @@
-/**
- * RACI Chart Generator Page - Main application entry point
- */
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
+import { Loader2 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+import { NotAuthorized } from '@/components/auth/NotAuthorized';
+import { useSession } from '@/hooks/useSession';
 
 // Components
 import {
@@ -69,7 +69,7 @@ const formatGeneratedOn = (iso: string) => {
 
 // Demo data for quick start - using imported demo descriptions
 
-export const Route = createFileRoute('/tools/raci-generator')({
+export const Route = createFileRoute('/tools/raci')({
   loader: ({ location }) => {
     const sharedState = parseSharedState(location.searchStr);
 
@@ -83,7 +83,11 @@ export const Route = createFileRoute('/tools/raci-generator')({
 });
 
 function RaciGeneratorPage() {
-  const { initialState, hasSharedState, generatedOn } = Route.useLoaderData();
+  const loaderData = Route.useLoaderData();
+  const { isAuthenticated, isPending, isFetching } = useSession();
+  const isCheckingAccess = isPending || isFetching;
+
+  const { initialState, hasSharedState, generatedOn } = loaderData;
 
   const [state, setState] = useState<RaciState>(initialState);
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
@@ -325,8 +329,19 @@ function RaciGeneratorPage() {
 
   return (
     <Layout>
-      {/* Page Header */}
-      <div className="border-b border-gray-200 bg-white">
+      {isCheckingAccess ? (
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            Validating Access...
+          </div>
+        </div>
+      ) : !isAuthenticated ? (
+        <NotAuthorized loginPath="/app" />
+      ) : (
+        <>
+          {/* Page Header */}
+          <div className="border-b border-gray-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="space-y-4">
             <div>
@@ -521,6 +536,9 @@ function RaciGeneratorPage() {
           />
         </div>
       </div>
+        </>
+      )}
     </Layout>
   );
 }
+

@@ -38,7 +38,7 @@ The RACI Chart Generator is an interactive tool for creating project responsibil
 
 ### Quick Start
 
-1. Navigate to `/tools/raci-generator`
+1. Navigate to `/tools/raci`
 2. Try one of the demo projects:
    - **Mobile App**: E-commerce development team
    - **Web Redesign**: Marketing & design project  
@@ -137,3 +137,4 @@ Backend services are deployed separately and include:
 - **Frontend Issues**: Use GitHub Issues in this repository
 - **Backend/API Issues**: Contact backend team
 - **Feature Requests**: GitHub Issues with enhancement label
+

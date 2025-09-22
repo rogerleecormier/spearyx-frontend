@@ -10,13 +10,34 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TypographyGuideRouteImport } from './routes/typography-guide'
+import { Route as StylesGuideRouteImport } from './routes/styles-guide'
+import { Route as DevSetupRouteImport } from './routes/dev-setup'
+import { Route as DebugAuthRouteImport } from './routes/debug-auth'
 import { Route as DataRouteImport } from './routes/data'
 import { Route as CardsGuideRouteImport } from './routes/cards-guide'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ToolsRaciRouteImport } from './routes/tools/raci'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
 
 const TypographyGuideRoute = TypographyGuideRouteImport.update({
   id: '/typography-guide',
   path: '/typography-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StylesGuideRoute = StylesGuideRouteImport.update({
+  id: '/styles-guide',
+  path: '/styles-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevSetupRoute = DevSetupRouteImport.update({
+  id: '/dev-setup',
+  path: '/dev-setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DebugAuthRoute = DebugAuthRouteImport.update({
+  id: '/debug-auth',
+  path: '/debug-auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DataRoute = DataRouteImport.update({
@@ -29,44 +50,114 @@ const CardsGuideRoute = CardsGuideRouteImport.update({
   path: '/cards-guide',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsRaciRoute = ToolsRaciRouteImport.update({
+  id: '/tools/raci',
+  path: '/tools/raci',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
   '/cards-guide': typeof CardsGuideRoute
   '/data': typeof DataRoute
+  '/debug-auth': typeof DebugAuthRoute
+  '/dev-setup': typeof DevSetupRoute
+  '/styles-guide': typeof StylesGuideRoute
   '/typography-guide': typeof TypographyGuideRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/tools/raci': typeof ToolsRaciRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
   '/cards-guide': typeof CardsGuideRoute
   '/data': typeof DataRoute
+  '/debug-auth': typeof DebugAuthRoute
+  '/dev-setup': typeof DevSetupRoute
+  '/styles-guide': typeof StylesGuideRoute
   '/typography-guide': typeof TypographyGuideRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/tools/raci': typeof ToolsRaciRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRoute
   '/cards-guide': typeof CardsGuideRoute
   '/data': typeof DataRoute
+  '/debug-auth': typeof DebugAuthRoute
+  '/dev-setup': typeof DevSetupRoute
+  '/styles-guide': typeof StylesGuideRoute
   '/typography-guide': typeof TypographyGuideRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/tools/raci': typeof ToolsRaciRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cards-guide' | '/data' | '/typography-guide'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/cards-guide'
+    | '/data'
+    | '/debug-auth'
+    | '/dev-setup'
+    | '/styles-guide'
+    | '/typography-guide'
+    | '/admin/users'
+    | '/tools/raci'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cards-guide' | '/data' | '/typography-guide'
-  id: '__root__' | '/' | '/cards-guide' | '/data' | '/typography-guide'
+  to:
+    | '/'
+    | '/app'
+    | '/cards-guide'
+    | '/data'
+    | '/debug-auth'
+    | '/dev-setup'
+    | '/styles-guide'
+    | '/typography-guide'
+    | '/admin/users'
+    | '/tools/raci'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/cards-guide'
+    | '/data'
+    | '/debug-auth'
+    | '/dev-setup'
+    | '/styles-guide'
+    | '/typography-guide'
+    | '/admin/users'
+    | '/tools/raci'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRoute
   CardsGuideRoute: typeof CardsGuideRoute
   DataRoute: typeof DataRoute
+  DebugAuthRoute: typeof DebugAuthRoute
+  DevSetupRoute: typeof DevSetupRoute
+  StylesGuideRoute: typeof StylesGuideRoute
   TypographyGuideRoute: typeof TypographyGuideRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  ToolsRaciRoute: typeof ToolsRaciRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -76,6 +167,27 @@ declare module '@tanstack/react-router' {
       path: '/typography-guide'
       fullPath: '/typography-guide'
       preLoaderRoute: typeof TypographyGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/styles-guide': {
+      id: '/styles-guide'
+      path: '/styles-guide'
+      fullPath: '/styles-guide'
+      preLoaderRoute: typeof StylesGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev-setup': {
+      id: '/dev-setup'
+      path: '/dev-setup'
+      fullPath: '/dev-setup'
+      preLoaderRoute: typeof DevSetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/debug-auth': {
+      id: '/debug-auth'
+      path: '/debug-auth'
+      fullPath: '/debug-auth'
+      preLoaderRoute: typeof DebugAuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/data': {
@@ -92,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CardsGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -99,14 +218,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/raci': {
+      id: '/tools/raci'
+      path: '/tools/raci'
+      fullPath: '/tools/raci'
+      preLoaderRoute: typeof ToolsRaciRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRoute,
   CardsGuideRoute: CardsGuideRoute,
   DataRoute: DataRoute,
+  DebugAuthRoute: DebugAuthRoute,
+  DevSetupRoute: DevSetupRoute,
+  StylesGuideRoute: StylesGuideRoute,
   TypographyGuideRoute: TypographyGuideRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  ToolsRaciRoute: ToolsRaciRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

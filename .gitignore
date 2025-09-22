@@ -7,7 +7,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Backend files (moved to spearyx-backend repository)
-workers/
+workers/*
+!workers/auth-api/
+!workers/auth-api/**
 deploy-workers.*
 backend-repo-files/
 *-migration.*
@@ -124,3 +126,6 @@ miniflare-*.log
 
 # Local development
 *.local
+
+# Spearyx backend
+spearyx-backend/

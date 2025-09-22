@@ -1,0 +1,67 @@
+import { Link } from '@tanstack/react-router';
+import { Settings } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+import { DevelopmentSetup } from './DevelopmentSetup';
+
+interface NotAuthorizedProps {
+  loginPath?: string;
+}
+
+export function NotAuthorized({ loginPath = '/app' }: NotAuthorizedProps) {
+  // In development mode without auth API configured, show setup guide
+  if (import.meta.env.DEV && !import.meta.env.VITE_AUTH_API_URL) {
+    return <DevelopmentSetup />;
+  }
+
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center bg-muted/40 p-4">
+      <Card className="w-full max-w-md border-dashed">
+        <CardHeader className="space-y-2 text-center">
+          <CardTitle className="text-2xl font-semibold">Not authorized</CardTitle>
+          <CardDescription>
+            {import.meta.env.DEV 
+              ? 'Connect to your auth worker to enable full authentication.'
+              : 'You need to be signed in with Cloudflare Access to view this page.'
+            }
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          {import.meta.env.DEV ? (
+            <>
+              <Button asChild className="w-full">
+                <Link to="/dev-setup">
+                  <Settings className="h-4 w-4 mr-2" />
+                  Setup Development Auth
+                </Link>
+              </Button>
+              <Button variant="outline" asChild className="w-full">
+                <Link to={loginPath}>
+                  Continue with Mock Auth
+                </Link>
+              </Button>
+            </>
+          ) : (
+            <Button asChild className="w-full">
+              <Link to={loginPath}>
+                Log In
+              </Link>
+            </Button>
+          )}
+          <p className="text-center text-xs text-muted-foreground">
+            {import.meta.env.DEV 
+              ? 'Mock auth provides admin access for testing all features.'
+              : 'The login button sends you to an Access-protected route to trigger the Access prompt.'
+            }
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+
+
+

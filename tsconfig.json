@@ -1,6 +1,6 @@
 {
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/*.json", "dist"],
+  "exclude": ["**/*.json", "dist", "workers/**/*"],
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,
