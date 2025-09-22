@@ -342,203 +342,202 @@ function RaciGeneratorPage() {
         <>
           {/* Page Header */}
           <div className="border-b border-gray-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="space-y-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                RACI Chart Generator
-              </h1>
-              <p className="mt-2 text-gray-600">
-                Create and manage your RACI (Responsible, Accountable,
-                Consulted, Informed) matrix.{' '}
-                <a
-                  href="#"
-                  className="text-blue-600 underline hover:text-blue-800"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Learn about RACI methodology
-                </a>
-              </p>
-            </div>
+            <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+              <div className="space-y-4">
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900">
+                    RACI Chart Generator
+                  </h1>
+                  <p className="mt-2 text-gray-600">
+                    Create and manage your RACI (Responsible, Accountable,
+                    Consulted, Informed) matrix.{' '}
+                    <a
+                      href="#"
+                      className="text-blue-600 underline hover:text-blue-800"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Learn about RACI methodology
+                    </a>
+                  </p>
+                </div>
 
-            {/* Editable Title */}
-            <div>
-              <label
-                htmlFor="chart-title"
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
-                Chart Title
-              </label>
-              <input
-                id="chart-title"
-                type="text"
-                value={state.title}
-                onChange={(e) => handleTitleChange(e.target.value)}
-                className="w-full max-w-md rounded-md border border-gray-300 bg-white px-3 py-2 text-xl font-semibold text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter chart title"
+                {/* Editable Title */}
+                <div>
+                  <label
+                    htmlFor="chart-title"
+                    className="mb-2 block text-sm font-medium text-gray-700"
+                  >
+                    Chart Title
+                  </label>
+                  <input
+                    id="chart-title"
+                    type="text"
+                    value={state.title}
+                    onChange={(e) => handleTitleChange(e.target.value)}
+                    className="w-full max-w-md rounded-md border border-gray-300 bg-white px-3 py-2 text-xl font-semibold text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter chart title"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+            <div className="space-y-8">
+              {/* Description Panel */}
+              <DescriptionPanel
+                description={state.description}
+                onDescriptionChange={handleDescriptionChange}
+                onGenerateRaci={handleGenerateRaci}
+                followUpQuestions={followUpQuestions}
+                isGenerating={isGenerating}
+              />
+
+              {/* Quick Start */}
+              {state.roles.length === 0 &&
+                state.tasks.length === 0 &&
+                !state.description && (
+                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-sm font-medium text-blue-900">
+                          Quick Start
+                        </h3>
+                        <p className="mt-1 text-sm text-blue-700">
+                          Try one of our demo projects to see how the RACI
+                          generator works
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                        <button
+                          onClick={() => handleLoadDemo('mobileApp')}
+                          className="rounded-md bg-blue-100 p-3 text-left text-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        >
+                          <div className="font-medium text-blue-900">
+                            Mobile App
+                          </div>
+                          <div className="mt-1 text-xs text-blue-700">
+                            E-commerce development team
+                          </div>
+                        </button>
+                        <button
+                          onClick={() => handleLoadDemo('webRedesign')}
+                          className="rounded-md bg-blue-100 p-3 text-left text-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        >
+                          <div className="font-medium text-blue-900">
+                            Web Redesign
+                          </div>
+                          <div className="mt-1 text-xs text-blue-700">
+                            Marketing & design project
+                          </div>
+                        </button>
+                        <button
+                          onClick={() => handleLoadDemo('softwareMigration')}
+                          className="rounded-md bg-blue-100 p-3 text-left text-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        >
+                          <div className="font-medium text-blue-900">
+                            CRM Migration
+                          </div>
+                          <div className="mt-1 text-xs text-blue-700">
+                            Legacy system upgrade
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+              {/* Editors Grid */}
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                <RolesEditor
+                  roles={state.roles}
+                  onAddRole={handleAddRole}
+                  onUpdateRole={handleUpdateRole}
+                  onDeleteRole={handleDeleteRole}
+                />
+
+                <TasksEditor
+                  tasks={state.tasks}
+                  onAddTask={handleAddTask}
+                  onUpdateTask={handleUpdateTask}
+                  onDeleteTask={handleDeleteTask}
+                />
+              </div>
+
+              {/* Matrix Editor */}
+              <RaciMatrixEditor
+                roles={state.roles}
+                tasks={state.tasks}
+                matrix={state.matrix}
+                onMatrixChange={handleMatrixChange}
+                validationErrors={matrixValidationErrors}
+              />
+
+              {/* Validation Summary */}
+              {validationErrors.length > 0 && (
+                <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+                  <div className="flex items-start gap-2">
+                    <div className="flex-shrink-0">
+                      <svg
+                        className="h-5 w-5 text-amber-600"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-amber-800">
+                        Validation Issues ({validationErrors.length})
+                      </h3>
+                      <div className="mt-2 text-sm text-amber-700">
+                        <ul className="list-inside list-disc space-y-1">
+                          {validationErrors.slice(0, 5).map((error, index) => (
+                            <li key={index}>{error.message}</li>
+                          ))}
+                          {validationErrors.length > 5 && (
+                            <li>
+                              ... and {validationErrors.length - 5} more issues
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Canvas Preview */}
+              <div ref={matrixCanvasRef}>
+                <RaciCanvasPreview
+                  title={state.title}
+                  roles={state.roles}
+                  tasks={state.tasks}
+                  matrix={state.matrix}
+                  logo={state.logo}
+                  onLogoChange={handleLogoChange}
+                  generatedOnLabel={formattedGeneratedOn}
+                  exportRef={matrixExportRef}
+                />
+              </div>
+
+              {/* Export Center */}
+              <ExportCenter
+                state={state}
+                canvasRef={matrixExportRef}
+                onStateImport={handleStateImport}
+                validationErrors={exportValidationErrors}
+                hasSharedStateInSearch={hasSharedState}
               />
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="space-y-8">
-          {/* Description Panel */}
-          <DescriptionPanel
-            description={state.description}
-            onDescriptionChange={handleDescriptionChange}
-            onGenerateRaci={handleGenerateRaci}
-            followUpQuestions={followUpQuestions}
-            isGenerating={isGenerating}
-          />
-
-          {/* Quick Start */}
-          {state.roles.length === 0 &&
-            state.tasks.length === 0 &&
-            !state.description && (
-              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-sm font-medium text-blue-900">
-                      Quick Start
-                    </h3>
-                    <p className="mt-1 text-sm text-blue-700">
-                      Try one of our demo projects to see how the RACI generator
-                      works
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                    <button
-                      onClick={() => handleLoadDemo('mobileApp')}
-                      className="rounded-md bg-blue-100 p-3 text-left text-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    >
-                      <div className="font-medium text-blue-900">
-                        Mobile App
-                      </div>
-                      <div className="mt-1 text-xs text-blue-700">
-                        E-commerce development team
-                      </div>
-                    </button>
-                    <button
-                      onClick={() => handleLoadDemo('webRedesign')}
-                      className="rounded-md bg-blue-100 p-3 text-left text-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    >
-                      <div className="font-medium text-blue-900">
-                        Web Redesign
-                      </div>
-                      <div className="mt-1 text-xs text-blue-700">
-                        Marketing & design project
-                      </div>
-                    </button>
-                    <button
-                      onClick={() => handleLoadDemo('softwareMigration')}
-                      className="rounded-md bg-blue-100 p-3 text-left text-sm hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    >
-                      <div className="font-medium text-blue-900">
-                        CRM Migration
-                      </div>
-                      <div className="mt-1 text-xs text-blue-700">
-                        Legacy system upgrade
-                      </div>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-          {/* Editors Grid */}
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <RolesEditor
-              roles={state.roles}
-              onAddRole={handleAddRole}
-              onUpdateRole={handleUpdateRole}
-              onDeleteRole={handleDeleteRole}
-            />
-
-            <TasksEditor
-              tasks={state.tasks}
-              onAddTask={handleAddTask}
-              onUpdateTask={handleUpdateTask}
-              onDeleteTask={handleDeleteTask}
-            />
-          </div>
-
-          {/* Matrix Editor */}
-          <RaciMatrixEditor
-            roles={state.roles}
-            tasks={state.tasks}
-            matrix={state.matrix}
-            onMatrixChange={handleMatrixChange}
-            validationErrors={matrixValidationErrors}
-          />
-
-          {/* Validation Summary */}
-          {validationErrors.length > 0 && (
-            <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
-              <div className="flex items-start gap-2">
-                <div className="flex-shrink-0">
-                  <svg
-                    className="h-5 w-5 text-amber-600"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-amber-800">
-                    Validation Issues ({validationErrors.length})
-                  </h3>
-                  <div className="mt-2 text-sm text-amber-700">
-                    <ul className="list-inside list-disc space-y-1">
-                      {validationErrors.slice(0, 5).map((error, index) => (
-                        <li key={index}>{error.message}</li>
-                      ))}
-                      {validationErrors.length > 5 && (
-                        <li>
-                          ... and {validationErrors.length - 5} more issues
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Canvas Preview */}
-          <div ref={matrixCanvasRef}>
-            <RaciCanvasPreview
-              title={state.title}
-              roles={state.roles}
-              tasks={state.tasks}
-              matrix={state.matrix}
-              logo={state.logo}
-              onLogoChange={handleLogoChange}
-              generatedOnLabel={formattedGeneratedOn}
-              exportRef={matrixExportRef}
-            />
-          </div>
-
-          {/* Export Center */}
-          <ExportCenter
-            state={state}
-            canvasRef={matrixExportRef}
-            onStateImport={handleStateImport}
-            validationErrors={exportValidationErrors}
-            hasSharedStateInSearch={hasSharedState}
-          />
-        </div>
-      </div>
         </>
       )}
     </Layout>
   );
 }
-

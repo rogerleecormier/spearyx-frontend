@@ -3,7 +3,13 @@ import { useState } from 'react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
 export function DevelopmentSetup() {
@@ -25,7 +31,7 @@ VITE_ENVIRONMENT=development`;
   return (
     <div className="min-h-screen bg-muted/40 p-4">
       <div className="container mx-auto max-w-4xl space-y-6">
-        <div className="text-center space-y-2">
+        <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold">Development Setup</h1>
           <p className="text-muted-foreground">
             Configure your local environment to work with the auth system
@@ -36,8 +42,8 @@ VITE_ENVIRONMENT=development`;
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Authentication Not Configured</AlertTitle>
           <AlertDescription>
-            The frontend is running in development mode but cannot connect to the auth API. 
-            Follow the setup steps below to enable authentication.
+            The frontend is running in development mode but cannot connect to
+            the auth API. Follow the setup steps below to enable authentication.
           </AlertDescription>
         </Alert>
 
@@ -46,18 +52,21 @@ VITE_ENVIRONMENT=development`;
             <CardHeader>
               <CardTitle>Option 1: Use Mock Authentication</CardTitle>
               <CardDescription>
-                The simplest way to test the frontend without setting up the backend
+                The simplest way to test the frontend without setting up the
+                backend
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                The frontend is currently using mock authentication data. You have admin access as:
+                The frontend is currently using mock authentication data. You
+                have admin access as:
               </p>
-              <div className="bg-muted p-3 rounded-md">
+              <div className="rounded-md bg-muted p-3">
                 <code className="text-sm">dev@localhost.com (Admin)</code>
               </div>
               <p className="text-sm text-muted-foreground">
-                This allows you to test all features including the admin panel with mock data.
+                This allows you to test all features including the admin panel
+                with mock data.
               </p>
               <Button asChild className="w-full">
                 <a href="/app">Continue with Mock Auth</a>
@@ -69,61 +78,71 @@ VITE_ENVIRONMENT=development`;
             <CardHeader>
               <CardTitle>Option 2: Connect to Production Auth</CardTitle>
               <CardDescription>
-                Use your deployed auth worker for full Cloudflare Access authentication
+                Use your deployed auth worker for full Cloudflare Access
+                authentication
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
                 <div>
-                  <h4 className="font-medium mb-2">1. Create environment file</h4>
+                  <h4 className="mb-2 font-medium">
+                    1. Create environment file
+                  </h4>
                   <div className="relative">
-                    <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto">
+                    <pre className="overflow-x-auto rounded-md bg-muted p-3 text-xs">
                       {envContent}
                     </pre>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="absolute top-2 right-2"
+                      className="absolute right-2 top-2"
                       onClick={copyEnvContent}
                     >
                       {copiedEnv ? 'Copied!' : <Copy className="h-4 w-4" />}
                     </Button>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Create a <code>.env.local</code> file in the project root with this content
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Create a <code>.env.local</code> file in the project root
+                    with this content
                   </p>
                 </div>
 
                 <Separator />
 
                 <div>
-                  <h4 className="font-medium mb-2">2. Restart the frontend</h4>
-                  <div className="bg-muted p-3 rounded-md">
-                    <code className="text-xs">
-                      npm run dev
-                    </code>
+                  <h4 className="mb-2 font-medium">2. Restart the frontend</h4>
+                  <div className="rounded-md bg-muted p-3">
+                    <code className="text-xs">npm run dev</code>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    The frontend will now connect to your production auth worker at <code>spearyx.com/auth</code>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    The frontend will now connect to your production auth worker
+                    at <code>spearyx.com/auth</code>
                   </p>
                 </div>
 
                 <Separator />
 
                 <div>
-                  <h4 className="font-medium mb-2">3. Authentication Flow</h4>
+                  <h4 className="mb-2 font-medium">3. Authentication Flow</h4>
                   <p className="text-xs text-muted-foreground">
-                    • Login will redirect through Cloudflare Access<br />
-                    • You'll authenticate with your configured identity provider<br />
-                    • New users start with 'pending' role and need admin approval<br />
-                    • Admins can promote users through the admin panel
+                    • Login will redirect through Cloudflare Access
+                    <br />
+                    • You'll authenticate with your configured identity provider
+                    <br />
+                    • New users start with 'pending' role and need admin
+                    approval
+                    <br />• Admins can promote users through the admin panel
                   </p>
                 </div>
               </div>
 
               <Button variant="outline" className="w-full" asChild>
-                <a href="https://developers.cloudflare.com/cloudflare-one/identity/users/" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-2" />
+                <a
+                  href="https://developers.cloudflare.com/cloudflare-one/identity/users/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="mr-2 h-4 w-4" />
                   Cloudflare Access Docs
                 </a>
               </Button>
@@ -146,13 +165,16 @@ VITE_ENVIRONMENT=development`;
               <div>
                 <h4 className="font-medium">Auth API URL</h4>
                 <p className="text-sm text-muted-foreground">
-                  {import.meta.env.VITE_AUTH_API_URL || 'Not configured (using fallback)'}
+                  {import.meta.env.VITE_AUTH_API_URL ||
+                    'Not configured (using fallback)'}
                 </p>
               </div>
               <div>
                 <h4 className="font-medium">Authentication Mode</h4>
                 <p className="text-sm text-muted-foreground">
-                  {import.meta.env.VITE_AUTH_API_URL ? 'Real Auth Worker' : 'Mock Authentication'}
+                  {import.meta.env.VITE_AUTH_API_URL
+                    ? 'Real Auth Worker'
+                    : 'Mock Authentication'}
                 </p>
               </div>
             </div>

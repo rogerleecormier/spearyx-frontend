@@ -6,12 +6,12 @@ import { Logo } from '@/components/brand';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { getWorkerUrl } from '@/config/workers';
 import { useSession } from '@/hooks/useSession';
@@ -26,16 +26,21 @@ const LOGOUT_PATH = '/cdn-cgi/access/logout';
 
 export function Header({ isDev = false }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { session, isAuthenticated, isAdmin, isPending, isFetching } = useSession();
+  const { session, isAuthenticated, isAdmin, isPending, isFetching } =
+    useSession();
 
   // Get the auth API URL and construct login URL
-  const authApiUrl = import.meta.env.VITE_AUTH_API_URL || getWorkerUrl('AUTH_API');
+  const authApiUrl =
+    import.meta.env.VITE_AUTH_API_URL || getWorkerUrl('AUTH_API');
   const LOGIN_PATH = `${authApiUrl}/session?redirect=${encodeURIComponent(window.location.origin + '/app')}`;
 
   const isLoadingSession = isPending || isFetching;
 
   const userLabel = session.email ?? 'Authenticated user';
-  const avatarFallback = useMemo(() => userLabel.charAt(0).toUpperCase() || 'U', [userLabel]);
+  const avatarFallback = useMemo(
+    () => userLabel.charAt(0).toUpperCase() || 'U',
+    [userLabel]
+  );
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -139,15 +144,21 @@ export function Header({ isDev = false }: HeaderProps) {
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel>
                     <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground">Signed in</span>
-                      <span className="truncate text-sm font-semibold">{session.email}</span>
+                      <span className="text-xs text-muted-foreground">
+                        Signed in
+                      </span>
+                      <span className="truncate text-sm font-semibold">
+                        {session.email}
+                      </span>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem disabled>
                     <div className="flex w-full items-center justify-between text-muted-foreground">
                       <span>Status</span>
-                      <span className="font-medium">{session.isPaid ? 'Paid' : 'Free'}</span>
+                      <span className="font-medium">
+                        {session.isPaid ? 'Paid' : 'Free'}
+                      </span>
                     </div>
                   </DropdownMenuItem>
                   {isAdmin && (
@@ -176,7 +187,11 @@ export function Header({ isDev = false }: HeaderProps) {
             aria-expanded={isMobileMenuOpen}
             aria-label="Toggle navigation"
           >
-            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isMobileMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </Button>
         </div>
 
@@ -184,13 +199,23 @@ export function Header({ isDev = false }: HeaderProps) {
           <div className="border-t border-precision-200 py-4 dark:border-precision-800 md:hidden">
             <div className="space-y-4">
               <div className="space-y-2">
-                <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start"
+                  asChild
+                >
                   <Link to={PROTECTED_TOOL_PATH} onClick={closeMobileMenu}>
                     RACI Generator
                   </Link>
                 </Button>
                 {isAdmin && (
-                  <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full justify-start"
+                    asChild
+                  >
                     <Link to={ADMIN_PATH} onClick={closeMobileMenu}>
                       Admin
                     </Link>
@@ -207,23 +232,26 @@ export function Header({ isDev = false }: HeaderProps) {
 
                 {!isLoadingSession && !isAuthenticated && (
                   <Button className="w-full" asChild>
-                    <a href={LOGIN_PATH}>
-                      Log In
-                    </a>
+                    <a href={LOGIN_PATH}>Log In</a>
                   </Button>
                 )}
 
                 {!isLoadingSession && isAuthenticated && (
                   <div className="flex flex-col gap-3">
                     <div>
-                      <div className="text-xs uppercase text-muted-foreground">Signed in</div>
+                      <div className="text-xs uppercase text-muted-foreground">
+                        Signed in
+                      </div>
                       <div className="text-sm font-medium">{session.email}</div>
                       <div className="text-xs text-muted-foreground">
                         {isAdmin ? 'Administrator' : 'Member'}
                       </div>
                     </div>
                     <Button variant="outline" className="w-full" asChild>
-                      <a href={LOGOUT_PATH} className="flex items-center justify-center gap-2">
+                      <a
+                        href={LOGOUT_PATH}
+                        className="flex items-center justify-center gap-2"
+                      >
                         <LogOut className="h-4 w-4" /> Log Out
                       </a>
                     </Button>
@@ -237,22 +265,42 @@ export function Header({ isDev = false }: HeaderProps) {
                     Dev Mode
                   </div>
                   <div className="space-y-2">
-                    <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
+                      asChild
+                    >
                       <Link to="/typography-guide" onClick={closeMobileMenu}>
                         Typography Guide
                       </Link>
                     </Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
+                      asChild
+                    >
                       <Link to="/cards-guide" onClick={closeMobileMenu}>
                         Cards Guide
                       </Link>
                     </Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
+                      asChild
+                    >
                       <Link to="/styles-guide" onClick={closeMobileMenu}>
                         Styles Guide
                       </Link>
                     </Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
+                      asChild
+                    >
                       <Link to="/data" onClick={closeMobileMenu}>
                         Server Data
                       </Link>

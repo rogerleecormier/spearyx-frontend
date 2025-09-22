@@ -8,6 +8,7 @@ export interface SessionPayload {
   isPaid: boolean;
   hasContentAccess?: boolean;
   accessLevel?: 'none' | 'basic' | 'premium' | 'admin';
+  isAdmin?: boolean;
 }
 
 export interface SessionFetchOptions {
@@ -54,10 +55,15 @@ export interface AdminUserSummary {
   createdAt: string;
 }
 
-const BASE_URL = normalizeBaseUrl(import.meta.env.VITE_AUTH_API_URL) || getWorkerUrl('AUTH_API');
+const BASE_URL =
+  normalizeBaseUrl(import.meta.env.VITE_AUTH_API_URL) ||
+  getWorkerUrl('AUTH_API');
 
 // Debug logging
-console.log('🔧 Environment VITE_AUTH_API_URL:', import.meta.env.VITE_AUTH_API_URL);
+console.log(
+  '🔧 Environment VITE_AUTH_API_URL:',
+  import.meta.env.VITE_AUTH_API_URL
+);
 console.log('🔧 Normalized BASE_URL:', BASE_URL);
 console.log('🔧 Worker fallback URL:', getWorkerUrl('AUTH_API'));
 
@@ -78,7 +84,9 @@ export function createAnonymousSession(): SessionPayload {
 
 function ensureBaseUrl(action: string) {
   if (!BASE_URL) {
-    throw new Error(`Auth API URL is required to ${action}. Configure VITE_AUTH_API_URL or ensure worker endpoints are available.`);
+    throw new Error(
+      `Auth API URL is required to ${action}. Configure VITE_AUTH_API_URL or ensure worker endpoints are available.`
+    );
   }
 
   return BASE_URL;
@@ -94,7 +102,9 @@ function createAuthHeaders(accessJwt?: string) {
   return headers;
 }
 
-async function parseSessionResponse(response: Response): Promise<SessionPayload> {
+async function parseSessionResponse(
+  response: Response
+): Promise<SessionPayload> {
   if (response.status === 401) {
     return createAnonymousSession();
   }
@@ -117,9 +127,15 @@ async function parseSessionResponse(response: Response): Promise<SessionPayload>
 }
 
 function normalizeAdminUser(record: Record<string, unknown>): AdminUserSummary {
-  const id = typeof record?.id === 'string' ? record.id : typeof record?.userId === 'string' ? record.userId : '';
+  const id =
+    typeof record?.id === 'string'
+      ? record.id
+      : typeof record?.userId === 'string'
+        ? record.userId
+        : '';
   const email = typeof record?.email === 'string' ? record.email : '';
-  const createdAt = typeof record?.createdAt === 'string' ? record.createdAt : '';
+  const createdAt =
+    typeof record?.createdAt === 'string' ? record.createdAt : '';
 
   if (!id || !email) {
     throw new Error('Invalid user record returned by auth API.');
@@ -134,10 +150,14 @@ function normalizeAdminUser(record: Record<string, unknown>): AdminUserSummary {
   };
 }
 
-export async function fetchSession(options: SessionFetchOptions = {}): Promise<SessionPayload> {
+export async function fetchSession(
+  options: SessionFetchOptions = {}
+): Promise<SessionPayload> {
   if (!BASE_URL) {
     if (import.meta.env.DEV) {
-      console.warn('Auth API URL is not configured; treating session as unauthenticated.');
+      console.warn(
+        'Auth API URL is not configured; treating session as unauthenticated.'
+      );
       // In development without auth API, provide a mock session for testing
       return createMockDevSession();
     }
@@ -145,11 +165,15 @@ export async function fetchSession(options: SessionFetchOptions = {}): Promise<S
   }
 
   const headers = createAuthHeaders(options.accessJwt);
-  
+
   // In development mode with production auth, add mock email header if no auth JWT is present
   // This allows testing the production auth worker without full Cloudflare Access setup
-  if (import.meta.env.DEV && import.meta.env.VITE_ENVIRONMENT === 'development' && 
-      !headers.get('CF-Access-Jwt-Assertion') && !headers.get('Authorization')) {
+  if (
+    import.meta.env.DEV &&
+    import.meta.env.VITE_ENVIRONMENT === 'development' &&
+    !headers.get('CF-Access-Jwt-Assertion') &&
+    !headers.get('Authorization')
+  ) {
     headers.set('X-Mock-Email', 'dev@localhost.com');
   }
 
@@ -164,7 +188,7 @@ export async function fetchSession(options: SessionFetchOptions = {}): Promise<S
   });
 
   console.log('🔍 Session response:', response.status, response.statusText);
-  
+
   return parseSessionResponse(response);
 }
 
@@ -180,7 +204,9 @@ function createMockDevSession(): SessionPayload {
   };
 }
 
-export async function bootstrapSession(options: BootstrapOptions = {}): Promise<SessionPayload> {
+export async function bootstrapSession(
+  options: BootstrapOptions = {}
+): Promise<SessionPayload> {
   if (!BASE_URL) {
     if (import.meta.env.DEV) {
       console.warn('Auth API URL is not configured; skipping /bootstrap call.');
@@ -190,10 +216,14 @@ export async function bootstrapSession(options: BootstrapOptions = {}): Promise<
   }
 
   const headers = createAuthHeaders(options.accessJwt);
-  
+
   // In development mode with production auth, add mock email header if no auth JWT is present
-  if (import.meta.env.DEV && import.meta.env.VITE_ENVIRONMENT === 'development' && 
-      !headers.get('CF-Access-Jwt-Assertion') && !headers.get('Authorization')) {
+  if (
+    import.meta.env.DEV &&
+    import.meta.env.VITE_ENVIRONMENT === 'development' &&
+    !headers.get('CF-Access-Jwt-Assertion') &&
+    !headers.get('Authorization')
+  ) {
     headers.set('X-Mock-Email', 'dev@localhost.com');
   }
 
@@ -213,7 +243,9 @@ export async function bootstrapSession(options: BootstrapOptions = {}): Promise<
   return parseSessionResponse(response);
 }
 
-export async function fetchAdminUsers(options: SessionFetchOptions = {}): Promise<AdminUserSummary[]> {
+export async function fetchAdminUsers(
+  options: SessionFetchOptions = {}
+): Promise<AdminUserSummary[]> {
   if (!BASE_URL) {
     if (import.meta.env.DEV) {
       // Return mock users for development
@@ -241,16 +273,22 @@ export async function fetchAdminUsers(options: SessionFetchOptions = {}): Promis
         },
       ];
     }
-    throw new Error('Auth API URL is required to fetch admin users. Configure VITE_AUTH_API_URL or ensure worker endpoints are available.');
+    throw new Error(
+      'Auth API URL is required to fetch admin users. Configure VITE_AUTH_API_URL or ensure worker endpoints are available.'
+    );
   }
 
   const baseUrl = ensureBaseUrl('fetch admin users');
 
   const headers = createAuthHeaders(options.accessJwt);
-  
+
   // In development mode with production auth, add mock email header if no auth JWT is present
-  if (import.meta.env.DEV && import.meta.env.VITE_ENVIRONMENT === 'development' && 
-      !headers.get('CF-Access-Jwt-Assertion') && !headers.get('Authorization')) {
+  if (
+    import.meta.env.DEV &&
+    import.meta.env.VITE_ENVIRONMENT === 'development' &&
+    !headers.get('CF-Access-Jwt-Assertion') &&
+    !headers.get('Authorization')
+  ) {
     headers.set('X-Mock-Email', 'dev@localhost.com');
   }
 
@@ -279,7 +317,9 @@ export async function fetchAdminUsers(options: SessionFetchOptions = {}): Promis
     return [];
   }
 
-  return payload.users.map((user) => normalizeAdminUser(user as Record<string, unknown>)).sort((a, b) => a.email.localeCompare(b.email));
+  return payload.users
+    .map((user) => normalizeAdminUser(user as Record<string, unknown>))
+    .sort((a, b) => a.email.localeCompare(b.email));
 }
 
 export async function toggleUserPaid(
@@ -320,7 +360,9 @@ export async function toggleUserPaid(
   return normalizeAdminUser(body.user as Record<string, unknown>);
 }
 
-export async function checkAccess(options: SessionFetchOptions = {}): Promise<AccessCheckResponse> {
+export async function checkAccess(
+  options: SessionFetchOptions = {}
+): Promise<AccessCheckResponse> {
   if (!BASE_URL) {
     if (import.meta.env.DEV) {
       // Return mock access data for development
@@ -334,8 +376,8 @@ export async function checkAccess(options: SessionFetchOptions = {}): Promise<Ac
         isPaid: mockSession.isPaid,
       };
     }
-    return { 
-      hasContentAccess: false, 
+    return {
+      hasContentAccess: false,
       accessLevel: 'none',
       authenticated: false,
       roles: [],
@@ -346,10 +388,14 @@ export async function checkAccess(options: SessionFetchOptions = {}): Promise<Ac
   const baseUrl = ensureBaseUrl('check access');
 
   const headers = createAuthHeaders(options.accessJwt);
-  
+
   // In development mode with production auth, add mock email header if no auth JWT is present
-  if (import.meta.env.DEV && import.meta.env.VITE_ENVIRONMENT === 'development' && 
-      !headers.get('CF-Access-Jwt-Assertion') && !headers.get('Authorization')) {
+  if (
+    import.meta.env.DEV &&
+    import.meta.env.VITE_ENVIRONMENT === 'development' &&
+    !headers.get('CF-Access-Jwt-Assertion') &&
+    !headers.get('Authorization')
+  ) {
     headers.set('X-Mock-Email', 'dev@localhost.com');
   }
 
@@ -361,8 +407,8 @@ export async function checkAccess(options: SessionFetchOptions = {}): Promise<Ac
   });
 
   if (response.status === 401) {
-    return { 
-      hasContentAccess: false, 
+    return {
+      hasContentAccess: false,
       accessLevel: 'none',
       authenticated: false,
       roles: [],
@@ -375,7 +421,7 @@ export async function checkAccess(options: SessionFetchOptions = {}): Promise<Ac
   }
 
   const data = (await response.json()) as Partial<AccessCheckResponse>;
-  
+
   return {
     hasContentAccess: Boolean(data.hasContentAccess),
     accessLevel: data.accessLevel ?? 'none',
@@ -424,8 +470,3 @@ export async function updateUserRole(
 
   return normalizeAdminUser(body.user as Record<string, unknown>);
 }
-
-
-
-
-

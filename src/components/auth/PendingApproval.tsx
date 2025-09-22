@@ -1,7 +1,13 @@
 import { Clock, Mail } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 interface PendingApprovalProps {
   email?: string;
@@ -9,7 +15,11 @@ interface PendingApprovalProps {
   isRefreshing?: boolean;
 }
 
-export function PendingApproval({ email, onRefresh, isRefreshing }: PendingApprovalProps) {
+export function PendingApproval({
+  email,
+  onRefresh,
+  isRefreshing,
+}: PendingApprovalProps) {
   return (
     <div className="flex min-h-[60vh] items-center justify-center bg-muted/40 p-4">
       <Card className="w-full max-w-md border-dashed border-amber-200">
@@ -19,7 +29,8 @@ export function PendingApproval({ email, onRefresh, isRefreshing }: PendingAppro
             Pending approval
           </CardTitle>
           <CardDescription>
-            Your account is awaiting approval from an administrator to access content.
+            Your account is awaiting approval from an administrator to access
+            content.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
@@ -34,7 +45,7 @@ export function PendingApproval({ email, onRefresh, isRefreshing }: PendingAppro
               </p>
             </div>
           )}
-          
+
           <div className="space-y-3 text-sm text-muted-foreground">
             <p>
               <strong className="text-foreground">What happens next?</strong>
@@ -47,9 +58,9 @@ export function PendingApproval({ email, onRefresh, isRefreshing }: PendingAppro
           </div>
 
           {onRefresh && (
-            <Button 
-              variant="outline" 
-              className="w-full" 
+            <Button
+              variant="outline"
+              className="w-full"
               onClick={onRefresh}
               disabled={isRefreshing}
             >
@@ -65,4 +76,3 @@ export function PendingApproval({ email, onRefresh, isRefreshing }: PendingAppro
     </div>
   );
 }
-

@@ -7,30 +7,36 @@ import { NotAuthorized } from '@/components/auth/NotAuthorized';
 import { Layout } from '@/components/layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Switch } from '@/components/ui/switch';
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui/table';
 import { SESSION_QUERY_KEY, useSession } from '@/hooks/useSession';
 import {
-    fetchAdminUsers,
-    toggleUserPaid,
-    updateUserRole,
-    type AdminUserSummary,
-    type TogglePaidPayload,
-    type UpdateRolePayload,
+  fetchAdminUsers,
+  toggleUserPaid,
+  updateUserRole,
+  type AdminUserSummary,
+  type TogglePaidPayload,
+  type UpdateRolePayload,
 } from '@/lib/session';
 
 const ADMIN_USERS_QUERY_KEY = ['admin', 'users'] as const;
@@ -41,7 +47,8 @@ export const Route = createFileRoute('/admin/users')({
 
 function AdminUsersPage() {
   const queryClient = useQueryClient();
-  const { session, isAuthenticated, isAdmin, isPending, isFetching } = useSession();
+  const { session, isAuthenticated, isAdmin, isPending, isFetching } =
+    useSession();
   const [mutationError, setMutationError] = useState<string | null>(null);
   const [pendingUserId, setPendingUserId] = useState<string | null>(null);
 
@@ -61,15 +68,20 @@ function AdminUsersPage() {
       setMutationError(null);
     },
     onError: (error: unknown) => {
-      setMutationError(error instanceof Error ? error.message : 'Unable to update user.');
+      setMutationError(
+        error instanceof Error ? error.message : 'Unable to update user.'
+      );
     },
     onSuccess: (updatedUser) => {
-      queryClient.setQueryData<AdminUserSummary[]>(ADMIN_USERS_QUERY_KEY, (previous) => {
-        if (!previous) return [updatedUser];
-        return previous
-          .map((user) => (user.id === updatedUser.id ? updatedUser : user))
-          .sort((a, b) => a.email.localeCompare(b.email));
-      });
+      queryClient.setQueryData<AdminUserSummary[]>(
+        ADMIN_USERS_QUERY_KEY,
+        (previous) => {
+          if (!previous) return [updatedUser];
+          return previous
+            .map((user) => (user.id === updatedUser.id ? updatedUser : user))
+            .sort((a, b) => a.email.localeCompare(b.email));
+        }
+      );
 
       if (updatedUser.id === session.userId) {
         queryClient.invalidateQueries({ queryKey: SESSION_QUERY_KEY });
@@ -87,15 +99,20 @@ function AdminUsersPage() {
       setMutationError(null);
     },
     onError: (error: unknown) => {
-      setMutationError(error instanceof Error ? error.message : 'Unable to update user role.');
+      setMutationError(
+        error instanceof Error ? error.message : 'Unable to update user role.'
+      );
     },
     onSuccess: (updatedUser) => {
-      queryClient.setQueryData<AdminUserSummary[]>(ADMIN_USERS_QUERY_KEY, (previous) => {
-        if (!previous) return [updatedUser];
-        return previous
-          .map((user) => (user.id === updatedUser.id ? updatedUser : user))
-          .sort((a, b) => a.email.localeCompare(b.email));
-      });
+      queryClient.setQueryData<AdminUserSummary[]>(
+        ADMIN_USERS_QUERY_KEY,
+        (previous) => {
+          if (!previous) return [updatedUser];
+          return previous
+            .map((user) => (user.id === updatedUser.id ? updatedUser : user))
+            .sort((a, b) => a.email.localeCompare(b.email));
+        }
+      );
 
       if (updatedUser.id === session.userId) {
         queryClient.invalidateQueries({ queryKey: SESSION_QUERY_KEY });
@@ -161,7 +178,9 @@ function AdminUsersPage() {
       <div className="container mx-auto flex flex-col gap-6 py-10">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">User directory</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">
+              User directory
+            </h1>
             <p className="text-sm text-muted-foreground">
               Manage Access-provisioned users and toggle paid status.
             </p>
@@ -188,7 +207,9 @@ function AdminUsersPage() {
 
         {usersQuery.isError && (
           <div className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
-            {usersQuery.error instanceof Error ? usersQuery.error.message : 'Failed to load users.'}
+            {usersQuery.error instanceof Error
+              ? usersQuery.error.message
+              : 'Failed to load users.'}
           </div>
         )}
 
@@ -212,7 +233,8 @@ function AdminUsersPage() {
           <CardContent className="overflow-x-auto">
             {isLoadingUsers ? (
               <div className="flex items-center justify-center py-12 text-sm text-muted-foreground">
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading users...
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Loading
+                users...
               </div>
             ) : (
               <UsersTable
@@ -236,7 +258,12 @@ interface UsersTableProps {
   onUpdateRole: (payload: UpdateRolePayload) => void;
 }
 
-function UsersTable({ users, pendingUserId, onTogglePaid, onUpdateRole }: UsersTableProps) {
+function UsersTable({
+  users,
+  pendingUserId,
+  onTogglePaid,
+  onUpdateRole,
+}: UsersTableProps) {
   if (users.length === 0) {
     return (
       <div className="py-10 text-center text-sm text-muted-foreground">
@@ -262,7 +289,9 @@ function UsersTable({ users, pendingUserId, onTogglePaid, onUpdateRole }: UsersT
           <TableRow key={user.id}>
             <TableCell className="font-medium">{user.email}</TableCell>
             <TableCell>
-              <code className="rounded bg-muted px-1 py-0.5 text-xs">{user.id}</code>
+              <code className="rounded bg-muted px-1 py-0.5 text-xs">
+                {user.id}
+              </code>
             </TableCell>
             <TableCell>
               <AccessLevelDropdown
@@ -277,7 +306,10 @@ function UsersTable({ users, pendingUserId, onTogglePaid, onUpdateRole }: UsersT
                   <Badge variant="outline">default</Badge>
                 ) : (
                   user.roles.map((role) => (
-                    <Badge key={role} variant={role === 'admin' ? 'default' : 'outline'}>
+                    <Badge
+                      key={role}
+                      variant={role === 'admin' ? 'default' : 'outline'}
+                    >
                       {role}
                     </Badge>
                   ))
@@ -307,18 +339,30 @@ interface AccessLevelDropdownProps {
   disabled?: boolean;
 }
 
-function AccessLevelDropdown({ user, onUpdateRole, disabled }: AccessLevelDropdownProps) {
+function AccessLevelDropdown({
+  user,
+  onUpdateRole,
+  disabled,
+}: AccessLevelDropdownProps) {
   const currentRole = getCurrentAccessLevel(user);
-  
+
   const roleOptions: Array<{
     value: UpdateRolePayload['role'];
     label: string;
     description: string;
   }> = [
     { value: 'pending', label: 'Pending', description: 'No content access' },
-    { value: 'verified', label: 'Verified', description: 'Basic content access' },
+    {
+      value: 'verified',
+      label: 'Verified',
+      description: 'Basic content access',
+    },
     { value: 'premium', label: 'Premium', description: 'Full content access' },
-    { value: 'moderator', label: 'Moderator', description: 'Content moderation tools' },
+    {
+      value: 'moderator',
+      label: 'Moderator',
+      description: 'Content moderation tools',
+    },
     { value: 'admin', label: 'Admin', description: 'Full system access' },
   ];
 
@@ -329,7 +373,7 @@ function AccessLevelDropdown({ user, onUpdateRole, disabled }: AccessLevelDropdo
           variant="outline"
           size="sm"
           disabled={disabled}
-          className="h-8 justify-between min-w-[120px]"
+          className="h-8 min-w-[120px] justify-between"
         >
           <span>{getRoleLabel(currentRole)}</span>
           <ChevronDown className="h-4 w-4 opacity-50" />
@@ -339,12 +383,16 @@ function AccessLevelDropdown({ user, onUpdateRole, disabled }: AccessLevelDropdo
         {roleOptions.map((option) => (
           <DropdownMenuItem
             key={option.value}
-            onClick={() => onUpdateRole({ userId: user.id, role: option.value })}
+            onClick={() =>
+              onUpdateRole({ userId: user.id, role: option.value })
+            }
             disabled={disabled || currentRole === option.value}
             className="flex flex-col items-start gap-1"
           >
             <span className="font-medium">{option.label}</span>
-            <span className="text-xs text-muted-foreground">{option.description}</span>
+            <span className="text-xs text-muted-foreground">
+              {option.description}
+            </span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
@@ -352,7 +400,9 @@ function AccessLevelDropdown({ user, onUpdateRole, disabled }: AccessLevelDropdo
   );
 }
 
-function getCurrentAccessLevel(user: AdminUserSummary): UpdateRolePayload['role'] {
+function getCurrentAccessLevel(
+  user: AdminUserSummary
+): UpdateRolePayload['role'] {
   // Determine access level based on roles - matches backend role hierarchy
   if (user.roles.includes('admin')) return 'admin';
   if (user.roles.includes('moderator')) return 'moderator';
@@ -363,12 +413,18 @@ function getCurrentAccessLevel(user: AdminUserSummary): UpdateRolePayload['role'
 
 function getRoleLabel(role: UpdateRolePayload['role']): string {
   switch (role) {
-    case 'pending': return 'Pending';
-    case 'verified': return 'Verified';
-    case 'premium': return 'Premium';
-    case 'moderator': return 'Moderator';
-    case 'admin': return 'Admin';
-    default: return 'Unknown';
+    case 'pending':
+      return 'Pending';
+    case 'verified':
+      return 'Verified';
+    case 'premium':
+      return 'Premium';
+    case 'moderator':
+      return 'Moderator';
+    case 'admin':
+      return 'Admin';
+    default:
+      return 'Unknown';
   }
 }
 
@@ -384,4 +440,3 @@ function formatTimestamp(value: string) {
 
   return date.toLocaleString();
 }
-

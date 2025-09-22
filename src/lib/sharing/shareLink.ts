@@ -239,4 +239,3 @@ export function clearSharedStateFromUrl(): void {
     console.error('Failed to clear shared state from URL:', error);
   }
 }
-

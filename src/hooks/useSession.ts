@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
 import {
-    bootstrapSession,
-    checkAccess,
-    createAnonymousSession,
-    fetchSession,
-    type AccessCheckResponse,
-    type SessionPayload,
+  bootstrapSession,
+  checkAccess,
+  createAnonymousSession,
+  fetchSession,
+  type AccessCheckResponse,
+  type SessionPayload,
 } from '../lib/session';
 
 export const SESSION_QUERY_KEY = ['session'] as const;
@@ -19,7 +19,10 @@ function withAdminFlag(session: SessionPayload) {
   };
 }
 
-function withAccessLevel(session: SessionPayload, accessData?: AccessCheckResponse) {
+function withAccessLevel(
+  session: SessionPayload,
+  accessData?: AccessCheckResponse
+) {
   return {
     ...session,
     hasContentAccess: accessData?.hasContentAccess ?? false,
@@ -61,8 +64,12 @@ export function useSession() {
   const dataWithFlags = withAdminFlag(sessionData);
   const dataWithAccess = withAccessLevel(dataWithFlags, accessQuery.data);
 
-  const isPending = sessionQuery.isPending || (sessionData.authenticated && accessQuery.isPending);
-  const isFetching = sessionQuery.isFetching || (sessionData.authenticated && accessQuery.isFetching);
+  const isPending =
+    sessionQuery.isPending ||
+    (sessionData.authenticated && accessQuery.isPending);
+  const isFetching =
+    sessionQuery.isFetching ||
+    (sessionData.authenticated && accessQuery.isFetching);
   const isError = sessionQuery.isError || accessQuery.isError;
   const error = sessionQuery.error || accessQuery.error;
 

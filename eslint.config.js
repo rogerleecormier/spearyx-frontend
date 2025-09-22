@@ -13,6 +13,8 @@ export default [
       ".tanstack/*",
       ".output/*",
       ".nitro/*",
+      ".wrangler/**/*",
+      "**/.wrangler/**/*",
       "**/*.json",
       "routeTree.gen.ts",
     ],

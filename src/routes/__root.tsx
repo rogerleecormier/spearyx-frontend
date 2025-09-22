@@ -1,15 +1,21 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import {
-    HeadContent,
-    Outlet,
-    Scripts,
-    createRootRouteWithContext,
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRouteWithContext,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import type { ReactNode } from 'react';
 
 import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../components/ui/card';
 import appStyles from '../index.css?url';
 import type { RouterContext } from '../router';
 
@@ -29,7 +35,7 @@ function RootDocument({ children }: { children: ReactNode }) {
 
 function NotFoundComponent() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Page Not Found</CardTitle>
@@ -38,8 +44,8 @@ function NotFoundComponent() {
           </CardDescription>
         </CardHeader>
         <CardContent className="text-center">
-          <Button 
-            onClick={() => window.location.href = '/'}
+          <Button
+            onClick={() => (window.location.href = '/')}
             className="w-full"
           >
             Go Home

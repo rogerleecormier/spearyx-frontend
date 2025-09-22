@@ -6,7 +6,13 @@ import { PendingApproval } from '@/components/auth/PendingApproval';
 import { Layout } from '@/components/layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { useSession } from '@/hooks/useSession';
 
 export const Route = createFileRoute('/app')({
@@ -14,7 +20,15 @@ export const Route = createFileRoute('/app')({
 });
 
 function AppLanding() {
-  const { session, isAuthenticated, hasContentAccess, accessLevel, isPending, isFetching, refetch } = useSession();
+  const {
+    session,
+    isAuthenticated,
+    hasContentAccess,
+    accessLevel,
+    isPending,
+    isFetching,
+    refetch,
+  } = useSession();
   const isLoading = isPending || isFetching;
 
   if (isLoading) {
@@ -42,7 +56,7 @@ function AppLanding() {
   if (!hasContentAccess || accessLevel === 'none') {
     return (
       <Layout>
-        <PendingApproval 
+        <PendingApproval
           email={session.email}
           onRefresh={refetch}
           isRefreshing={isLoading}
@@ -68,7 +82,7 @@ function AppLanding() {
           <CardContent className="flex flex-col gap-4 text-center">
             <div className="rounded-md bg-muted p-3 text-sm text-muted-foreground">
               <div className="font-medium text-foreground">{session.email}</div>
-              <div className="flex items-center justify-center gap-2 mt-1">
+              <div className="mt-1 flex items-center justify-center gap-2">
                 <AccessLevelBadge level={accessLevel} />
                 {session.roles.length > 0 && (
                   <Badge variant="outline" className="text-xs">
@@ -92,7 +106,7 @@ function AppLanding() {
               {accessLevel === 'basic' && (
                 <div className="rounded-md bg-blue-50 p-3 text-sm text-blue-800">
                   <p className="font-medium">Want more features?</p>
-                  <p className="text-xs mt-1">
+                  <p className="mt-1 text-xs">
                     Upgrade to premium for advanced tools and priority support.
                   </p>
                 </div>
@@ -100,8 +114,8 @@ function AppLanding() {
 
               {/* Admin tools */}
               {accessLevel === 'admin' && (
-                <div className="pt-2 border-t">
-                  <p className="text-sm font-medium text-muted-foreground mb-2">
+                <div className="border-t pt-2">
+                  <p className="mb-2 text-sm font-medium text-muted-foreground">
                     Admin Tools
                   </p>
                   <div className="flex flex-wrap items-center justify-center gap-2">
@@ -133,22 +147,25 @@ function AccessLevelBadge({ level }: AccessLevelBadgeProps) {
       );
     case 'basic':
       return (
-        <Badge variant="outline" className="text-xs text-green-700 border-green-200">
-          <CheckCircle2 className="w-3 h-3 mr-1" />
+        <Badge
+          variant="outline"
+          className="border-green-200 text-xs text-green-700"
+        >
+          <CheckCircle2 className="mr-1 h-3 w-3" />
           Basic Access
         </Badge>
       );
     case 'premium':
       return (
-        <Badge variant="default" className="text-xs bg-blue-600">
-          <Crown className="w-3 h-3 mr-1" />
+        <Badge variant="default" className="bg-blue-600 text-xs">
+          <Crown className="mr-1 h-3 w-3" />
           Premium
         </Badge>
       );
     case 'admin':
       return (
-        <Badge variant="default" className="text-xs bg-red-600">
-          <Shield className="w-3 h-3 mr-1" />
+        <Badge variant="default" className="bg-red-600 text-xs">
+          <Shield className="mr-1 h-3 w-3" />
           Admin
         </Badge>
       );
@@ -160,4 +177,3 @@ function AccessLevelBadge({ level }: AccessLevelBadgeProps) {
       );
   }
 }
-

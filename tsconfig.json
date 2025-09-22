@@ -1,6 +1,6 @@
 {
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/*.json", "dist", "workers/**/*"],
+  "exclude": ["**/*.json", "dist", "spearyx-backend/**/*"],
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,
