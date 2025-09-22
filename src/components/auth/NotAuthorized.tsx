@@ -3,6 +3,7 @@ import { Settings } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { getWorkerUrl } from '@/config/workers';
 
 import { DevelopmentSetup } from './DevelopmentSetup';
 
@@ -15,6 +16,10 @@ export function NotAuthorized({ loginPath = '/app' }: NotAuthorizedProps) {
   if (import.meta.env.DEV && !import.meta.env.VITE_AUTH_API_URL) {
     return <DevelopmentSetup />;
   }
+
+  // Get the auth API URL - use configured URL or fallback to worker URL
+  const authApiUrl = import.meta.env.VITE_AUTH_API_URL || getWorkerUrl('AUTH_API');
+  const loginUrl = `${authApiUrl}/session?redirect=${encodeURIComponent(window.location.origin + loginPath)}`;
 
   return (
     <div className="flex min-h-[60vh] items-center justify-center bg-muted/40 p-4">
@@ -45,7 +50,7 @@ export function NotAuthorized({ loginPath = '/app' }: NotAuthorizedProps) {
             </>
           ) : (
             <Button asChild className="w-full">
-              <a href="/auth/session">
+              <a href={loginUrl}>
                 Log In
               </a>
             </Button>

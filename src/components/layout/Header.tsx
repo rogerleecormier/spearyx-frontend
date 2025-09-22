@@ -13,13 +13,13 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { getWorkerUrl } from '@/config/workers';
 import { useSession } from '@/hooks/useSession';
 
 interface HeaderProps {
   isDev?: boolean;
 }
 
-const LOGIN_PATH = '/auth/session';
 const PROTECTED_TOOL_PATH = '/tools/raci';
 const ADMIN_PATH = '/admin/users';
 const LOGOUT_PATH = '/cdn-cgi/access/logout';
@@ -27,6 +27,10 @@ const LOGOUT_PATH = '/cdn-cgi/access/logout';
 export function Header({ isDev = false }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { session, isAuthenticated, isAdmin, isPending, isFetching } = useSession();
+
+  // Get the auth API URL and construct login URL
+  const authApiUrl = import.meta.env.VITE_AUTH_API_URL || getWorkerUrl('AUTH_API');
+  const LOGIN_PATH = `${authApiUrl}/session?redirect=${encodeURIComponent(window.location.origin + '/app')}`;
 
   const isLoadingSession = isPending || isFetching;
 
