@@ -4,16 +4,22 @@ import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
+  base: '/',
   server: {
     port: 5173,
     fs: { allow: ['.'] },
   },
+  resolve: {
+    alias: {
+      '@': new URL('./src', import.meta.url).pathname,
+    },
+  },
   plugins: [
-    tsconfigPaths({ projects: ['./tsconfig.json'] }),
-    tanstackStart({ 
+    tanstackStart({
       customViteReactPlugin: true
     }),
     react(),
+    tsconfigPaths({ projects: ['./tsconfig.json'] }),
   ],
   ssr: {
     // Handle "use client" directives in SSR build

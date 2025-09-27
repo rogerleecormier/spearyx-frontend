@@ -3,24 +3,24 @@
  */
 
 import {
-    AlertCircle,
-    Check,
-    Copy,
-    Download,
-    FileSpreadsheet,
-    FileText,
-    Image,
-    Link,
-    Loader2,
-    Users,
-    X,
+  AlertCircle,
+  Check,
+  Copy,
+  Download,
+  FileSpreadsheet,
+  FileText,
+  Image,
+  Link,
+  Loader2,
+  Users,
+  X,
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 import {
-    copyShareableUrl,
-    hasSharedState,
-    parseSharedState,
+  copyShareableUrl,
+  hasSharedState,
+  parseSharedState,
 } from '../../lib/sharing/shareLink';
 import type { RaciState } from '../../types/raci';
 
@@ -362,7 +362,7 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
                   {isExporting ? (
                     <Loader2 className="h-6 w-6 animate-spin" />
                   ) : (
-                    <button.icon className="h-6 w-6" />
+                    React.createElement(button.icon, { className: 'h-6 w-6' })
                   )}
                 </div>
 

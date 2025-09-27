@@ -128,14 +128,28 @@ export function downloadSvg(
   canvasElement: HTMLElement,
   options: ExportOptions = {}
 ): void {
+  // Check if we're in a browser environment
+  if (typeof document === 'undefined' || typeof window === 'undefined') {
+    throw new Error('downloadSvg can only be called in a browser environment');
+  }
+
   exportToSvg(canvasElement, options)
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
       link.download = options.filename || 'raci.svg';
+      link.style.display = 'none';
       document.body.appendChild(link);
-      link.click();
+
+      // Use a more reliable click mechanism
+      const clickEvent = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      });
+      link.dispatchEvent(clickEvent);
+
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
     })

@@ -121,59 +121,62 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
     disablePreload,
   ]);
 
-  const handleExport = useCallback(async (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent form submission
-    if (disabled || isExporting) return;
+  const handleExport = useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault(); // Prevent form submission
+      if (disabled || isExporting) return;
 
-    setIsExporting(true);
-    setLoadError(null);
-    onExportStart?.(id);
+      setIsExporting(true);
+      setLoadError(null);
+      onExportStart?.(id);
 
-    try {
-      const module = await import(importPath);
-      const exportFn = module[exportFunction];
+      try {
+        const module = await import(importPath);
+        const exportFn = module[exportFunction];
 
-      if (requiresCanvas && !hasCanvas) {
-        throw new Error('Canvas not available');
+        if (requiresCanvas && !hasCanvas) {
+          throw new Error('Canvas not available');
+        }
+
+        // Add small delay for canvas exports to ensure rendering
+        if (requiresCanvas) {
+          await new Promise((resolve) => setTimeout(resolve, 200));
+        }
+
+        // Handle different export function signatures
+        if (requiresCanvas) {
+          await exportFn(canvasRef?.current, { filename });
+        } else {
+          await exportFn(state, { filename });
+        }
+      } catch (error) {
+        console.error(`Export failed (${id}):`, error);
+        const errorMessage =
+          error instanceof Error ? error.message : 'Unknown error occurred';
+        setLoadError(`Export failed: ${errorMessage}`);
+        onExportError?.(`Failed to export ${label}. Please try again.`);
+      } finally {
+        setIsExporting(false);
+        onExportEnd?.();
       }
-
-      // Add small delay for canvas exports to ensure rendering
-      if (requiresCanvas) {
-        await new Promise((resolve) => setTimeout(resolve, 200));
-      }
-
-      // Handle different export function signatures
-      if (requiresCanvas) {
-        await exportFn(canvasRef?.current, { filename });
-      } else {
-        await exportFn(state, { filename });
-      }
-    } catch (error) {
-      console.error(`Export failed (${id}):`, error);
-      const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error occurred';
-      setLoadError(`Export failed: ${errorMessage}`);
-      onExportError?.(`Failed to export ${label}. Please try again.`);
-    } finally {
-      setIsExporting(false);
-      onExportEnd?.();
-    }
-  }, [
-    disabled,
-    isExporting,
-    id,
-    importPath,
-    exportFunction,
-    requiresCanvas,
-    hasCanvas,
-    state,
-    filename,
-    canvasRef,
-    onExportStart,
-    onExportEnd,
-    onExportError,
-    label,
-  ]);
+    },
+    [
+      disabled,
+      isExporting,
+      id,
+      importPath,
+      exportFunction,
+      requiresCanvas,
+      hasCanvas,
+      state,
+      filename,
+      canvasRef,
+      onExportStart,
+      onExportEnd,
+      onExportError,
+      label,
+    ]
+  );
 
   const isDisabled = disabled || isExporting || (requiresCanvas && !hasCanvas);
 

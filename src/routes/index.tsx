@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { Layout } from '@/components/layout';
-
 import { ComingSoon } from '../components/ComingSoon';
+import { Layout } from '../components/layout';
 import { useLogger } from '../lib/useLogger';
 
 export const Route = createFileRoute('/')({

@@ -3,12 +3,12 @@
  */
 
 import {
-    Download,
-    FileText,
-    HelpCircle,
-    Lightbulb,
-    PenTool,
-    Sparkles,
+  Download,
+  FileText,
+  HelpCircle,
+  Lightbulb,
+  PenTool,
+  Sparkles,
 } from 'lucide-react';
 import React from 'react';
 
@@ -134,7 +134,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({
         {/* Additional Info - More compact */}
         <div className="rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 p-4">
           <div className="flex items-start gap-3">
-            <Lightbulb className="mt-0.5 h-5 w-5 text-blue-600 flex-shrink-0" />
+            <Lightbulb className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-600" />
             <div>
               <p className="mb-1 text-sm font-medium text-blue-900">Pro Tip</p>
               <p className="text-sm text-blue-800">
