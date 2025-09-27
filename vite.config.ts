@@ -23,13 +23,30 @@ export default defineConfig({
       'pptxgenjs',
       'docx',
       'html-to-image',
+      'recharts',
     ],
   },
   build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        // Avoid aggressive compression that might create duplicate keys
+        passes: 1,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'],
+      },
+      mangle: {
+        // Be more conservative with mangling to avoid issues
+        safari10: true,
+      },
+    },
     rollupOptions: {
       onwarn(warning, warn) {
         // Suppress "use client" directive warnings for TanStack React Query
         if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && warning.message.includes('use client')) {
+          return;
+        }
+        // Suppress duplicate object key warnings that might come from minified dependencies
+        if (warning.code === 'DUPLICATE_OBJECT_KEY' || warning.message.includes('Duplicate key')) {
           return;
         }
         warn(warning);
@@ -68,7 +85,7 @@ export default defineConfig({
           }
 
           // Chart libraries
-          if (id.includes('recharts')) {
+          if (id.includes('recharts') || id.includes('d3') || id.includes('victory') || id.includes('chart')) {
             return 'chart-vendor';
           }
 
