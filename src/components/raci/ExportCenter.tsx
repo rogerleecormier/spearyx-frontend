@@ -3,24 +3,24 @@
  */
 
 import {
-  AlertCircle,
-  Check,
-  Copy,
-  Download,
-  FileSpreadsheet,
-  FileText,
-  Image,
-  Link,
-  Loader2,
-  Users,
-  X,
+    AlertCircle,
+    Check,
+    Copy,
+    Download,
+    FileSpreadsheet,
+    FileText,
+    Image,
+    Link,
+    Loader2,
+    Users,
+    X,
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 import {
-  copyShareableUrl,
-  hasSharedState,
-  parseSharedState,
+    copyShareableUrl,
+    hasSharedState,
+    parseSharedState,
 } from '../../lib/sharing/shareLink';
 import type { RaciState } from '../../types/raci';
 
@@ -341,7 +341,10 @@ export const ExportCenter: React.FC<ExportCenterProps> = ({
             return (
               <button
                 key={button.id}
-                onClick={() => handleExport(button.id, button.action)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleExport(button.id, button.action);
+                }}
                 disabled={isDisabled}
                 className={`relative flex flex-col items-center rounded-lg border-2 p-4 transition-all ${
                   isDisabled

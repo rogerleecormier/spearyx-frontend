@@ -33,7 +33,8 @@ interface LazyExportButtonProps {
 // Helper function to create lazy export components
 const createLazyExportComponent = (
   importPath: string,
-  exportFunction: string
+  exportFunction: string,
+  requiresCanvas?: boolean
 ) => {
   return lazy(async () => {
     const module = await import(importPath);
@@ -48,7 +49,11 @@ const createLazyExportComponent = (
         canvasRef?: React.RefObject<HTMLElement>;
       }) => {
         const exportFn = module[exportFunction];
-        return exportFn(state, { filename }, canvasRef);
+        if (requiresCanvas) {
+          return exportFn(canvasRef?.current, { filename });
+        } else {
+          return exportFn(state, { filename });
+        }
       },
     };
   });
@@ -116,7 +121,8 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
     disablePreload,
   ]);
 
-  const handleExport = useCallback(async () => {
+  const handleExport = useCallback(async (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent form submission
     if (disabled || isExporting) return;
 
     setIsExporting(true);
@@ -136,7 +142,12 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
         await new Promise((resolve) => setTimeout(resolve, 200));
       }
 
-      await exportFn(state, { filename }, canvasRef?.current);
+      // Handle different export function signatures
+      if (requiresCanvas) {
+        await exportFn(canvasRef?.current, { filename });
+      } else {
+        await exportFn(state, { filename });
+      }
     } catch (error) {
       console.error(`Export failed (${id}):`, error);
       const errorMessage =
@@ -237,7 +248,8 @@ export const LazyExportButtonWithSuspense: React.FC<LazyExportButtonProps> = (
 ) => {
   const LazyComponent = createLazyExportComponent(
     props.importPath,
-    props.exportFunction
+    props.exportFunction,
+    props.requiresCanvas
   );
 
   return (
