@@ -1,3 +1,4 @@
+import { cloudflare } from '@cloudflare/vite-plugin'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
@@ -15,9 +16,12 @@ export default defineConfig({
     },
   },
   plugins: [
-    tanstackStart(),
+    tanstackStart({
+      customViteReactPlugin: true,
+    }),
     react(),
     tsconfigPaths({ projects: ['./tsconfig.json'] }),
+    cloudflare(),
   ],
   build: {
     minify: 'terser',
@@ -43,65 +47,6 @@ export default defineConfig({
           return;
         }
         warn(warning);
-      },
-      output: {
-        manualChunks(id) {
-          // Export libraries - split into separate chunks for better caching
-          if (id.includes('docx')) return 'export-docx';
-          if (id.includes('exceljs')) return 'export-xlsx';
-          if (id.includes('html-to-image')) return 'export-image';
-          if (id.includes('pptxgenjs')) return 'export-pptx';
-
-          // TanStack libraries
-          if (id.includes('@tanstack/react-router') || id.includes('@tanstack/react-query')) {
-            return 'tanstack-vendor';
-          }
-
-          // UI libraries - split Radix UI components
-          if (id.includes('@radix-ui/')) {
-            return 'ui-vendor';
-          }
-
-          // Form libraries
-          if (id.includes('react-hook-form') || id.includes('@hookform/resolvers')) {
-            return 'form-vendor';
-          }
-
-          // Utility libraries
-          if (id.includes('date-fns') || id.includes('zod') || id.includes('clsx') || id.includes('tailwind-merge')) {
-            return 'utils-vendor';
-          }
-
-          // Chart libraries (exclude recharts and d3 since they're externalized)
-          if (id.includes('victory') || id.includes('chart')) {
-            return 'chart-vendor';
-          }
-
-          // Icon libraries
-          if (id.includes('lucide-react')) {
-            return 'icons-vendor';
-          }
-
-          // Animation libraries
-          if (id.includes('framer-motion') || id.includes('embla-carousel')) {
-            return 'animation-vendor';
-          }
-
-          // File processing libraries
-          if (id.includes('file-saver') || id.includes('jszip')) {
-            return 'file-processing-vendor';
-          }
-
-          // Let TanStack Start handle React dependencies
-          return undefined;
-        },
-        chunkFileNames: (chunkInfo) => {
-          // Custom naming for export chunks
-          if (chunkInfo.name?.includes('export')) {
-            return 'assets/export/[name]-[hash].js';
-          }
-          return 'assets/[name]-[hash].js';
-        },
       },
     },
     // Increase chunk size warning limit since we're optimizing with manual chunks

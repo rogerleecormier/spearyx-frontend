@@ -11,10 +11,6 @@
     "enabled": true,
     "head_sampling_rate": 1
   },
-  "build": {
-    "command": "npm run build",
-    "watch_dir": "src"
-  },
   "vars": {
     "NODE_ENV": "production"
   }
