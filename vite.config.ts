@@ -42,7 +42,6 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           // Export libraries - split into separate chunks for better caching
-          if (id.includes('@react-pdf/renderer')) return 'export-pdf';
           if (id.includes('docx')) return 'export-docx';
           if (id.includes('exceljs')) return 'export-xlsx';
           if (id.includes('html-to-image')) return 'export-image';
