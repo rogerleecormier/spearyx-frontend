@@ -7,11 +7,11 @@ import { Layout } from '@/components/layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from '@/components/ui/card';
 import { useSession } from '@/hooks/useSession';
 
@@ -120,7 +120,7 @@ function AppLanding() {
                   </p>
                   <div className="flex flex-wrap items-center justify-center gap-2">
                     <Button variant="outline" size="sm" asChild>
-                      <Link to="/admin/users">Manage Users</Link>
+                      <Link to="/admin-users">Manage Users</Link>
                     </Button>
                   </div>
                 </div>

@@ -17,7 +17,7 @@ export default defineConfig({
   ],
   ssr: {
     // Handle "use client" directives in SSR build
-    noExternal: ['@tanstack/react-query'],
+    noExternal: ['@tanstack/react-query', 'exceljs', 'pptxgenjs'],
   },
   build: {
     rollupOptions: {
@@ -28,12 +28,15 @@ export default defineConfig({
         }
         warn(warning);
       },
+      external: [
+        // Externalize Node.js dependencies for server builds
+        'exceljs',
+        'pptxgenjs',
+      ],
       output: {
         manualChunks(id) {
           // Handle export libraries - separate chunks for better lazy loading
           if (id.includes('@react-pdf/renderer')) return 'export-pdf';
-          if (id.includes('exceljs')) return 'export-excel';
-          if (id.includes('pptxgenjs')) return 'export-pptx';
           if (id.includes('docx')) return 'export-docx';
           if (id.includes('html-to-image')) return 'export-image';
           
@@ -94,10 +97,19 @@ export default defineConfig({
       'react-dom',
       '@tanstack/react-router',
       '@tanstack/react-query',
-      'exceljs',
       '@react-pdf/renderer',
       'docx',
-      'pptxgenjs',
+      // Packages with side effects that should not be tree-shaken
+      '@floating-ui/react-dom',
+      'aria-hidden',
+      'react-remove-scroll',
+      'tiny-warning',
+      '@tanstack/store',
+      '@tanstack/history',
+      'isbot',
+      '@tanstack/query-core',
+      '@tanstack/react-store',
+      '@radix-ui/primitive',
     ],
     // Exclude problematic libraries from pre-bundling
     exclude: [

@@ -16,7 +16,8 @@
     "format:fix": "prettier --write \"src/**/*.{ts,tsx,json,css,md}\"",
     "audit": "npm audit",
     "audit:fix": "npm audit fix",
-    "ci": "npm run lint:fix && npm run type-check && npm run format:fix && npm run audit:fix && npm run build"
+    "ci": "npm run lint:fix && npm run type-check && npm run format:fix && npm run audit:fix && npm run build",
+    "dev:auth": "wrangler dev --port 8787 --config spearyx-backend/workers/auth-api/wrangler.toml"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

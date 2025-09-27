@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { Loader2, LogOut, Menu, ShieldCheck, X } from 'lucide-react';
+import { Loader2, LogOut, Menu, ShieldCheck, User, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import { Logo } from '@/components/brand';
@@ -21,7 +21,6 @@ interface HeaderProps {
 }
 
 const PROTECTED_TOOL_PATH = '/tools/raci';
-const ADMIN_PATH = '/admin/users';
 const LOGOUT_PATH = '/cdn-cgi/access/logout';
 
 export function Header({ isDev = false }: HeaderProps) {
@@ -60,61 +59,7 @@ export function Header({ isDev = false }: HeaderProps) {
 
           <nav className="hidden items-center space-x-8 md:flex">
             <div className="flex items-center space-x-6">
-              <Button variant="ghost" size="sm" asChild>
-                <Link to={PROTECTED_TOOL_PATH}>RACI Generator</Link>
-              </Button>
-
-              {isAdmin && (
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to={ADMIN_PATH}>Admin</Link>
-                </Button>
-              )}
-
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search tools..."
-                  className="w-64 rounded-lg border border-precision-300 bg-background px-4 py-2 pl-10 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-precision-700"
-                />
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <svg
-                    className="h-4 w-4 text-precision-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </div>
-              </div>
             </div>
-
-            {isDev && (
-              <div className="flex items-center space-x-4 border-l border-precision-200 pl-4 dark:border-precision-700">
-                <span className="text-xs uppercase tracking-wide text-precision-500 dark:text-precision-400">
-                  Dev Mode
-                </span>
-                <div className="flex items-center space-x-2">
-                  <Button variant="ghost" size="sm" asChild>
-                    <Link to="/typography-guide">Typography</Link>
-                  </Button>
-                  <Button variant="ghost" size="sm" asChild>
-                    <Link to="/cards-guide">Cards</Link>
-                  </Button>
-                  <Button variant="ghost" size="sm" asChild>
-                    <Link to="/styles-guide">Styles</Link>
-                  </Button>
-                  <Button variant="ghost" size="sm" asChild>
-                    <Link to="/data">Server Data</Link>
-                  </Button>
-                </div>
-              </div>
-            )}
           </nav>
 
           <div className="hidden items-center md:flex">
@@ -129,6 +74,36 @@ export function Header({ isDev = false }: HeaderProps) {
               <Button variant="default" size="sm" asChild>
                 <a href={LOGIN_PATH}>Log In</a>
               </Button>
+            )}
+
+            {isAuthenticated && (
+              <>
+                <Button variant="ghost" size="sm" asChild className="mr-4">
+                  <Link to={PROTECTED_TOOL_PATH}>RACI Generator</Link>
+                </Button>
+                <div className="relative mr-4">
+                  <input
+                    type="text"
+                    placeholder="Search tools..."
+                    className="w-64 rounded-lg border border-precision-300 bg-background px-4 py-2 pl-10 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-precision-700"
+                  />
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <svg
+                      className="h-4 w-4 text-precision-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </>
             )}
 
             {!isLoadingSession && isAuthenticated && (
@@ -163,16 +138,22 @@ export function Header({ isDev = false }: HeaderProps) {
                       </span>
                     </div>
                   </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile" className="flex items-center gap-2 cursor-pointer hover:bg-accent">
+                      <User className="h-4 w-4" /> Profile Settings
+                    </Link>
+                  </DropdownMenuItem>
                   {isAdmin && (
                     <DropdownMenuItem asChild>
-                      <Link to={ADMIN_PATH} className="flex items-center gap-2">
-                        <ShieldCheck className="h-4 w-4" /> Admin Panel
+                      <Link to="/admin" className="flex items-center gap-2 cursor-pointer hover:bg-accent">
+                        <ShieldCheck className="h-4 w-4" /> Admin
                       </Link>
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <a href={LOGOUT_PATH} className="flex items-center gap-2">
+                    <a href={LOGOUT_PATH} className="flex items-center gap-2 cursor-pointer hover:bg-accent">
                       <LogOut className="h-4 w-4" /> Log Out
                     </a>
                   </DropdownMenuItem>
@@ -211,15 +192,15 @@ export function Header({ isDev = false }: HeaderProps) {
                     RACI Generator
                   </Link>
                 </Button>
+                <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                  <Link to="/profile" onClick={closeMobileMenu} className="cursor-pointer hover:bg-accent">
+                    <User className="h-4 w-4 mr-2" /> Profile Settings
+                  </Link>
+                </Button>
                 {isAdmin && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start"
-                    asChild
-                  >
-                    <Link to={ADMIN_PATH} onClick={closeMobileMenu}>
-                      Admin
+                  <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                    <Link to="/admin" onClick={closeMobileMenu} className="cursor-pointer hover:bg-accent">
+                      <ShieldCheck className="h-4 w-4 mr-2" /> Admin
                     </Link>
                   </Button>
                 )}
@@ -238,6 +219,31 @@ export function Header({ isDev = false }: HeaderProps) {
                   </Button>
                 )}
 
+                {isAuthenticated && (
+                  <div className="relative mb-4">
+                    <input
+                      type="text"
+                      placeholder="Search tools..."
+                      className="w-full rounded-lg border border-precision-300 bg-background px-4 py-2 pl-10 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-precision-700"
+                    />
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                      <svg
+                        className="h-4 w-4 text-precision-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+
                 {!isLoadingSession && isAuthenticated && (
                   <div className="flex flex-col gap-3">
                     <div>
@@ -248,6 +254,8 @@ export function Header({ isDev = false }: HeaderProps) {
                       <div className="text-xs text-muted-foreground">
                         {isAdmin ? 'Administrator' : 'Member'}
                       </div>
+                    </div>
+                    <div className="space-y-2">
                     </div>
                     <Button variant="outline" className="w-full" asChild>
                       <a
@@ -261,55 +269,6 @@ export function Header({ isDev = false }: HeaderProps) {
                 )}
               </div>
 
-              {isDev && (
-                <div className="border-t border-precision-200 pt-4 dark:border-precision-800">
-                  <div className="mb-3 text-xs uppercase tracking-wide text-precision-500 dark:text-precision-400">
-                    Dev Mode
-                  </div>
-                  <div className="space-y-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start"
-                      asChild
-                    >
-                      <Link to="/typography-guide" onClick={closeMobileMenu}>
-                        Typography Guide
-                      </Link>
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start"
-                      asChild
-                    >
-                      <Link to="/cards-guide" onClick={closeMobileMenu}>
-                        Cards Guide
-                      </Link>
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start"
-                      asChild
-                    >
-                      <Link to="/styles-guide" onClick={closeMobileMenu}>
-                        Styles Guide
-                      </Link>
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start"
-                      asChild
-                    >
-                      <Link to="/data" onClick={closeMobileMenu}>
-                        Server Data
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         )}
