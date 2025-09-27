@@ -15,22 +15,10 @@ export default defineConfig({
     },
   },
   plugins: [
-    tanstackStart({
-      customViteReactPlugin: true
-    }),
+    tanstackStart(),
     react(),
     tsconfigPaths({ projects: ['./tsconfig.json'] }),
   ],
-  ssr: {
-    // Handle "use client" directives in SSR build
-    noExternal: [
-      '@tanstack/react-query',
-      'exceljs',
-      'pptxgenjs',
-      'docx',
-      'html-to-image',
-    ],
-  },
   build: {
     minify: 'terser',
     terserOptions: {
@@ -56,24 +44,6 @@ export default defineConfig({
         }
         warn(warning);
       },
-      external: [
-        // Externalize Node.js dependencies for server builds
-        'exceljs',
-        'jszip',
-        // Externalize chart libraries to avoid minification issues
-        'recharts',
-        'd3',
-        'd3-array',
-        'd3-scale',
-        'd3-shape',
-        'd3-color',
-        'd3-format',
-        'd3-time',
-        'd3-time-format',
-        // Externalize PDF renderer to avoid minification issues
-        '@react-pdf/renderer',
-        'react-pdf',
-      ],
       output: {
         manualChunks(id) {
           // Export libraries - split into separate chunks for better caching
