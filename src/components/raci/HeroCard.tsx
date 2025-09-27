@@ -3,12 +3,12 @@
  */
 
 import {
-  Download,
-  FileText,
-  HelpCircle,
-  Lightbulb,
-  PenTool,
-  Sparkles,
+    Download,
+    FileText,
+    HelpCircle,
+    Lightbulb,
+    PenTool,
+    Sparkles,
 } from 'lucide-react';
 import React from 'react';
 
@@ -56,7 +56,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({
     <div
       className={`rounded-lg border border-gray-200 bg-white p-6 shadow-sm ${className}`}
     >
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Header */}
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900">
@@ -79,34 +79,41 @@ export const HeroCard: React.FC<HeroCardProps> = ({
           )}
         </div>
 
-        {/* Steps */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {/* Steps - Streamlined Design */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step) => (
-            <div key={step.number} className="relative">
-              <div className="flex flex-col items-center space-y-3 rounded-lg border border-gray-200 p-4 text-center transition-shadow hover:shadow-md">
-                <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-full ${step.color}`}
-                >
-                  <step.icon className="h-6 w-6" />
-                </div>
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-sm font-semibold text-gray-600">
+            <div key={step.number} className="group relative">
+              <div className="relative h-full rounded-lg border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-6 transition-all duration-300 hover:shadow-lg hover:shadow-gray-200/50">
+                {/* Step number in corner */}
+                <div className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 text-xs font-semibold text-gray-500 group-hover:bg-gray-200">
                   {step.number}
                 </div>
-                <div>
-                  <h3 className="mb-1 text-sm font-semibold text-gray-900">
+
+                {/* Icon */}
+                <div className="mb-4 flex justify-center">
+                  <div
+                    className={`flex h-14 w-14 items-center justify-center rounded-full ${step.color} shadow-sm`}
+                  >
+                    <step.icon className="h-7 w-7" />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="text-center">
+                  <h3 className="mb-2 text-base font-semibold text-gray-900">
                     {step.title}
                   </h3>
-                  <p className="text-xs leading-tight text-gray-600">
+                  <p className="text-sm leading-relaxed text-gray-600">
                     {step.description}
                   </p>
                 </div>
               </div>
 
-              {/* Arrow for larger screens */}
+              {/* Subtle arrow for larger screens */}
               {step.number < 4 && (
-                <div className="absolute -right-2 top-1/2 z-10 hidden -translate-y-1/2 transform lg:block">
+                <div className="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 transform lg:block">
                   <svg
-                    className="h-4 w-4 text-gray-400"
+                    className="h-5 w-5 text-gray-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -114,7 +121,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth={2}
+                      strokeWidth={1.5}
                       d="M9 5l7 7-7 7"
                     />
                   </svg>
@@ -124,10 +131,10 @@ export const HeroCard: React.FC<HeroCardProps> = ({
           ))}
         </div>
 
-        {/* Additional Info */}
-        <div className="rounded-lg bg-blue-50 p-4">
+        {/* Additional Info - More compact */}
+        <div className="rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 p-4">
           <div className="flex items-start gap-3">
-            <Lightbulb className="mt-0.5 h-5 w-5 text-blue-600" />
+            <Lightbulb className="mt-0.5 h-5 w-5 text-blue-600 flex-shrink-0" />
             <div>
               <p className="mb-1 text-sm font-medium text-blue-900">Pro Tip</p>
               <p className="text-sm text-blue-800">
