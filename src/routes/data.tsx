@@ -5,6 +5,9 @@ import { Body, Card, ElevatedCard, Hero, Title } from '@/components/brand';
 import { Layout } from '@/components/layout';
 import { getServerData } from '@/lib/server/server-data';
 
+// For server-side calls, we need to import the server function properly
+// This will be handled by TanStack Start's server function system
+
 import { Button } from '../components/ui/button';
 import { useLogger } from '../lib/useLogger';
 
@@ -26,6 +29,7 @@ export const Route = createFileRoute('/data')({
       isServerSide: true,
     };
 
+    // Call the server function - on server side this runs directly, on client side it makes HTTP call
     const serverFunctionData = await getServerData({ count: 3 });
 
     return {
