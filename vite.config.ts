@@ -21,7 +21,12 @@ export default defineConfig({
     }),
     react(),
     tsconfigPaths({ projects: ['./tsconfig.json'] }),
-    cloudflare(),
+    cloudflare({
+      // Enable Node.js compatibility for TanStack Router
+      nodejsCompat: true,
+      // Configure external modules that should not be bundled
+      external: ['node:stream', 'node:stream/web'],
+    }),
   ],
   build: {
     minify: 'terser',
@@ -37,6 +42,13 @@ export default defineConfig({
       },
     },
     rollupOptions: {
+      external: (id) => {
+        // Externalize Node.js built-in modules that shouldn't be bundled
+        if (id.startsWith('node:') || id.includes('node_modules/@tanstack/router-core/dist/esm/ssr/')) {
+          return true;
+        }
+        return false;
+      },
       onwarn(warning, warn) {
         // Suppress "use client" directive warnings for TanStack React Query
         if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && warning.message.includes('use client')) {
@@ -46,11 +58,17 @@ export default defineConfig({
         if (warning.code === 'DUPLICATE_OBJECT_KEY' || warning.message.includes('Duplicate key')) {
           return;
         }
+        // Suppress warnings about Node.js streams in browser context
+        if (warning.message.includes('Readable') && warning.message.includes('__vite-browser-external')) {
+          return;
+        }
         warn(warning);
       },
     },
     // Increase chunk size warning limit since we're optimizing with manual chunks
     chunkSizeWarningLimit: 2000,
+    // Target Cloudflare Workers environment
+    target: 'es2022',
   },
   define: {
     // Fix for jszip compatibility with pptxgenjs
