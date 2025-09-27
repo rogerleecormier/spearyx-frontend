@@ -1,20 +1,20 @@
 import {
-  AccentText,
-  Body,
-  BodyLarge,
-  Caption,
-  ComingSoonCard,
-  Display,
-  FeatureCard,
-  Headline,
-  HeroCard,
-  InfoCard,
-  Logo,
-  PrimaryAccent,
-  StatsCard,
-  SuccessText,
-  Title,
-  ToolCard,
+    AccentText,
+    Body,
+    BodyLarge,
+    Caption,
+    ComingSoonCard,
+    Display,
+    FeatureCard,
+    Headline,
+    HeroCard,
+    InfoCard,
+    Logo,
+    PrimaryAccent,
+    StatsCard,
+    SuccessText,
+    Title,
+    ToolCard,
 } from '@/components/brand';
 import { Button } from '@/components/ui/button';
 
@@ -161,7 +161,7 @@ export function ComingSoon() {
             <ToolCard>
               <div className="mb-4 flex items-start justify-between">
                 <div>
-                  <Title>RACI Chart Generator</Title>
+                  <Title>RACI Matrix Generator</Title>
                   <Body className="mt-2">
                     Create clear responsibility matrices with AI-powered
                     suggestions for optimal team structure.

@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 
-import { Logo, Body, Caption, Title } from '@/components/brand';
+import { Body, Caption, Logo, Title } from '@/components/brand';
 
 export function Footer() {
   return (
@@ -29,7 +29,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Body className="text-precision-600 dark:text-precision-400">
-                  RACI Chart Generator
+                  RACI Matrix Generator
                 </Body>
               </li>
               <li>

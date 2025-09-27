@@ -8,6 +8,15 @@ import { inferRaci } from './adapter';
 import { TASK_CATEGORIES } from './examples';
 
 /**
+ * Generates an AI-powered title for a project based on its description
+ */
+export async function generateProjectTitle(description: string): Promise<string> {
+  // Import the generateProjectTitle function from adapter
+  const { generateProjectTitle: generateTitle } = await import('./adapter');
+  return generateTitle(description);
+}
+
+/**
  * Builds an enhanced prompt with context for the AI worker
  */
 function buildEnhancedPrompt(

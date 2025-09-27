@@ -13,7 +13,7 @@ export interface AIProvider {
 /**
  * AI model caller - always uses production Cloudflare Worker
  */
-async function callAIModel(prompt: string): Promise<string> {
+export async function callAIModel(prompt: string): Promise<string> {
   const workerUrl = getWorkerUrl('AI_RACI_GENERATOR');
 
   console.log('🤖 Calling production AI Worker:', workerUrl);
@@ -25,6 +25,7 @@ async function callAIModel(prompt: string): Promise<string> {
       headers: WORKER_CONFIG.headers,
       body: JSON.stringify({
         description: prompt,
+        generateTitleAndRaci: true, // Use the combined title + RACI endpoint
         seedRoles: [], // Will be populated by assignRaciFromDescription
         previousAnswers: {}, // Will be populated by assignRaciFromDescription
       }),
@@ -47,6 +48,21 @@ async function callAIModel(prompt: string): Promise<string> {
     }
 
     const result = await response.json();
+
+    // The combined endpoint returns { generatedTitle, roles, tasks, matrix, ... }
+    // For RACI generation, we only need the RACI data, not the title
+    if (result && result.roles && result.tasks && result.matrix) {
+      // Extract only the RACI-related fields for backward compatibility
+      const raciResult = {
+        roles: result.roles,
+        tasks: result.tasks,
+        matrix: result.matrix,
+        followUpQuestions: result.followUpQuestions || [],
+        confidence: result.confidence || 'medium',
+        suggestions: result.suggestions || [],
+      };
+      return JSON.stringify(raciResult);
+    }
 
     // The worker returns the full structured response, so we return it as JSON string
     // for compatibility with the existing parseAIResponse function
@@ -95,6 +111,230 @@ async function callAIModel(prompt: string): Promise<string> {
       ],
     });
   }
+}
+
+/**
+ * Generates a project title using the AI worker's title generation endpoint
+ */
+export async function generateProjectTitle(description: string): Promise<string> {
+  if (!description || !description.trim()) {
+    return 'RACI Matrix';
+  }
+
+  const workerUrl = getWorkerUrl('AI_RACI_GENERATOR');
+
+  console.log('🤖 Calling AI Worker for title generation:', workerUrl);
+  console.log('📝 Description preview:', description.substring(0, 100) + '...');
+
+  try {
+    const response = await fetch(workerUrl, {
+      method: 'POST',
+      headers: WORKER_CONFIG.headers,
+      body: JSON.stringify({
+        description,
+        generateTitleAndRaci: true, // This triggers the combined title + RACI endpoint
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = errorData.message || 'Unknown error';
+      throw new Error(
+        `Title generation failed: ${response.statusText} - ${errorMessage}`
+      );
+    }
+
+    const result = await response.json();
+    console.log('🤖 AI Worker combined response:', result);
+    console.log('🤖 Response type:', typeof result);
+    console.log('🤖 Response keys:', Object.keys(result || {}));
+
+    console.log('🤖 Processing combined response:', {
+      hasGeneratedTitle: !!result.generatedTitle,
+      generatedTitleType: typeof result.generatedTitle,
+      hasRoles: !!result.roles,
+      hasTasks: !!result.tasks,
+      hasMatrix: !!result.matrix,
+      allKeys: Object.keys(result || {}),
+    });
+
+    // The combined endpoint returns { generatedTitle, roles, tasks, matrix, ... }
+    if (result && result.generatedTitle && typeof result.generatedTitle === 'string') {
+      console.log('🤖 Found generatedTitle in primary check:', result.generatedTitle);
+      return result.generatedTitle.trim();
+    }
+
+    // Handle different response formats
+    if (result && typeof result === 'object') {
+      // Check if it's a RACI response with a title field
+      if (result.roles && result.tasks && result.matrix) {
+        if (result.generatedTitle) {
+          console.log('🤖 Got combined response with title:', result.generatedTitle);
+          return result.generatedTitle.trim();
+        }
+        console.log('🤖 Got RACI response without title field, checking alternatives...');
+
+        // Check if title is in a different field
+        if (result.title && typeof result.title === 'string') {
+          console.log('🤖 Found title in title field');
+          return result.title.trim();
+        }
+
+        if (result.response && typeof result.response === 'string') {
+          console.log('🤖 Found title in response field');
+          return result.response.trim();
+        }
+
+        if (result.result && typeof result.result === 'string') {
+          console.log('🤖 Found title in result field');
+          return result.result.trim();
+        }
+
+        if (result.output && typeof result.output === 'string') {
+          console.log('🤖 Found title in output field');
+          return result.output.trim();
+        }
+
+        console.log('🤖 No title field found, using fallback');
+        return generateFallbackTitle(description);
+      }
+
+      // If it doesn't have RACI fields, try alternative title fields
+      if (result.title && typeof result.title === 'string') {
+        console.log('🤖 Found title in title field (no RACI fields)');
+        return result.title.trim();
+      }
+
+      if (result.response && typeof result.response === 'string') {
+        console.log('🤖 Found title in response field (no RACI fields)');
+        return result.response.trim();
+      }
+
+      if (result.result && typeof result.result === 'string') {
+        console.log('🤖 Found title in result field (no RACI fields)');
+        return result.result.trim();
+      }
+
+      if (result.output && typeof result.output === 'string') {
+        console.log('🤖 Found title in output field (no RACI fields)');
+        return result.output.trim();
+      }
+    }
+
+    console.error('❌ Invalid combined response format. Received:', result);
+    throw new Error('Invalid combined response format');
+  } catch (error) {
+    console.error('❌ Title generation failed:', error);
+
+    // Use a better fallback method that creates meaningful titles
+    return generateFallbackTitle(description);
+  }
+}
+
+/**
+ * Generates an improved fallback title when AI fails
+ */
+function generateFallbackTitle(description: string): string {
+  const words = description.toLowerCase().split(/\s+/);
+
+  // Look for key project-related words with better categorization
+  const projectKeywords = [
+    'project', 'system', 'application', 'platform', 'website', 'app', 'portal',
+    'dashboard', 'tool', 'solution', 'service', 'product', 'software', 'database',
+    'api', 'interface', 'framework', 'library', 'module', 'component'
+  ];
+
+  const actionKeywords = [
+    'develop', 'build', 'create', 'design', 'implement', 'migrate', 'upgrade',
+    'redesign', 'refactor', 'optimize', 'improve', 'enhance', 'deploy', 'launch',
+    'integrate', 'configure', 'customize', 'automate', 'streamline', 'modernize'
+  ];
+
+  const domainKeywords = [
+    'e-commerce', 'ecommerce', 'crm', 'erp', 'hr', 'hrms', 'marketing', 'sales',
+    'finance', 'accounting', 'customer', 'user', 'admin', 'management', 'analytics',
+    'reporting', 'inventory', 'logistics', 'supply', 'chain', 'retail', 'healthcare',
+    'education', 'learning', 'training', 'support', 'helpdesk', 'ticketing'
+  ];
+
+  const industryKeywords = [
+    'healthcare', 'finance', 'retail', 'manufacturing', 'education', 'government',
+    'nonprofit', 'startup', 'enterprise', 'corporate', 'business', 'commercial'
+  ];
+
+  // Find the best keywords
+  const projectWord = words.find(word => projectKeywords.includes(word));
+  const actionWord = words.find(word => actionKeywords.includes(word));
+  const domainWord = words.find(word => domainKeywords.includes(word));
+  const industryWord = words.find(word => industryKeywords.includes(word));
+
+  // Create intelligent title combinations
+  if (actionWord && projectWord) {
+    return `${actionWord.charAt(0).toUpperCase() + actionWord.slice(1)} ${projectWord.charAt(0).toUpperCase() + projectWord.slice(1)}`;
+  }
+
+  if (actionWord && domainWord) {
+    return `${actionWord.charAt(0).toUpperCase() + actionWord.slice(1)} ${domainWord.charAt(0).toUpperCase() + domainWord.slice(1)}`;
+  }
+
+  if (projectWord && domainWord) {
+    return `${projectWord.charAt(0).toUpperCase() + projectWord.slice(1)} ${domainWord.charAt(0).toUpperCase() + domainWord.slice(1)}`;
+  }
+
+  if (actionWord && industryWord) {
+    return `${actionWord.charAt(0).toUpperCase() + actionWord.slice(1)} ${industryWord.charAt(0).toUpperCase() + industryWord.slice(1)}`;
+  }
+
+  if (projectWord && industryWord) {
+    return `${projectWord.charAt(0).toUpperCase() + projectWord.slice(1)} ${industryWord.charAt(0).toUpperCase() + industryWord.slice(1)}`;
+  }
+
+  // Single keyword with context
+  if (actionWord) {
+    return `${actionWord.charAt(0).toUpperCase() + actionWord.slice(1)} Project`;
+  }
+
+  if (projectWord) {
+    return `${projectWord.charAt(0).toUpperCase() + projectWord.slice(1)} Development`;
+  }
+
+  if (domainWord) {
+    return `${domainWord.charAt(0).toUpperCase() + domainWord.slice(1)} System`;
+  }
+
+  if (industryWord) {
+    return `${industryWord.charAt(0).toUpperCase() + industryWord.slice(1)} Solution`;
+  }
+
+  // Enhanced word extraction for meaningful phrases
+  const meaningfulWords = words
+    .filter(word =>
+      word.length > 3 &&
+      !['that', 'with', 'from', 'this', 'will', 'have', 'been', 'they', 'them', 'their', 'should', 'would', 'could'].includes(word) &&
+      !word.includes('.') && // Remove file extensions and abbreviations
+      isNaN(Number(word)) // Remove numbers
+    )
+    .slice(0, 4); // Take more words for better context
+
+  if (meaningfulWords.length >= 3) {
+    return meaningfulWords.map((word, index) => {
+      if (index === 0) return word.charAt(0).toUpperCase() + word.slice(1);
+      return word;
+    }).join(' ');
+  }
+
+  if (meaningfulWords.length >= 2) {
+    return meaningfulWords.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  }
+
+  // Last resort: use first few meaningful words
+  const firstWords = words.filter(word => word.length > 2).slice(0, 3);
+  if (firstWords.length >= 2) {
+    return firstWords.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  }
+
+  // Ultimate fallback
+  return 'Project RACI Matrix';
 }
 
 /**

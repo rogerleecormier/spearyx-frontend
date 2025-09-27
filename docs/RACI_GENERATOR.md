@@ -1,8 +1,8 @@
-# RACI Chart Generator
+# RACI Matrix Generator
 
 ## Overview
 
-The RACI Chart Generator is an interactive tool for creating project responsibility matrices. It helps teams clarify roles and responsibilities using the RACI framework (Responsible, Accountable, Consulted, Informed).
+The RACI Matrix Generator is an interactive tool for creating project responsibility matrices. It helps teams clarify roles and responsibilities using the RACI framework (Responsible, Accountable, Consulted, Informed).
 
 ## Features
 
@@ -44,7 +44,7 @@ The RACI Chart Generator is an interactive tool for creating project responsibil
    - **Web Redesign**: Marketing & design project  
    - **CRM Migration**: Legacy system upgrade
 
-### Creating Custom RACI Charts
+### Creating Custom RACI Matrices
 
 1. **Describe your project** in the description field
 2. **Click "Generate from Description"** to get AI suggestions
@@ -137,4 +137,3 @@ Backend services are deployed separately and include:
 - **Frontend Issues**: Use GitHub Issues in this repository
 - **Backend/API Issues**: Contact backend team
 - **Feature Requests**: GitHub Issues with enhancement label
-

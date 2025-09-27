@@ -23,7 +23,7 @@ export const createDemoState = (
   type: keyof typeof DEMO_DESCRIPTIONS = 'mobileApp'
 ): RaciState => {
   const baseState: RaciState = {
-    title: 'RACI Chart - Demo Project',
+    title: 'RACI Matrix - Demo Project',
     description: DEMO_DESCRIPTIONS[type],
     roles: [],
     tasks: [],
@@ -107,7 +107,7 @@ function createMobileAppDemo(baseState: RaciState): RaciState {
 
   return {
     ...baseState,
-    title: 'Mobile E-commerce App - RACI Chart',
+    title: 'Mobile E-commerce App - RACI Matrix',
     roles,
     tasks,
     matrix,
@@ -164,7 +164,7 @@ function createWebRedesignDemo(baseState: RaciState): RaciState {
 
   return {
     ...baseState,
-    title: 'Website Redesign - RACI Chart',
+    title: 'Website Redesign - RACI Matrix',
     roles,
     tasks,
     matrix,
@@ -235,7 +235,7 @@ function createSoftwareMigrationDemo(baseState: RaciState): RaciState {
 
   return {
     ...baseState,
-    title: 'CRM Migration - RACI Chart',
+    title: 'CRM Migration - RACI Matrix',
     roles,
     tasks,
     matrix,

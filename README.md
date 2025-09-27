@@ -11,7 +11,7 @@ A modern React application built with TanStack Start, featuring TypeScript, Tail
 - 🚀 **Vite** - Fast build tool and development server
 - 🎯 **Custom Logo** - SVG logo with targeting reticle and spear design
 - 🔄 **Server-Side Rendering** - SSR with route loaders and server functions
-- 📊 **RACI Chart Generator** - Interactive tool for creating project responsibility matrices
+- 📊 **RACI Matrix Generator** - Interactive tool for creating project responsibility matrices
 
 ## Architecture
 

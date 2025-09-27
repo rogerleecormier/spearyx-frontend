@@ -7,7 +7,6 @@ import React from 'react';
 
 import { getActiveRaciKey } from '../../lib/raci/matrix';
 import type { LogoData, Matrix, RaciKey, Role, Task } from '../../types/raci';
-import { LogoUploader } from './LogoUploader';
 
 interface RaciCanvasPreviewProps {
   title: string;
@@ -56,9 +55,6 @@ export const RaciCanvasPreview: React.FC<RaciCanvasPreviewProps> = ({
 
   return (
     <div className={`space-y-6 ${className}`}>
-      {/* Logo Uploader */}
-      <LogoUploader logo={logo} onLogoChange={onLogoChange} />
-
       {/* Pretty Matrix Preview */}
       <div
         ref={exportRef}

@@ -1,24 +1,24 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import {
-  AccentText,
-  Body,
-  BodyLarge,
-  Caption,
-  Card,
-  Code,
-  Display,
-  ElevatedCard,
-  GradientText,
-  Headline,
-  Hero,
-  Label,
-  MutedText,
-  PrimaryAccent,
-  Quote,
-  SuccessText,
-  Title,
-  WarningText,
+    AccentText,
+    Body,
+    BodyLarge,
+    Caption,
+    Card,
+    Code,
+    Display,
+    ElevatedCard,
+    GradientText,
+    Headline,
+    Hero,
+    Label,
+    MutedText,
+    PrimaryAccent,
+    Quote,
+    SuccessText,
+    Title,
+    WarningText,
 } from '@/components/brand';
 import { Layout } from '@/components/layout';
 
@@ -67,7 +67,7 @@ function TypographyGuide() {
                 <Card>
                   <div className="space-y-2">
                     <Label>Title - Component Titles</Label>
-                    <Title>RACI Chart Generator</Title>
+                    <Title>RACI Matrix Generator</Title>
                     <Caption>
                       Perfect for card titles and component headers
                     </Caption>

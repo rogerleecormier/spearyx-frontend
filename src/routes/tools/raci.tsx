@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute } from '@tanstack/react-router';
-import { Loader2 } from 'lucide-react';
+import { Eye, Link, Loader2 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -8,6 +8,7 @@ import { NotAuthorized } from '@/components/auth/NotAuthorized';
 import { useSession } from '@/hooks/useSession';
 
 // Components
+import { generateProjectTitle } from '../../ai/adapter';
 import {
   assignRaciFromDescription,
   type InferenceOptions,
@@ -15,12 +16,15 @@ import {
 import { Layout } from '../../components/layout';
 import { DescriptionPanel } from '../../components/raci/DescriptionPanel';
 import { ExportCenter } from '../../components/raci/ExportCenter';
+import { HeroCard } from '../../components/raci/HeroCard';
+import { LogoUploader } from '../../components/raci/LogoUploader';
 import { RaciCanvasPreview } from '../../components/raci/RaciCanvasPreview';
+import { RaciLearnModal } from '../../components/raci/RaciLearnModal';
 import { RaciMatrixEditor } from '../../components/raci/RaciMatrixEditor';
 import { RolesEditor } from '../../components/raci/RolesEditor';
 import { TasksEditor } from '../../components/raci/TasksEditor';
 // Types and utilities
-import { DEMO_DESCRIPTIONS, DEMO_STATES } from '../../lib/raci/demo-data';
+import { DEMO_STATES } from '../../lib/raci/demo-data';
 import {
   addRoleToMatrix,
   addTaskToMatrix,
@@ -48,7 +52,7 @@ const generateId = () =>
 
 // Default state
 const createDefaultState = (): RaciState => ({
-  title: 'RACI Chart',
+  title: 'RACI Matrix',
   description: '',
   roles: [],
   tasks: [],
@@ -95,9 +99,11 @@ function RaciGeneratorPage() {
   );
   const [isGenerating, setIsGenerating] = useState(false);
   const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([]);
+  const [isLearnModalOpen, setIsLearnModalOpen] = useState(false);
   const matrixCanvasRef = useRef<HTMLDivElement>(null);
   const matrixExportRef = useRef<HTMLDivElement>(null);
   const [generatedOnIso, setGeneratedOnIso] = useState(generatedOn);
+  const [userSetTitle, setUserSetTitle] = useState(false);
 
   const formattedGeneratedOn = useMemo(
     () => formatGeneratedOn(generatedOnIso),
@@ -134,6 +140,7 @@ function RaciGeneratorPage() {
   // Handlers
   const handleTitleChange = useCallback((title: string) => {
     setState((prev) => ({ ...prev, title }));
+    setUserSetTitle(title.trim() !== '' && title !== 'RACI Matrix');
   }, []);
 
   const handleLogoChange = useCallback((logo: LogoData | undefined) => {
@@ -237,6 +244,20 @@ function RaciGeneratorPage() {
 
         const result = await assignRaciFromDescription(options);
 
+        // Generate AI title if user hasn't set one and title is still default
+        let aiGeneratedTitle: string | null = null;
+        if (!userSetTitle && state.title === 'RACI Matrix') {
+          try {
+            // Use AI to generate a better title based on the description
+            aiGeneratedTitle = await generateProjectTitle(description);
+          } catch (error) {
+            console.error('Failed to generate AI title, using fallback:', error);
+            // Fallback to the original method
+            const words = description.split(' ').slice(0, 6).join(' ');
+            aiGeneratedTitle = `${words} RACI Matrix`;
+          }
+        }
+
         // Update state with AI results
         setState((prev) => {
           const oldRoles = prev.roles;
@@ -266,6 +287,7 @@ function RaciGeneratorPage() {
 
           return {
             ...prev,
+            title: aiGeneratedTitle || prev.title,
             roles: result.roles,
             tasks: result.tasks,
             matrix: finalMatrix,
@@ -284,7 +306,7 @@ function RaciGeneratorPage() {
         setIsGenerating(false);
       }
     },
-    [state.roles, state.tasks, state.matrix]
+    [state.roles, state.tasks, state.matrix, state.title, userSetTitle]
   );
 
   // Quick start with demo data
@@ -297,14 +319,6 @@ function RaciGeneratorPage() {
     []
   );
 
-  const _handleLoadDemoDescription = useCallback(
-    (demoType: keyof typeof DEMO_DESCRIPTIONS = 'mobileApp') => {
-      const description = DEMO_DESCRIPTIONS[demoType];
-      setState((prev) => ({ ...prev, description }));
-      handleGenerateRaci(description);
-    },
-    [handleGenerateRaci]
-  );
 
   // Handle state import from sharing
   const handleStateImport = useCallback((importedState: RaciState) => {
@@ -312,6 +326,11 @@ function RaciGeneratorPage() {
     // Clear any existing validation errors
     setValidationErrors([]);
     setGeneratedOnIso(new Date().toISOString());
+  }, []);
+
+  // Handle learn about RACI modal
+  const handleLearnAboutRaci = useCallback(() => {
+    setIsLearnModalOpen(true);
   }, []);
 
   // Memoized validation errors for components
@@ -337,64 +356,48 @@ function RaciGeneratorPage() {
           </div>
         </div>
       ) : !isAuthenticated ? (
-        <NotAuthorized loginPath="/app" />
-      ) : (
         <>
-          {/* Page Header */}
-          <div className="border-b border-gray-200 bg-white">
+          <NotAuthorized loginPath="/app" />
+        </>
+      ) : (
+        <div>
+          {/* Hero Card */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-100 border-b border-gray-200">
             <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-              <div className="space-y-4">
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">
-                    RACI Chart Generator
-                  </h1>
-                  <p className="mt-2 text-gray-600">
-                    Create and manage your RACI (Responsible, Accountable,
-                    Consulted, Informed) matrix.{' '}
-                    <a
-                      href="#"
-                      className="text-blue-600 underline hover:text-blue-800"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Learn about RACI methodology
-                    </a>
-                  </p>
-                </div>
+              <HeroCard onLearnAboutRaci={handleLearnAboutRaci} />
+            </div>
+          </div>
 
-                {/* Editable Title */}
-                <div>
-                  <label
-                    htmlFor="chart-title"
-                    className="mb-2 block text-sm font-medium text-gray-700"
+          {/* Import from Share Link */}
+          {hasSharedState && (
+            <div className="bg-green-50 border-b border-gray-200">
+              <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-center">
+                  <button
+                    onClick={() => {
+                      try {
+                        const sharedState = parseSharedState(window.location.search);
+                        if (sharedState) {
+                          handleStateImport(sharedState);
+                        }
+                      } catch (error) {
+                        console.error('Import failed:', error);
+                      }
+                    }}
+                    className="flex items-center gap-2 rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                   >
-                    Chart Title
-                  </label>
-                  <input
-                    id="chart-title"
-                    type="text"
-                    value={state.title}
-                    onChange={(e) => handleTitleChange(e.target.value)}
-                    className="w-full max-w-md rounded-md border border-gray-300 bg-white px-3 py-2 text-xl font-semibold text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter chart title"
-                  />
+                    <Link className="h-4 w-4" />
+                    Import RACI Matrix from URL
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Main Content */}
           <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="space-y-8">
-              {/* Description Panel */}
-              <DescriptionPanel
-                description={state.description}
-                onDescriptionChange={handleDescriptionChange}
-                onGenerateRaci={handleGenerateRaci}
-                followUpQuestions={followUpQuestions}
-                isGenerating={isGenerating}
-              />
-
-              {/* Quick Start */}
+              {/* Demo Content Selector */}
               {state.roles.length === 0 &&
                 state.tasks.length === 0 &&
                 !state.description && (
@@ -447,6 +450,34 @@ function RaciGeneratorPage() {
                     </div>
                   </div>
                 )}
+
+              {/* Chart Title */}
+              <div>
+                <label
+                  htmlFor="chart-title"
+                  className="mb-2 block text-sm font-medium text-gray-700"
+                >
+                  Matrix Title
+                </label>
+                <input
+                  id="chart-title"
+                  type="text"
+                  value={state.title}
+                  onChange={(e) => handleTitleChange(e.target.value)}
+                  className="w-full max-w-md rounded-md border border-gray-300 bg-white px-3 py-2 text-xl font-semibold text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter matrix title"
+                />
+              </div>
+
+              {/* Description Panel */}
+              <DescriptionPanel
+                description={state.description}
+                onDescriptionChange={handleDescriptionChange}
+                onGenerateRaci={handleGenerateRaci}
+                followUpQuestions={followUpQuestions}
+                isGenerating={isGenerating}
+              />
+
 
               {/* Editors Grid */}
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -512,18 +543,47 @@ function RaciGeneratorPage() {
                 </div>
               )}
 
-              {/* Canvas Preview */}
-              <div ref={matrixCanvasRef}>
-                <RaciCanvasPreview
-                  title={state.title}
-                  roles={state.roles}
-                  tasks={state.tasks}
-                  matrix={state.matrix}
-                  logo={state.logo}
-                  onLogoChange={handleLogoChange}
-                  generatedOnLabel={formattedGeneratedOn}
-                  exportRef={matrixExportRef}
-                />
+              {/* Logo Setup */}
+              <LogoUploader logo={state.logo} onLogoChange={handleLogoChange} />
+
+              {/* Generated RACI Matrix Preview */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900">
+                        Generated RACI Matrix
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        AI-generated responsibility assignments
+                      </p>
+                    </div>
+                    <div className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800">
+                      Deliverable
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Eye className="h-4 w-4" />
+                    <span>Live Preview</span>
+                  </div>
+                </div>
+
+                <div
+                  ref={matrixCanvasRef}
+                  className="overflow-hidden rounded-lg border-2 border-blue-300 bg-white shadow-lg"
+                >
+                    <RaciCanvasPreview
+                      title={state.title}
+                      roles={state.roles}
+                      tasks={state.tasks}
+                      matrix={state.matrix}
+                      logo={state.logo}
+                      onLogoChange={handleLogoChange}
+                      generatedOnLabel={formattedGeneratedOn}
+                      exportRef={matrixExportRef}
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Export Center */}
@@ -535,9 +595,12 @@ function RaciGeneratorPage() {
                 hasSharedStateInSearch={hasSharedState}
               />
             </div>
-          </div>
-        </>
-      )}
+          </div>)}
+          {/* RACI Learn Modal */}
+          <RaciLearnModal
+            isOpen={isLearnModalOpen}
+            onClose={() => setIsLearnModalOpen(false)}
+          />
+
     </Layout>
-  );
-}
+  );}

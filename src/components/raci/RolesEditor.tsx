@@ -27,6 +27,33 @@ export const RolesEditor: React.FC<RolesEditorProps> = ({
   const [newRoleName, setNewRoleName] = useState('');
   const [editRoleName, setEditRoleName] = useState('');
 
+  // Common role templates
+  const roleTemplates = [
+    'Product Owner',
+    'Project Manager',
+    'Business Analyst',
+    'Developer',
+    'Senior Developer',
+    'QA Engineer',
+    'UI/UX Designer',
+    'DevOps Engineer',
+    'Scrum Master',
+    'Technical Lead',
+    'Stakeholder',
+    'Client',
+    'Marketing Manager',
+    'Sales Representative',
+    'Legal Counsel',
+    'Compliance Officer',
+    'Security Specialist',
+    'Database Administrator',
+    'System Administrator',
+    'Content Writer',
+    'Trainer',
+    'Support Specialist',
+    'Operations Manager',
+  ];
+
   const handleAdd = () => {
     const trimmedName = newRoleName.trim();
     if (trimmedName) {
@@ -42,6 +69,22 @@ export const RolesEditor: React.FC<RolesEditorProps> = ({
       }
     }
   };
+
+  const handleAddTemplate = (templateName: string) => {
+    // Check for duplicates (case-insensitive)
+    const isDuplicate = roles.some(
+      (role) => role.name.toLowerCase() === templateName.toLowerCase()
+    );
+
+    if (!isDuplicate) {
+      onAddRole(templateName);
+    }
+  };
+
+  const availableTemplates = roleTemplates.filter(
+    (template) =>
+      !roles.some((role) => role.name.toLowerCase() === template.toLowerCase())
+  );
 
   const handleEdit = (role: Role) => {
     setEditingId(role.id);
@@ -103,6 +146,26 @@ export const RolesEditor: React.FC<RolesEditorProps> = ({
             </button>
           )}
         </div>
+
+        {/* Quick Add Templates */}
+        {availableTemplates.length > 0 && roles.length > 0 && (
+          <div className="rounded-md border border-gray-200 bg-gray-50 p-3">
+            <p className="mb-2 text-xs font-medium text-gray-700">
+              Quick Add Common Roles:
+            </p>
+            <div className="flex flex-wrap gap-1">
+              {availableTemplates.slice(0, 6).map((template) => (
+                <button
+                  key={template}
+                  onClick={() => handleAddTemplate(template)}
+                  className="rounded border border-gray-300 bg-white px-2 py-1 text-xs hover:border-blue-300 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  + {template}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Roles List */}
         <div className="space-y-2">
@@ -213,13 +276,32 @@ export const RolesEditor: React.FC<RolesEditorProps> = ({
           {roles.length === 0 && !isAdding && (
             <div className="py-8 text-center text-gray-500">
               <Users className="mx-auto mb-2 h-8 w-8 text-gray-400" />
-              <p className="text-sm">No roles defined yet</p>
-              <button
-                onClick={() => setIsAdding(true)}
-                className="mt-2 text-sm font-medium text-blue-600 hover:text-blue-700"
-              >
-                Add your first role
-              </button>
+              <p className="mb-4 text-sm">No roles defined yet</p>
+
+              {/* Template Suggestions for Empty State */}
+              <div className="space-y-3">
+                <button
+                  onClick={() => setIsAdding(true)}
+                  className="mx-auto block text-sm font-medium text-blue-600 hover:text-blue-700"
+                >
+                  Add your first role
+                </button>
+
+                <div className="text-xs text-gray-500">
+                  <p className="mb-2">Or quickly add common roles:</p>
+                  <div className="flex flex-wrap justify-center gap-1">
+                    {roleTemplates.slice(0, 5).map((template) => (
+                      <button
+                        key={template}
+                        onClick={() => handleAddTemplate(template)}
+                        className="rounded border border-gray-300 bg-gray-100 px-2 py-1 text-xs hover:border-blue-300 hover:bg-blue-50"
+                      >
+                        + {template}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -2,7 +2,7 @@
  * Logo Uploader Component - For adding logos to RACI chart exports
  */
 
-import { Image as ImageIcon, Upload, X } from 'lucide-react';
+import { Image as ImageIcon, Info, Upload, X } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 
 import { validateLogoFile } from '../../lib/raci/schema';
@@ -22,6 +22,7 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleFileSelect = (file: File) => {
     setUploadError(null);
@@ -86,14 +87,42 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
 
   return (
     <div
-      className={`rounded-lg border border-gray-200 bg-white p-4 shadow-sm ${className}`}
+      className={`rounded-lg border border-gray-200 bg-white p-3 shadow-sm ${className}`}
     >
-      <div className="space-y-4">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">Export Logo</h3>
-          <p className="mt-1 text-sm text-gray-600">
-            Add a logo to appear in your exported XLSX and PDF files
-          </p>
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-semibold text-gray-900">Add Logo</h3>
+            <p className="mt-1 text-xs text-gray-600">
+              Upload your company or project logo
+            </p>
+          </div>
+          <div className="relative">
+            <button
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+              className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Logo usage information"
+            >
+              <Info className="h-4 w-4" />
+            </button>
+
+            {/* Tooltip */}
+            {showTooltip && (
+              <div className="absolute right-0 top-8 z-10 w-64 rounded-lg bg-gray-900 p-3 text-xs text-white shadow-lg">
+                <div className="space-y-2">
+                  <p className="font-medium">Logo Usage:</p>
+                  <ul className="space-y-1">
+                    <li>• XLSX, PDF, PPTX, and DOCX headers</li>
+                    <li>• PNG/SVG canvas exports</li>
+                    <li>• Auto-scaled with aspect ratio maintained</li>
+                  </ul>
+                </div>
+                {/* Tooltip arrow */}
+                <div className="absolute -top-1 right-3 h-2 w-2 rotate-45 bg-gray-900"></div>
+              </div>
+            )}
+          </div>
         </div>
 
         {logo ? (
@@ -134,7 +163,7 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
         ) : (
           /* Upload Area */
           <div
-            className={`relative cursor-pointer rounded-lg border-2 border-dashed p-6 text-center transition-colors ${
+            className={`relative cursor-pointer rounded-lg border-2 border-dashed p-4 text-center transition-colors ${
               dragActive
                 ? 'border-blue-500 bg-blue-50'
                 : 'border-gray-300 hover:border-gray-400 hover:bg-gray-50'
@@ -144,7 +173,7 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
             onDragLeave={handleDragLeave}
             onClick={() => fileInputRef.current?.click()}
           >
-            <ImageIcon className="mx-auto mb-3 h-10 w-10 text-gray-400" />
+            <ImageIcon className="mx-auto mb-2 h-8 w-8 text-gray-400" />
             <div className="space-y-1">
               <p className="text-sm font-medium text-gray-900">
                 Upload your logo
@@ -176,15 +205,6 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
           aria-label="Upload logo file"
         />
 
-        {/* Usage Note */}
-        <div className="rounded bg-blue-50 p-3 text-xs text-gray-500">
-          <p className="mb-1 font-medium text-blue-900">Logo Usage:</p>
-          <ul className="list-inside list-disc space-y-1 text-blue-800">
-            <li>XLSX, PDF, PPTX, and DOCX headers</li>
-            <li>PNG/SVG canvas exports</li>
-            <li>Auto-scaled with aspect ratio maintained</li>
-          </ul>
-        </div>
       </div>
     </div>
   );
