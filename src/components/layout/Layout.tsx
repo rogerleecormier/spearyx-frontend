@@ -5,16 +5,12 @@ import { Header } from './Header';
 
 interface LayoutProps {
   children: ReactNode;
-  isDev?: boolean;
 }
 
-export function Layout({ children, isDev }: LayoutProps) {
-  // Automatically detect dev mode if not explicitly set
-  const isDevMode = isDev ?? import.meta.env.DEV;
-
+export function Layout({ children }: LayoutProps) {
   return (
     <div className="flex min-h-screen flex-col">
-      <Header isDev={isDevMode} />
+      <Header />
       <main className="flex-1">{children}</main>
       <Footer />
     </div>

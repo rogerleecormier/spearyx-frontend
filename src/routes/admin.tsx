@@ -1,16 +1,23 @@
 import { Link, createFileRoute } from '@tanstack/react-router';
+import {
+  Database,
+  Layout as LayoutIcon,
+  Palette,
+  ShieldCheck,
+  Type,
+  Users,
+} from 'lucide-react';
 
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card';
 import { useSession } from '@/hooks/useSession';
-import { Database, Layout as LayoutIcon, Palette, ShieldCheck, Type, Users } from 'lucide-react';
 
 export const Route = createFileRoute('/admin')({
   component: AdminPage,
@@ -23,7 +30,7 @@ function AdminPage() {
     return (
       <Layout>
         <div className="container mx-auto py-8">
-          <Card className="w-full max-w-2xl mx-auto">
+          <Card className="mx-auto w-full max-w-2xl">
             <CardHeader>
               <CardTitle>Access Denied</CardTitle>
               <CardDescription>
@@ -73,21 +80,22 @@ function AdminPage() {
     <Layout>
       <div className="container mx-auto py-8">
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <ShieldCheck className="h-6 w-6 text-primary" />
+          <div className="mb-2 flex items-center gap-3">
+            <ShieldCheck className="text-primary h-6 w-6" />
             <h1 className="text-3xl font-bold">Admin Dashboard</h1>
           </div>
           <p className="text-muted-foreground">
-            Welcome back, {session.email}. Access development tools and administrative functions.
+            Welcome back, {session.email}. Access development tools and
+            administrative functions.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {adminLinks.map((link) => (
-            <Card key={link.href} className="hover:shadow-lg transition-shadow">
+            <Card key={link.href} className="transition-shadow hover:shadow-lg">
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-2">
-                  <link.icon className="h-5 w-5 text-primary" />
+                  <link.icon className="text-primary h-5 w-5" />
                   <CardTitle className="text-lg">{link.title}</CardTitle>
                 </div>
                 <CardDescription>{link.description}</CardDescription>

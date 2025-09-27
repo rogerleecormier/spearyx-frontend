@@ -6,24 +6,22 @@ import { Logo } from '@/components/brand';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { getWorkerUrl } from '@/config/workers';
 import { useSession } from '@/hooks/useSession';
 
-interface HeaderProps {
-  isDev?: boolean;
-}
+interface HeaderProps {}
 
 const PROTECTED_TOOL_PATH = '/tools/raci';
 const LOGOUT_PATH = '/cdn-cgi/access/logout';
 
-export function Header({ isDev = false }: HeaderProps) {
+export function Header({}: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { session, isAuthenticated, isAdmin, isPending, isFetching } =
     useSession();
@@ -58,8 +56,7 @@ export function Header({ isDev = false }: HeaderProps) {
           </Link>
 
           <nav className="hidden items-center space-x-8 md:flex">
-            <div className="flex items-center space-x-6">
-            </div>
+            <div className="flex items-center space-x-6"></div>
           </nav>
 
           <div className="hidden items-center md:flex">
@@ -140,20 +137,29 @@ export function Header({ isDev = false }: HeaderProps) {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/profile" className="flex items-center gap-2 cursor-pointer hover:bg-accent">
+                    <Link
+                      to="/profile"
+                      className="hover:bg-accent flex cursor-pointer items-center gap-2"
+                    >
                       <User className="h-4 w-4" /> Profile Settings
                     </Link>
                   </DropdownMenuItem>
                   {isAdmin && (
                     <DropdownMenuItem asChild>
-                      <Link to="/admin" className="flex items-center gap-2 cursor-pointer hover:bg-accent">
+                      <Link
+                        to="/admin"
+                        className="hover:bg-accent flex cursor-pointer items-center gap-2"
+                      >
                         <ShieldCheck className="h-4 w-4" /> Admin
                       </Link>
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <a href={LOGOUT_PATH} className="flex items-center gap-2 cursor-pointer hover:bg-accent">
+                    <a
+                      href={LOGOUT_PATH}
+                      className="hover:bg-accent flex cursor-pointer items-center gap-2"
+                    >
                       <LogOut className="h-4 w-4" /> Log Out
                     </a>
                   </DropdownMenuItem>
@@ -192,15 +198,33 @@ export function Header({ isDev = false }: HeaderProps) {
                     RACI Generator
                   </Link>
                 </Button>
-                <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
-                  <Link to="/profile" onClick={closeMobileMenu} className="cursor-pointer hover:bg-accent">
-                    <User className="h-4 w-4 mr-2" /> Profile Settings
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start"
+                  asChild
+                >
+                  <Link
+                    to="/profile"
+                    onClick={closeMobileMenu}
+                    className="hover:bg-accent cursor-pointer"
+                  >
+                    <User className="mr-2 h-4 w-4" /> Profile Settings
                   </Link>
                 </Button>
                 {isAdmin && (
-                  <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
-                    <Link to="/admin" onClick={closeMobileMenu} className="cursor-pointer hover:bg-accent">
-                      <ShieldCheck className="h-4 w-4 mr-2" /> Admin
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full justify-start"
+                    asChild
+                  >
+                    <Link
+                      to="/admin"
+                      onClick={closeMobileMenu}
+                      className="hover:bg-accent cursor-pointer"
+                    >
+                      <ShieldCheck className="mr-2 h-4 w-4" /> Admin
                     </Link>
                   </Button>
                 )}
@@ -255,8 +279,7 @@ export function Header({ isDev = false }: HeaderProps) {
                         {isAdmin ? 'Administrator' : 'Member'}
                       </div>
                     </div>
-                    <div className="space-y-2">
-                    </div>
+                    <div className="space-y-2"></div>
                     <Button variant="outline" className="w-full" asChild>
                       <a
                         href={LOGOUT_PATH}
@@ -268,7 +291,6 @@ export function Header({ isDev = false }: HeaderProps) {
                   </div>
                 )}
               </div>
-
             </div>
           </div>
         )}

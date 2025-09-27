@@ -8,35 +8,35 @@ import { Layout } from '@/components/layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Switch } from '@/components/ui/switch';
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui/table';
 import { SESSION_QUERY_KEY, useSession } from '@/hooks/useSession';
 import {
-    fetchAdminUsers,
-    toggleUserPaid,
-    updateUserRole,
-    type AdminUserSummary,
-    type TogglePaidPayload,
-    type UpdateRolePayload,
+  fetchAdminUsers,
+  toggleUserPaid,
+  updateUserRole,
+  type AdminUserSummary,
+  type TogglePaidPayload,
+  type UpdateRolePayload,
 } from '@/lib/session';
 
 const ADMIN_USERS_QUERY_KEY = ['admin', 'users'] as const;
@@ -322,7 +322,7 @@ function UsersTable({
                 {user.isPaid && (
                   <Badge
                     variant="default"
-                    className="bg-green-600 hover:bg-green-700 text-white font-semibold"
+                    className="bg-green-600 font-semibold text-white hover:bg-green-700"
                   >
                     PAID
                   </Badge>

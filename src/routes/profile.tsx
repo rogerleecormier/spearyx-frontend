@@ -3,11 +3,11 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Layout } from '@/components/layout';
 import { Badge } from '@/components/ui/badge';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useSession } from '@/hooks/useSession';
@@ -23,7 +23,7 @@ function ProfilePage() {
     return (
       <Layout>
         <div className="container mx-auto py-8">
-          <Card className="w-full max-w-2xl mx-auto">
+          <Card className="mx-auto w-full max-w-2xl">
             <CardHeader>
               <CardTitle>Access Denied</CardTitle>
               <CardDescription>
@@ -39,7 +39,7 @@ function ProfilePage() {
   return (
     <Layout>
       <div className="container mx-auto py-8">
-        <Card className="w-full max-w-2xl mx-auto">
+        <Card className="mx-auto w-full max-w-2xl">
           <CardHeader>
             <CardTitle>Profile Settings</CardTitle>
             <CardDescription>
@@ -55,7 +55,7 @@ function ProfilePage() {
                   <label className="text-sm font-medium text-muted-foreground">
                     Email Address
                   </label>
-                  <div className="text-sm font-mono">{session.email}</div>
+                  <div className="font-mono text-sm">{session.email}</div>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-muted-foreground">
@@ -72,7 +72,9 @@ function ProfilePage() {
                     User Role
                   </label>
                   <div className="flex items-center gap-2">
-                    <Badge variant={session.isAdmin ? 'destructive' : 'outline'}>
+                    <Badge
+                      variant={session.isAdmin ? 'destructive' : 'outline'}
+                    >
                       {session.isAdmin ? 'Administrator' : 'Member'}
                     </Badge>
                   </div>
