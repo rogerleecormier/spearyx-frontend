@@ -50,6 +50,7 @@ export const OptimizedExportCenter: React.FC<OptimizedExportCenterProps> = ({
   const [canImportFromUrl, setCanImportFromUrl] = useState(
     hasSharedStateInSearch
   );
+  const [loadedModules, setLoadedModules] = useState<Set<string>>(new Set());
 
   const hasErrors = validationErrors.length > 0;
   const canExport = state.roles.length > 0 && state.tasks.length > 0;
@@ -74,6 +75,10 @@ export const OptimizedExportCenter: React.FC<OptimizedExportCenterProps> = ({
 
   const handleExportError = (error: string) => {
     setExportError(error);
+  };
+
+  const handleModuleLoad = (moduleId: string) => {
+    setLoadedModules((prev) => new Set([...prev, moduleId]));
   };
 
   const handleShareLink = async () => {
@@ -147,7 +152,7 @@ export const OptimizedExportCenter: React.FC<OptimizedExportCenterProps> = ({
     }
   };
 
-  // Export button configurations with lazy loading
+  // Export button configurations with lazy loading and module tracking
   const exportButtons = [
     {
       id: 'csv',
@@ -333,6 +338,8 @@ export const OptimizedExportCenter: React.FC<OptimizedExportCenterProps> = ({
                 onExportStart={handleExportStart}
                 onExportEnd={handleExportEnd}
                 onExportError={handleExportError}
+                onModuleLoad={handleModuleLoad}
+                isModuleLoaded={loadedModules.has(button.id)}
               />
             ))}
           </div>

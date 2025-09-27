@@ -1,9 +1,9 @@
 /**
- * Lazy Export Button - Optimized lazy loading with preloading
+ * Lazy Export Button - Optimized lazy loading with preloading and error handling
  */
 
-import { Loader2 } from 'lucide-react';
-import React, { Suspense, lazy, useCallback, useState } from 'react';
+import { AlertCircle, Loader2 } from 'lucide-react';
+import React, { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 
 import { usePreload } from '../../hooks/usePreload';
 import type { RaciState } from '../../types/raci';
@@ -25,6 +25,8 @@ interface LazyExportButtonProps {
   onExportStart?: (type: string) => void;
   onExportEnd?: () => void;
   onExportError?: (error: string) => void;
+  onModuleLoad?: (moduleId: string) => void;
+  isModuleLoaded?: boolean;
 }
 
 // Helper function to create lazy export components
@@ -68,8 +70,13 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
   onExportStart,
   onExportEnd,
   onExportError,
+  onModuleLoad,
+  isModuleLoaded = false,
 }) => {
   const [isExporting, setIsExporting] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [moduleLoaded, setModuleLoaded] = useState(false);
+
   const { preloadOnHover, isPreloaded } = usePreload({
     delay: 100,
     timeout: 5000,
@@ -78,10 +85,39 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
   // Get hover handlers for preloading
   const hoverHandlers = preloadOnHover(importPath);
 
+  // Load module on component mount for better UX
+  useEffect(() => {
+    const loadModule = async () => {
+      try {
+        await import(importPath);
+        setModuleLoaded(true);
+        setLoadError(null);
+        onModuleLoad?.(id);
+      } catch (error) {
+        console.warn(`Failed to preload ${importPath}:`, error);
+        setLoadError(`Failed to load ${label} exporter`);
+      }
+    };
+
+    // Only preload if not disabled and has canvas if required
+    if (!disabled && (!requiresCanvas || hasCanvas)) {
+      loadModule();
+    }
+  }, [
+    importPath,
+    disabled,
+    requiresCanvas,
+    hasCanvas,
+    label,
+    onModuleLoad,
+    id,
+  ]);
+
   const handleExport = useCallback(async () => {
     if (disabled || isExporting) return;
 
     setIsExporting(true);
+    setLoadError(null);
     onExportStart?.(id);
 
     try {
@@ -100,6 +136,9 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
       await exportFn(state, { filename }, canvasRef?.current);
     } catch (error) {
       console.error(`Export failed (${id}):`, error);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred';
+      setLoadError(`Export failed: ${errorMessage}`);
       onExportError?.(`Failed to export ${label}. Please try again.`);
     } finally {
       setIsExporting(false);
@@ -123,6 +162,23 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
   ]);
 
   const isDisabled = disabled || isExporting || (requiresCanvas && !hasCanvas);
+
+  // Show error state if module failed to load
+  if (loadError && !isExporting) {
+    return (
+      <div
+        className={`relative flex flex-col items-center rounded-lg border-2 border-red-200 bg-red-50 p-4 transition-all`}
+      >
+        <div className="mb-2 flex h-8 w-8 items-center justify-center">
+          <AlertCircle className="h-6 w-6 text-red-600" />
+        </div>
+        <span className="mb-1 text-sm font-medium text-red-800">{label}</span>
+        <span className="text-center text-xs leading-tight text-red-600">
+          Load Error
+        </span>
+      </div>
+    );
+  }
 
   return (
     <button
@@ -158,6 +214,16 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
           title="Preloaded"
         />
       )}
+
+      {/* Module loaded indicator */}
+      {(moduleLoaded || isModuleLoaded) &&
+        !isPreloaded(importPath) &&
+        !isExporting && (
+          <div
+            className="absolute right-1 top-1 h-2 w-2 rounded-full bg-blue-500"
+            title="Ready"
+          />
+        )}
     </button>
   );
 };

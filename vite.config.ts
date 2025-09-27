@@ -17,7 +17,14 @@ export default defineConfig({
   ],
   ssr: {
     // Handle "use client" directives in SSR build
-    noExternal: ['@tanstack/react-query', 'exceljs', 'pptxgenjs'],
+    noExternal: [
+      '@tanstack/react-query',
+      'exceljs',
+      'pptxgenjs',
+      'docx',
+      '@react-pdf/renderer',
+      'html-to-image',
+    ],
   },
   build: {
     rollupOptions: {
@@ -35,46 +42,53 @@ export default defineConfig({
       ],
       output: {
         manualChunks(id) {
-          // Handle export libraries - separate chunks for better lazy loading
+          // Export libraries - split into separate chunks for better caching
           if (id.includes('@react-pdf/renderer')) return 'export-pdf';
           if (id.includes('docx')) return 'export-docx';
+          if (id.includes('exceljs')) return 'export-xlsx';
           if (id.includes('html-to-image')) return 'export-image';
-          
+          if (id.includes('pptxgenjs')) return 'export-pptx';
+
           // TanStack libraries
           if (id.includes('@tanstack/react-router') || id.includes('@tanstack/react-query')) {
             return 'tanstack-vendor';
           }
-          
+
           // UI libraries - split Radix UI components
           if (id.includes('@radix-ui/')) {
             return 'ui-vendor';
           }
-          
+
           // Form libraries
           if (id.includes('react-hook-form') || id.includes('@hookform/resolvers')) {
             return 'form-vendor';
           }
-          
+
           // Utility libraries
           if (id.includes('date-fns') || id.includes('zod') || id.includes('clsx') || id.includes('tailwind-merge')) {
             return 'utils-vendor';
           }
-          
+
           // Chart libraries
           if (id.includes('recharts')) {
             return 'chart-vendor';
           }
-          
+
           // Icon libraries
           if (id.includes('lucide-react')) {
             return 'icons-vendor';
           }
-          
+
           // Animation libraries
           if (id.includes('framer-motion') || id.includes('embla-carousel')) {
             return 'animation-vendor';
           }
-          
+
+          // File processing libraries
+          if (id.includes('file-saver') || id.includes('jszip')) {
+            return 'file-processing-vendor';
+          }
+
           // Let TanStack Start handle React dependencies
           return undefined;
         },
@@ -91,14 +105,12 @@ export default defineConfig({
     chunkSizeWarningLimit: 2000,
   },
   optimizeDeps: {
-    // Pre-bundle heavy dependencies
+    // Pre-bundle light dependencies only
     include: [
       'react',
       'react-dom',
       '@tanstack/react-router',
       '@tanstack/react-query',
-      '@react-pdf/renderer',
-      'docx',
       // Packages with side effects that should not be tree-shaken
       '@floating-ui/react-dom',
       'aria-hidden',
@@ -111,9 +123,15 @@ export default defineConfig({
       '@tanstack/react-store',
       '@radix-ui/primitive',
     ],
-    // Exclude problematic libraries from pre-bundling
+    // Exclude heavy export libraries from pre-bundling to enable lazy loading
     exclude: [
+      '@react-pdf/renderer',
+      'docx',
+      'exceljs',
       'html-to-image',
+      'pptxgenjs',
+      'file-saver',
+      'jszip',
     ],
     // Force re-optimization
     force: true,
