@@ -38,7 +38,7 @@ export default defineConfig({
       external: [
         // Externalize Node.js dependencies for server builds
         'exceljs',
-        'pptxgenjs',
+        'jszip',
       ],
       output: {
         manualChunks(id) {
@@ -104,36 +104,23 @@ export default defineConfig({
     // Increase chunk size warning limit since we're optimizing with manual chunks
     chunkSizeWarningLimit: 2000,
   },
-  optimizeDeps: {
-    // Pre-bundle light dependencies only
-    include: [
-      'react',
-      'react-dom',
-      '@tanstack/react-router',
-      '@tanstack/react-query',
-      'exceljs',
-      // Packages with side effects that should not be tree-shaken
-      '@floating-ui/react-dom',
-      'aria-hidden',
-      'react-remove-scroll',
-      'tiny-warning',
-      '@tanstack/store',
-      '@tanstack/history',
-      'isbot',
-      '@tanstack/query-core',
-      '@tanstack/react-store',
-      '@radix-ui/primitive',
-    ],
-    // Exclude heavy export libraries from pre-bundling to enable lazy loading
-    exclude: [
-      '@react-pdf/renderer',
-      'docx',
-      'html-to-image',
-      'pptxgenjs',
-      'file-saver',
-      'jszip',
-    ],
-    // Force re-optimization
-    force: true,
+  define: {
+    // Fix for jszip compatibility with pptxgenjs
+    global: 'globalThis',
+    // Ensure require is available for compatibility
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+  },
+  // Additional configuration for problematic packages
+  esbuild: {
+    define: {
+      global: 'globalThis',
+    },
+  },
+  // Handle jszip/pptxgenjs compatibility
+  resolve: {
+    alias: {
+      // Ensure jszip is resolved correctly
+      'jszip': require.resolve('jszip'),
+    },
   },
 })

@@ -2,12 +2,8 @@
  * PPTX export functionality for RACI matrix using PptxGenJS
  */
 
-import PptxGenJS from 'pptxgenjs';
-
 import { ExportOptions, RaciKey, RaciState } from '../../../types/raci';
 import { getActiveRaciKey } from '../matrix';
-
-// Static import for PptxGenJS
 
 // Import PptxGenJS types
 interface PptxGenJSInstance {
@@ -46,8 +42,23 @@ function getImageDimensions(
   });
 }
 
-function getPptxGen(): PptxGenJSInstance {
-  return new PptxGenJS() as PptxGenJSInstance;
+async function getPptxGen(): Promise<PptxGenJSInstance> {
+  try {
+    // First ensure jszip is loaded and available
+    const JSZipModule = await import('jszip');
+
+    // Make jszip available globally for pptxgenjs
+    if (typeof window !== 'undefined') {
+      (window as any).JSZip = JSZipModule.default || JSZipModule;
+    }
+
+    // Then load pptxgenjs
+    const module = await import('pptxgenjs');
+    return new module.default() as PptxGenJSInstance;
+  } catch (error) {
+    console.error('Failed to load pptxgenjs:', error);
+    throw new Error('Failed to load pptxgenjs library. Please try again.');
+  }
 }
 
 /**
@@ -179,7 +190,7 @@ export async function exportToPptx(
   options: ExportOptions = {}
 ): Promise<Blob> {
   try {
-    const pptx = getPptxGen();
+    const pptx = await getPptxGen();
 
     // Set presentation properties
     pptx.author = 'Spearyx RACI Generator';
