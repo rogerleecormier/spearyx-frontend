@@ -5,6 +5,23 @@
 import { ExportOptions, RaciKey, RaciState } from '../../../types/raci';
 import { getActiveRaciKey } from '../matrix';
 
+// PptxGenJS type definitions
+interface PptxGenJSInstance {
+  author: string;
+  company: string;
+  title: string;
+  subject: string;
+  addSlide(): PptxSlide;
+  write(): Promise<ArrayBuffer>;
+}
+
+interface PptxSlide {
+  addTable(data: unknown[][], options: unknown): void;
+  addText(text: string, options: unknown): void;
+  addImage(options: unknown): void;
+  addShape(type: string, options: unknown): void;
+}
+
 // Dynamic import for PptxGenJS
 
 /**
@@ -25,25 +42,8 @@ function getImageDimensions(
   });
 }
 
-async function getPptxGen(): Promise<any> {
+async function getPptxGen(): Promise<PptxGenJSInstance> {
   try {
-    // Define interfaces locally to avoid SSR issues
-    interface PptxGenJSInstance {
-      author: string;
-      company: string;
-      title: string;
-      subject: string;
-      addSlide(): PptxSlide;
-      write(): Promise<ArrayBuffer>;
-    }
-
-    interface PptxSlide {
-      addTable(data: unknown[][], options: unknown): void;
-      addText(text: string, options: unknown): void;
-      addImage(options: unknown): void;
-      addShape(type: string, options: unknown): void;
-    }
-
     // First ensure jszip is loaded and available
     const JSZipModule = await import('jszip');
 
@@ -76,7 +76,7 @@ const RACI_COLORS: Record<RaciKey, string> = {
  * Add table with 20% smaller sizing - simplified approach for PptxGenJS 4.0.1
  */
 async function addTableWithOverflowHandling(
-  slide: any,
+  slide: PptxSlide,
   tableData: unknown[][],
   startY: number,
   margin: number,
@@ -121,7 +121,7 @@ async function addTableWithOverflowHandling(
  * Add legend to a slide
  */
 async function addLegendToSlide(
-  slide: any,
+  slide: PptxSlide,
   legendY: number,
   margin: number,
   slideHeight: number

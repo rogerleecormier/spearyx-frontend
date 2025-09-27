@@ -101,7 +101,7 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
             <button
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
-              className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+              className="p-1 text-gray-400 transition-colors hover:text-gray-600"
               aria-label="Logo usage information"
             >
               <Info className="h-4 w-4" />
@@ -204,7 +204,6 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
           className="hidden"
           aria-label="Upload logo file"
         />
-
       </div>
     </div>
   );

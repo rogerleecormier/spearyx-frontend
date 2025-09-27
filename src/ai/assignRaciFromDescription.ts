@@ -10,7 +10,9 @@ import { TASK_CATEGORIES } from './examples';
 /**
  * Generates an AI-powered title for a project based on its description
  */
-export async function generateProjectTitle(description: string): Promise<string> {
+export async function generateProjectTitle(
+  description: string
+): Promise<string> {
   // Import the generateProjectTitle function from adapter
   const { generateProjectTitle: generateTitle } = await import('./adapter');
   return generateTitle(description);

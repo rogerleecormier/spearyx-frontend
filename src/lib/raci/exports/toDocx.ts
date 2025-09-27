@@ -83,7 +83,7 @@ export async function exportToDocx(
       WidthType,
     } = await import('docx');
 
-    const children: any[] = [];
+    const children: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     // Calculate logo dimensions if logo exists
     let logoDimensions: { width: number; height: number } | null = null;
@@ -168,7 +168,7 @@ export async function exportToDocx(
     );
 
     // RACI Matrix Table
-    const matrixRows: TableRow[] = [];
+    const matrixRows: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     // Header row
     const headerRow = new TableRow({

@@ -33,7 +33,9 @@ export async function exportToPdf(
   options: ExportOptions = {}
 ): Promise<Blob> {
   // Dynamic import to avoid SSR issues
-  const { Document, Image, Page, StyleSheet, Text, View, pdf } = await import('@react-pdf/renderer');
+  const { Document, Image, Page, StyleSheet, Text, View, pdf } = await import(
+    '@react-pdf/renderer'
+  );
 
   // Recreate styles object since StyleSheet is now imported dynamically
   const styles = StyleSheet.create({
@@ -212,7 +214,9 @@ export async function exportToPdf(
               <Text style={styles.taskCell}>{task.name}</Text>
               {state.roles.map((role) => {
                 const cellValue = state.matrix[task.id]?.[role.name];
-                const activeKey = cellValue ? getActiveRaciKey(cellValue) : null;
+                const activeKey = cellValue
+                  ? getActiveRaciKey(cellValue)
+                  : null;
 
                 return (
                   <View key={role.id} style={styles.raciCell}>

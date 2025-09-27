@@ -33,7 +33,7 @@ export const RaciCanvasPreview: React.FC<RaciCanvasPreviewProps> = ({
   tasks,
   matrix,
   logo,
-  onLogoChange,
+  onLogoChange: _onLogoChange,
   generatedOnLabel,
   className = '',
   exportRef,

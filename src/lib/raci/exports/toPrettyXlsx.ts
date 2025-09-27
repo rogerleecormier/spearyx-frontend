@@ -23,7 +23,8 @@ export async function exportToPrettyXlsx(
   options: ExportOptions = {}
 ): Promise<Blob> {
   // Dynamic import to avoid SSR issues
-  const ExcelJS = (await import('exceljs')).default || (await import('exceljs'));
+  const ExcelJS =
+    (await import('exceljs')).default || (await import('exceljs'));
 
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('RACI Matrix');

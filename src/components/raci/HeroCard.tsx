@@ -3,12 +3,12 @@
  */
 
 import {
-    Download,
-    FileText,
-    HelpCircle,
-    Lightbulb,
-    PenTool,
-    Sparkles,
+  Download,
+  FileText,
+  HelpCircle,
+  Lightbulb,
+  PenTool,
+  Sparkles,
 } from 'lucide-react';
 import React from 'react';
 
@@ -53,7 +53,9 @@ export const HeroCard: React.FC<HeroCardProps> = ({
   ];
 
   return (
-    <div className={`rounded-lg border border-gray-200 bg-white p-6 shadow-sm ${className}`}>
+    <div
+      className={`rounded-lg border border-gray-200 bg-white p-6 shadow-sm ${className}`}
+    >
       <div className="space-y-6">
         {/* Header */}
         <div className="text-center">
@@ -61,36 +63,40 @@ export const HeroCard: React.FC<HeroCardProps> = ({
             RACI Matrix Generator
           </h1>
           <p className="mt-2 text-lg text-gray-600">
-            Create comprehensive RACI (Responsible, Accountable, Consulted, Informed)
-            matrices for your projects with AI assistance
+            Create comprehensive RACI (Responsible, Accountable, Consulted,
+            Informed) matrices for your projects with AI assistance
           </p>
           {onLearnAboutRaci && (
             <button
               onClick={onLearnAboutRaci}
-              className="mt-3 inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+              className="mt-3 inline-flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-800"
             >
               <HelpCircle className="h-4 w-4" />
-              <span className="text-sm font-medium">Learn about RACI methodology</span>
+              <span className="text-sm font-medium">
+                Learn about RACI methodology
+              </span>
             </button>
           )}
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step) => (
             <div key={step.number} className="relative">
-              <div className="flex flex-col items-center text-center space-y-3 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                <div className={`flex h-12 w-12 items-center justify-center rounded-full ${step.color}`}>
+              <div className="flex flex-col items-center space-y-3 rounded-lg border border-gray-200 p-4 text-center transition-shadow hover:shadow-md">
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-full ${step.color}`}
+                >
                   <step.icon className="h-6 w-6" />
                 </div>
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-sm font-semibold text-gray-600">
                   {step.number}
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                  <h3 className="mb-1 text-sm font-semibold text-gray-900">
                     {step.title}
                   </h3>
-                  <p className="text-xs text-gray-600 leading-tight">
+                  <p className="text-xs leading-tight text-gray-600">
                     {step.description}
                   </p>
                 </div>
@@ -98,7 +104,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({
 
               {/* Arrow for larger screens */}
               {step.number < 4 && (
-                <div className="hidden lg:block absolute -right-2 top-1/2 transform -translate-y-1/2 z-10">
+                <div className="absolute -right-2 top-1/2 z-10 hidden -translate-y-1/2 transform lg:block">
                   <svg
                     className="h-4 w-4 text-gray-400"
                     fill="none"
@@ -119,16 +125,15 @@ export const HeroCard: React.FC<HeroCardProps> = ({
         </div>
 
         {/* Additional Info */}
-        <div className="bg-blue-50 rounded-lg p-4">
+        <div className="rounded-lg bg-blue-50 p-4">
           <div className="flex items-start gap-3">
-            <Lightbulb className="h-5 w-5 text-blue-600 mt-0.5" />
+            <Lightbulb className="mt-0.5 h-5 w-5 text-blue-600" />
             <div>
-              <p className="text-sm font-medium text-blue-900 mb-1">
-                Pro Tip
-              </p>
+              <p className="mb-1 text-sm font-medium text-blue-900">Pro Tip</p>
               <p className="text-sm text-blue-800">
-                The more detailed your project description, the better the AI can generate
-                accurate role assignments and task breakdowns for your RACI matrix.
+                The more detailed your project description, the better the AI
+                can generate accurate role assignments and task breakdowns for
+                your RACI matrix.
               </p>
             </div>
           </div>

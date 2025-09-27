@@ -116,7 +116,9 @@ export async function callAIModel(prompt: string): Promise<string> {
 /**
  * Generates a project title using the AI worker's title generation endpoint
  */
-export async function generateProjectTitle(description: string): Promise<string> {
+export async function generateProjectTitle(
+  description: string
+): Promise<string> {
   if (!description || !description.trim()) {
     return 'RACI Matrix';
   }
@@ -159,8 +161,15 @@ export async function generateProjectTitle(description: string): Promise<string>
     });
 
     // The combined endpoint returns { generatedTitle, roles, tasks, matrix, ... }
-    if (result && result.generatedTitle && typeof result.generatedTitle === 'string') {
-      console.log('🤖 Found generatedTitle in primary check:', result.generatedTitle);
+    if (
+      result &&
+      result.generatedTitle &&
+      typeof result.generatedTitle === 'string'
+    ) {
+      console.log(
+        '🤖 Found generatedTitle in primary check:',
+        result.generatedTitle
+      );
       return result.generatedTitle.trim();
     }
 
@@ -169,10 +178,15 @@ export async function generateProjectTitle(description: string): Promise<string>
       // Check if it's a RACI response with a title field
       if (result.roles && result.tasks && result.matrix) {
         if (result.generatedTitle) {
-          console.log('🤖 Got combined response with title:', result.generatedTitle);
+          console.log(
+            '🤖 Got combined response with title:',
+            result.generatedTitle
+          );
           return result.generatedTitle.trim();
         }
-        console.log('🤖 Got RACI response without title field, checking alternatives...');
+        console.log(
+          '🤖 Got RACI response without title field, checking alternatives...'
+        );
 
         // Check if title is in a different field
         if (result.title && typeof result.title === 'string') {
@@ -239,34 +253,102 @@ function generateFallbackTitle(description: string): string {
 
   // Look for key project-related words with better categorization
   const projectKeywords = [
-    'project', 'system', 'application', 'platform', 'website', 'app', 'portal',
-    'dashboard', 'tool', 'solution', 'service', 'product', 'software', 'database',
-    'api', 'interface', 'framework', 'library', 'module', 'component'
+    'project',
+    'system',
+    'application',
+    'platform',
+    'website',
+    'app',
+    'portal',
+    'dashboard',
+    'tool',
+    'solution',
+    'service',
+    'product',
+    'software',
+    'database',
+    'api',
+    'interface',
+    'framework',
+    'library',
+    'module',
+    'component',
   ];
 
   const actionKeywords = [
-    'develop', 'build', 'create', 'design', 'implement', 'migrate', 'upgrade',
-    'redesign', 'refactor', 'optimize', 'improve', 'enhance', 'deploy', 'launch',
-    'integrate', 'configure', 'customize', 'automate', 'streamline', 'modernize'
+    'develop',
+    'build',
+    'create',
+    'design',
+    'implement',
+    'migrate',
+    'upgrade',
+    'redesign',
+    'refactor',
+    'optimize',
+    'improve',
+    'enhance',
+    'deploy',
+    'launch',
+    'integrate',
+    'configure',
+    'customize',
+    'automate',
+    'streamline',
+    'modernize',
   ];
 
   const domainKeywords = [
-    'e-commerce', 'ecommerce', 'crm', 'erp', 'hr', 'hrms', 'marketing', 'sales',
-    'finance', 'accounting', 'customer', 'user', 'admin', 'management', 'analytics',
-    'reporting', 'inventory', 'logistics', 'supply', 'chain', 'retail', 'healthcare',
-    'education', 'learning', 'training', 'support', 'helpdesk', 'ticketing'
+    'e-commerce',
+    'ecommerce',
+    'crm',
+    'erp',
+    'hr',
+    'hrms',
+    'marketing',
+    'sales',
+    'finance',
+    'accounting',
+    'customer',
+    'user',
+    'admin',
+    'management',
+    'analytics',
+    'reporting',
+    'inventory',
+    'logistics',
+    'supply',
+    'chain',
+    'retail',
+    'healthcare',
+    'education',
+    'learning',
+    'training',
+    'support',
+    'helpdesk',
+    'ticketing',
   ];
 
   const industryKeywords = [
-    'healthcare', 'finance', 'retail', 'manufacturing', 'education', 'government',
-    'nonprofit', 'startup', 'enterprise', 'corporate', 'business', 'commercial'
+    'healthcare',
+    'finance',
+    'retail',
+    'manufacturing',
+    'education',
+    'government',
+    'nonprofit',
+    'startup',
+    'enterprise',
+    'corporate',
+    'business',
+    'commercial',
   ];
 
   // Find the best keywords
-  const projectWord = words.find(word => projectKeywords.includes(word));
-  const actionWord = words.find(word => actionKeywords.includes(word));
-  const domainWord = words.find(word => domainKeywords.includes(word));
-  const industryWord = words.find(word => industryKeywords.includes(word));
+  const projectWord = words.find((word) => projectKeywords.includes(word));
+  const actionWord = words.find((word) => actionKeywords.includes(word));
+  const domainWord = words.find((word) => domainKeywords.includes(word));
+  const industryWord = words.find((word) => industryKeywords.includes(word));
 
   // Create intelligent title combinations
   if (actionWord && projectWord) {
@@ -308,29 +390,50 @@ function generateFallbackTitle(description: string): string {
 
   // Enhanced word extraction for meaningful phrases
   const meaningfulWords = words
-    .filter(word =>
-      word.length > 3 &&
-      !['that', 'with', 'from', 'this', 'will', 'have', 'been', 'they', 'them', 'their', 'should', 'would', 'could'].includes(word) &&
-      !word.includes('.') && // Remove file extensions and abbreviations
-      isNaN(Number(word)) // Remove numbers
+    .filter(
+      (word) =>
+        word.length > 3 &&
+        ![
+          'that',
+          'with',
+          'from',
+          'this',
+          'will',
+          'have',
+          'been',
+          'they',
+          'them',
+          'their',
+          'should',
+          'would',
+          'could',
+        ].includes(word) &&
+        !word.includes('.') && // Remove file extensions and abbreviations
+        isNaN(Number(word)) // Remove numbers
     )
     .slice(0, 4); // Take more words for better context
 
   if (meaningfulWords.length >= 3) {
-    return meaningfulWords.map((word, index) => {
-      if (index === 0) return word.charAt(0).toUpperCase() + word.slice(1);
-      return word;
-    }).join(' ');
+    return meaningfulWords
+      .map((word, index) => {
+        if (index === 0) return word.charAt(0).toUpperCase() + word.slice(1);
+        return word;
+      })
+      .join(' ');
   }
 
   if (meaningfulWords.length >= 2) {
-    return meaningfulWords.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    return meaningfulWords
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   }
 
   // Last resort: use first few meaningful words
-  const firstWords = words.filter(word => word.length > 2).slice(0, 3);
+  const firstWords = words.filter((word) => word.length > 2).slice(0, 3);
   if (firstWords.length >= 2) {
-    return firstWords.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    return firstWords
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   }
 
   // Ultimate fallback

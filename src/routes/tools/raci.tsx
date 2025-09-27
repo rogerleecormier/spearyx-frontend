@@ -251,7 +251,10 @@ function RaciGeneratorPage() {
             // Use AI to generate a better title based on the description
             aiGeneratedTitle = await generateProjectTitle(description);
           } catch (error) {
-            console.error('Failed to generate AI title, using fallback:', error);
+            console.error(
+              'Failed to generate AI title, using fallback:',
+              error
+            );
             // Fallback to the original method
             const words = description.split(' ').slice(0, 6).join(' ');
             aiGeneratedTitle = `${words} RACI Matrix`;
@@ -319,7 +322,6 @@ function RaciGeneratorPage() {
     []
   );
 
-
   // Handle state import from sharing
   const handleStateImport = useCallback((importedState: RaciState) => {
     setState(importedState);
@@ -362,7 +364,7 @@ function RaciGeneratorPage() {
       ) : (
         <div>
           {/* Hero Card */}
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-100 border-b border-gray-200">
+          <div className="border-b border-gray-200 bg-gradient-to-br from-blue-50 to-indigo-100">
             <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
               <HeroCard onLearnAboutRaci={handleLearnAboutRaci} />
             </div>
@@ -370,13 +372,15 @@ function RaciGeneratorPage() {
 
           {/* Import from Share Link */}
           {hasSharedState && (
-            <div className="bg-green-50 border-b border-gray-200">
+            <div className="border-b border-gray-200 bg-green-50">
               <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-center">
                   <button
                     onClick={() => {
                       try {
-                        const sharedState = parseSharedState(window.location.search);
+                        const sharedState = parseSharedState(
+                          window.location.search
+                        );
                         if (sharedState) {
                           handleStateImport(sharedState);
                         }
@@ -478,7 +482,6 @@ function RaciGeneratorPage() {
                 isGenerating={isGenerating}
               />
 
-
               {/* Editors Grid */}
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                 <RolesEditor
@@ -572,35 +575,36 @@ function RaciGeneratorPage() {
                   ref={matrixCanvasRef}
                   className="overflow-hidden rounded-lg border-2 border-blue-300 bg-white shadow-lg"
                 >
-                    <RaciCanvasPreview
-                      title={state.title}
-                      roles={state.roles}
-                      tasks={state.tasks}
-                      matrix={state.matrix}
-                      logo={state.logo}
-                      onLogoChange={handleLogoChange}
-                      generatedOnLabel={formattedGeneratedOn}
-                      exportRef={matrixExportRef}
-                    />
-                  </div>
+                  <RaciCanvasPreview
+                    title={state.title}
+                    roles={state.roles}
+                    tasks={state.tasks}
+                    matrix={state.matrix}
+                    logo={state.logo}
+                    onLogoChange={handleLogoChange}
+                    generatedOnLabel={formattedGeneratedOn}
+                    exportRef={matrixExportRef}
+                  />
                 </div>
               </div>
-
-              {/* Export Center */}
-              <ExportCenter
-                state={state}
-                canvasRef={matrixExportRef}
-                onStateImport={handleStateImport}
-                validationErrors={exportValidationErrors}
-                hasSharedStateInSearch={hasSharedState}
-              />
             </div>
-          </div>)}
-          {/* RACI Learn Modal */}
-          <RaciLearnModal
-            isOpen={isLearnModalOpen}
-            onClose={() => setIsLearnModalOpen(false)}
-          />
 
+            {/* Export Center */}
+            <ExportCenter
+              state={state}
+              canvasRef={matrixExportRef}
+              onStateImport={handleStateImport}
+              validationErrors={exportValidationErrors}
+              hasSharedStateInSearch={hasSharedState}
+            />
+          </div>
+        </div>
+      )}
+      {/* RACI Learn Modal */}
+      <RaciLearnModal
+        isOpen={isLearnModalOpen}
+        onClose={() => setIsLearnModalOpen(false)}
+      />
     </Layout>
-  );}
+  );
+}
