@@ -23,7 +23,6 @@ export default defineConfig({
       'pptxgenjs',
       'docx',
       'html-to-image',
-      'recharts',
     ],
   },
   build: {
@@ -55,6 +54,19 @@ export default defineConfig({
         // Externalize Node.js dependencies for server builds
         'exceljs',
         'jszip',
+        // Externalize chart libraries to avoid minification issues
+        'recharts',
+        'd3',
+        'd3-array',
+        'd3-scale',
+        'd3-shape',
+        'd3-color',
+        'd3-format',
+        'd3-time',
+        'd3-time-format',
+        // Externalize PDF renderer to avoid minification issues
+        '@react-pdf/renderer',
+        'react-pdf',
       ],
       output: {
         manualChunks(id) {
@@ -84,8 +96,8 @@ export default defineConfig({
             return 'utils-vendor';
           }
 
-          // Chart libraries
-          if (id.includes('recharts') || id.includes('d3') || id.includes('victory') || id.includes('chart')) {
+          // Chart libraries (exclude recharts and d3 since they're externalized)
+          if (id.includes('victory') || id.includes('chart')) {
             return 'chart-vendor';
           }
 
