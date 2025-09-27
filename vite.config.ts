@@ -116,11 +116,4 @@ export default defineConfig({
       global: 'globalThis',
     },
   },
-  // Handle jszip/pptxgenjs compatibility
-  resolve: {
-    alias: {
-      // Ensure jszip is resolved correctly
-      'jszip': require.resolve('jszip'),
-    },
-  },
 })

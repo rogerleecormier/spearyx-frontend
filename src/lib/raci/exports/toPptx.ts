@@ -49,7 +49,8 @@ async function getPptxGen(): Promise<PptxGenJSInstance> {
 
     // Make jszip available globally for pptxgenjs
     if (typeof window !== 'undefined') {
-      (window as any).JSZip = JSZipModule.default || JSZipModule;
+      (window as typeof window & { JSZip?: unknown }).JSZip =
+        JSZipModule.default || JSZipModule;
     }
 
     // Then load pptxgenjs
