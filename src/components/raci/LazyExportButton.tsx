@@ -27,6 +27,7 @@ interface LazyExportButtonProps {
   onExportError?: (error: string) => void;
   onModuleLoad?: (moduleId: string) => void;
   isModuleLoaded?: boolean;
+  disablePreload?: boolean;
 }
 
 // Helper function to create lazy export components
@@ -72,6 +73,7 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
   onExportError,
   onModuleLoad,
   isModuleLoaded = false,
+  disablePreload = false,
 }) => {
   const [isExporting, setIsExporting] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -99,8 +101,8 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
       }
     };
 
-    // Only preload if not disabled and has canvas if required
-    if (!disabled && (!requiresCanvas || hasCanvas)) {
+    // Only preload if not disabled, has canvas if required, and preloading is not disabled
+    if (!disabled && (!requiresCanvas || hasCanvas) && !disablePreload) {
       loadModule();
     }
   }, [
@@ -111,6 +113,7 @@ export const LazyExportButton: React.FC<LazyExportButtonProps> = ({
     label,
     onModuleLoad,
     id,
+    disablePreload,
   ]);
 
   const handleExport = useCallback(async () => {

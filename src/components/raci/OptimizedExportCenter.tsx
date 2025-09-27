@@ -3,24 +3,24 @@
  */
 
 import {
-  AlertCircle,
-  Check,
-  Copy,
-  Download,
-  FileSpreadsheet,
-  FileText,
-  Image,
-  Link,
-  Loader2,
-  Users,
-  X,
+    AlertCircle,
+    Check,
+    Copy,
+    Download,
+    FileSpreadsheet,
+    FileText,
+    Image,
+    Link,
+    Loader2,
+    Users,
+    X,
 } from 'lucide-react';
 import React, { Suspense, useEffect, useState } from 'react';
 
 import {
-  copyShareableUrl,
-  hasSharedState,
-  parseSharedState,
+    copyShareableUrl,
+    hasSharedState,
+    parseSharedState,
 } from '../../lib/sharing/shareLink';
 import type { RaciState } from '../../types/raci';
 import { LazyExportButton } from './LazyExportButton';
@@ -183,6 +183,7 @@ export const OptimizedExportCenter: React.FC<OptimizedExportCenterProps> = ({
       importPath: '../../lib/raci/exports/toPdf',
       exportFunction: 'downloadPdf',
       filename: 'raci.pdf',
+      disablePreload: true,
     },
     {
       id: 'png',
@@ -340,6 +341,7 @@ export const OptimizedExportCenter: React.FC<OptimizedExportCenterProps> = ({
                 onExportError={handleExportError}
                 onModuleLoad={handleModuleLoad}
                 isModuleLoaded={loadedModules.has(button.id)}
+                disablePreload={button.disablePreload}
               />
             ))}
           </div>
