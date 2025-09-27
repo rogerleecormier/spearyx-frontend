@@ -22,7 +22,6 @@ export default defineConfig({
       'exceljs',
       'pptxgenjs',
       'docx',
-      '@react-pdf/renderer',
       'html-to-image',
     ],
   },
