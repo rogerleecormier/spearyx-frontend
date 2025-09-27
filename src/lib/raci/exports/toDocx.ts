@@ -2,20 +2,6 @@
  * DOCX export functionality for RACI matrix using docx
  */
 
-import {
-  AlignmentType,
-  Document,
-  ImageRun,
-  Packer,
-  Paragraph,
-  Table,
-  TableCell,
-  TableRow,
-  TextRun,
-  WidthType,
-  type FileChild,
-} from 'docx';
-
 import type { ExportOptions, RaciKey, RaciState } from '../../../types/raci';
 import { getActiveRaciKey } from '../matrix';
 
@@ -83,7 +69,21 @@ export async function exportToDocx(
   options: ExportOptions = {}
 ): Promise<Blob> {
   try {
-    const children: FileChild[] = [];
+    // Dynamic import to avoid SSR issues
+    const {
+      AlignmentType,
+      Document,
+      ImageRun,
+      Packer,
+      Paragraph,
+      Table,
+      TableCell,
+      TableRow,
+      TextRun,
+      WidthType,
+    } = await import('docx');
+
+    const children: any[] = [];
 
     // Calculate logo dimensions if logo exists
     let logoDimensions: { width: number; height: number } | null = null;

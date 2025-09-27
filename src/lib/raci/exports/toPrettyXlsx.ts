@@ -2,8 +2,6 @@
  * Pretty formatted XLSX export functionality
  */
 
-import ExcelJS from 'exceljs';
-
 import type { ExportOptions, RaciKey, RaciState } from '../../../types/raci';
 import { getActiveRaciKey } from '../matrix';
 
@@ -24,6 +22,9 @@ export async function exportToPrettyXlsx(
   state: RaciState,
   options: ExportOptions = {}
 ): Promise<Blob> {
+  // Dynamic import to avoid SSR issues
+  const ExcelJS = (await import('exceljs')).default || (await import('exceljs'));
+
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('RACI Matrix');
 
