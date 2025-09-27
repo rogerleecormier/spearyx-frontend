@@ -111,6 +111,7 @@ export default defineConfig({
       'react-dom',
       '@tanstack/react-router',
       '@tanstack/react-query',
+      'exceljs',
       // Packages with side effects that should not be tree-shaken
       '@floating-ui/react-dom',
       'aria-hidden',
@@ -127,7 +128,6 @@ export default defineConfig({
     exclude: [
       '@react-pdf/renderer',
       'docx',
-      'exceljs',
       'html-to-image',
       'pptxgenjs',
       'file-saver',
