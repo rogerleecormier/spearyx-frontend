@@ -28,14 +28,14 @@ class Logger {
   private isProduction: boolean;
   private logLevel: LogLevel;
 
-  constructor() {
-    this.isDevelopment = import.meta.env.DEV;
-    this.isProduction = import.meta.env.PROD;
-    this.logLevel = this.getLogLevel();
+  constructor(env?: Record<string, unknown>) {
+    this.isDevelopment = env?.NODE_ENV !== 'production';
+    this.isProduction = env?.NODE_ENV === 'production';
+    this.logLevel = this.getLogLevel(env);
   }
 
-  private getLogLevel(): LogLevel {
-    const envLevel = import.meta.env.VITE_LOG_LEVEL as LogLevel;
+  private getLogLevel(env?: Record<string, unknown>): LogLevel {
+    const envLevel = env?.VITE_LOG_LEVEL as LogLevel;
     if (envLevel && ['debug', 'info', 'warn', 'error'].includes(envLevel)) {
       return envLevel;
     }
@@ -235,7 +235,7 @@ class Logger {
 }
 
 // Create and export a singleton instance
-export const logger = new Logger();
+export const logger = new Logger(globalThis as Record<string, unknown>);
 
 // Export the class for custom instances if needed
 export { Logger };

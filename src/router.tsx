@@ -5,15 +5,25 @@ import { routeTree } from './routeTree.gen';
 
 export interface RouterContext {
   queryClient: QueryClient;
+  request?: Request;
+  env?: Record<string, unknown>;
+  ctx?: ExecutionContext;
+  authApiUrl?: string;
 }
 
-export function createRouter() {
+// Extended router type that includes our custom context
+export type AppRouter = ReturnType<typeof createRouter> & {
+  authApiUrl?: string;
+};
+
+export function createRouter(additionalContext?: Partial<RouterContext>) {
   const queryClient = new QueryClient();
 
   const router = createTanStackRouter({
     routeTree,
     context: {
       queryClient,
+      ...additionalContext,
     },
     defaultPreload: 'intent',
     scrollRestoration: true,
@@ -24,6 +34,14 @@ export function createRouter() {
 
 declare module '@tanstack/react-router' {
   interface Register {
-    router: ReturnType<typeof createRouter>;
+    router: AppRouter;
+  }
+
+  interface RouterContext {
+    queryClient: QueryClient;
+    request?: Request;
+    env?: Record<string, unknown>;
+    ctx?: ExecutionContext;
+    authApiUrl?: string;
   }
 }

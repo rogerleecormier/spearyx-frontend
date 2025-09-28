@@ -5,6 +5,39 @@
 import { getWorkerUrl, WORKER_CONFIG } from '../config/workers';
 import type { AIInferenceResult } from '../types/raci';
 
+// Type definitions for AI API responses
+interface AIErrorResponse {
+  message: string;
+  [key: string]: unknown;
+}
+
+interface AIResponse {
+  // RACI properties
+  roles?: Array<{ id: string; name: string }>;
+  tasks?: Array<{ id: string; name: string }>;
+  matrix?: Record<
+    string,
+    Record<string, { R: boolean; A: boolean; C: boolean; I: boolean }>
+  >;
+  followUpQuestions?: string[];
+  confidence?: string;
+  suggestions?: string[];
+
+  // Title generation properties
+  generatedTitle?: string;
+  title?: string;
+  response?: string;
+  result?: string;
+  output?: string;
+
+  // OpenAI-style response properties
+  choices?: Array<{
+    message?: {
+      content?: string;
+    };
+  }>;
+}
+
 export interface AIProvider {
   name: string;
   inferRaci(prompt: string): Promise<string>;
@@ -32,7 +65,9 @@ export async function callAIModel(prompt: string): Promise<string> {
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorData = (await response
+        .json()
+        .catch(() => ({}))) as AIErrorResponse;
       const errorMessage = errorData.message || 'Unknown error';
 
       // Provide specific error messages for common issues
@@ -47,7 +82,7 @@ export async function callAIModel(prompt: string): Promise<string> {
       );
     }
 
-    const result = await response.json();
+    const result = (await response.json()) as AIResponse;
 
     // The combined endpoint returns { generatedTitle, roles, tasks, matrix, ... }
     // For RACI generation, we only need the RACI data, not the title
@@ -139,14 +174,16 @@ export async function generateProjectTitle(
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorData = (await response
+        .json()
+        .catch(() => ({}))) as AIErrorResponse;
       const errorMessage = errorData.message || 'Unknown error';
       throw new Error(
         `Title generation failed: ${response.statusText} - ${errorMessage}`
       );
     }
 
-    const result = await response.json();
+    const result = (await response.json()) as AIResponse;
     console.log('🤖 AI Worker combined response:', result);
     console.log('🤖 Response type:', typeof result);
     console.log('🤖 Response keys:', Object.keys(result || {}));
@@ -630,8 +667,10 @@ export function createCloudflareProvider(
         throw new Error(`AI request failed: ${response.statusText}`);
       }
 
-      const result = await response.json();
-      return result.result?.response || '';
+      const apiResult = (await response.json()) as AIResponse & {
+        result?: { response?: string };
+      };
+      return apiResult.result?.response || apiResult.response || '';
     },
   };
 }
@@ -670,7 +709,7 @@ export function createOpenAIProvider(apiKey: string): AIProvider {
         throw new Error(`AI request failed: ${response.statusText}`);
       }
 
-      const result = await response.json();
+      const result = (await response.json()) as AIResponse;
       return result.choices?.[0]?.message?.content || '';
     },
   };

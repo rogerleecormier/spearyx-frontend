@@ -1,5 +1,6 @@
 {
   "name": "spearyx-frontend",
+  "main": "dist/server/_worker.js", // your SSR entry
   "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
@@ -7,6 +8,11 @@
     "head_sampling_rate": 1
   },
   "vars": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "VITE_AUTH_API_URL": "https://spearyx.com/auth"
+  },
+  "assets": {
+    "directory": "dist/client",
+    "binding": "ASSETS"
   }
 }

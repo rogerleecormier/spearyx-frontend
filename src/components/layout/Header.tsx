@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useRouter } from '@tanstack/react-router';
 import { Loader2, LogOut, Menu, ShieldCheck, User, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
@@ -16,6 +16,8 @@ import {
 import { getWorkerUrl } from '@/config/workers';
 import { useSession } from '@/hooks/useSession';
 
+import type { AppRouter } from '../../router';
+
 interface HeaderProps {}
 
 const PROTECTED_TOOL_PATH = '/tools/raci';
@@ -23,12 +25,12 @@ const LOGOUT_PATH = '/cdn-cgi/access/logout';
 
 export function Header({}: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter() as AppRouter;
   const { session, isAuthenticated, isAdmin, isPending, isFetching } =
     useSession();
 
   // Get the auth API URL and construct login URL
-  const authApiUrl =
-    import.meta.env.VITE_AUTH_API_URL || getWorkerUrl('AUTH_API');
+  const authApiUrl = router.authApiUrl || getWorkerUrl('AUTH_API');
   const LOGIN_PATH = `${authApiUrl}/session?redirect=${encodeURIComponent(
     typeof window !== 'undefined' ? window.location.origin + '/app' : '/app'
   )}`;

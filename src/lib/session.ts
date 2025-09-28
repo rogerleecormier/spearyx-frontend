@@ -55,24 +55,30 @@ export interface AdminUserSummary {
   createdAt: string;
 }
 
-const BASE_URL =
-  normalizeBaseUrl(import.meta.env.VITE_AUTH_API_URL) ||
-  getWorkerUrl('AUTH_API');
+// Lazy BASE_URL getter - will be computed when first accessed
+let BASE_URL: string | undefined;
 
-// Debug logging
-console.log(
-  '🔧 Environment VITE_AUTH_API_URL:',
-  import.meta.env.VITE_AUTH_API_URL
-);
-console.log('🔧 Normalized BASE_URL:', BASE_URL);
-console.log('🔧 Worker fallback URL:', getWorkerUrl('AUTH_API'));
+// Debug logging function
+function debugEnvironment(authApiUrl?: string) {
+  console.log('🔧 Environment VITE_AUTH_API_URL:', authApiUrl);
+  console.log('🔧 Normalized BASE_URL:', BASE_URL);
+  console.log('🔧 Worker fallback URL:', getWorkerUrl('AUTH_API'));
+}
+
+function getBaseUrl(authApiUrl?: string): string {
+  if (!BASE_URL) {
+    BASE_URL = normalizeBaseUrl(authApiUrl) || getWorkerUrl('AUTH_API');
+  }
+  return BASE_URL;
+}
 
 function normalizeBaseUrl(url?: string) {
   if (!url) return undefined;
   return url.endsWith('/') ? url.slice(0, -1) : url;
 }
 
-export function createAnonymousSession(): SessionPayload {
+export function createAnonymousSession(authApiUrl?: string): SessionPayload {
+  debugEnvironment(authApiUrl);
   return {
     authenticated: false,
     roles: [],
@@ -82,14 +88,15 @@ export function createAnonymousSession(): SessionPayload {
   };
 }
 
-function ensureBaseUrl(action: string) {
-  if (!BASE_URL) {
+function ensureBaseUrl(action: string, authApiUrl?: string) {
+  const baseUrl = getBaseUrl(authApiUrl);
+  if (!baseUrl) {
     throw new Error(
       `Auth API URL is required to ${action}. Configure VITE_AUTH_API_URL or ensure worker endpoints are available.`
     );
   }
 
-  return BASE_URL;
+  return baseUrl;
 }
 
 function createAuthHeaders(accessJwt?: string) {
@@ -151,17 +158,16 @@ function normalizeAdminUser(record: Record<string, unknown>): AdminUserSummary {
 }
 
 export async function fetchSession(
-  options: SessionFetchOptions = {}
+  options: SessionFetchOptions = {},
+  authApiUrl?: string
 ): Promise<SessionPayload> {
-  if (!BASE_URL) {
-    if (import.meta.env.DEV) {
-      console.warn(
-        'Auth API URL is not configured; treating session as unauthenticated.'
-      );
-      // In development without auth API, provide a mock session for testing
-      return createMockDevSession();
-    }
-    return createAnonymousSession();
+  const baseUrl = getBaseUrl(authApiUrl);
+  if (!baseUrl) {
+    console.warn(
+      'Auth API URL is not configured; treating session as unauthenticated.'
+    );
+    // In development without auth API, provide a mock session for testing
+    return createMockDevSession(authApiUrl);
   }
 
   const headers = createAuthHeaders(options.accessJwt);
@@ -169,18 +175,17 @@ export async function fetchSession(
   // In development mode with production auth, add mock email header if no auth JWT is present
   // This allows testing the production auth worker without full Cloudflare Access setup
   if (
-    import.meta.env.DEV &&
-    import.meta.env.VITE_ENVIRONMENT === 'development' &&
+    authApiUrl !== undefined &&
     !headers.get('CF-Access-Jwt-Assertion') &&
     !headers.get('Authorization')
   ) {
     headers.set('X-Mock-Email', 'dev@localhost.com');
   }
 
-  console.log('🔍 Fetching session from:', `${BASE_URL}/session`);
+  console.log('🔍 Fetching session from:', `${baseUrl}/session`);
   console.log('🔍 Headers:', Object.fromEntries(headers.entries()));
 
-  const response = await fetch(`${BASE_URL}/session`, {
+  const response = await fetch(`${baseUrl}/session`, {
     method: 'GET',
     credentials: 'include',
     headers,
@@ -192,7 +197,8 @@ export async function fetchSession(
   return parseSessionResponse(response);
 }
 
-function createMockDevSession(): SessionPayload {
+function createMockDevSession(authApiUrl?: string): SessionPayload {
+  debugEnvironment(authApiUrl);
   return {
     authenticated: true,
     email: 'dev@localhost.com',
@@ -205,22 +211,20 @@ function createMockDevSession(): SessionPayload {
 }
 
 export async function bootstrapSession(
-  options: BootstrapOptions = {}
+  options: BootstrapOptions = {},
+  authApiUrl?: string
 ): Promise<SessionPayload> {
-  if (!BASE_URL) {
-    if (import.meta.env.DEV) {
-      console.warn('Auth API URL is not configured; skipping /bootstrap call.');
-      return createMockDevSession();
-    }
-    return createAnonymousSession();
+  const baseUrl = getBaseUrl(authApiUrl);
+  if (!baseUrl) {
+    console.warn('Auth API URL is not configured; skipping /bootstrap call.');
+    return createMockDevSession(authApiUrl);
   }
 
   const headers = createAuthHeaders(options.accessJwt);
 
   // In development mode with production auth, add mock email header if no auth JWT is present
   if (
-    import.meta.env.DEV &&
-    import.meta.env.VITE_ENVIRONMENT === 'development' &&
+    authApiUrl !== undefined &&
     !headers.get('CF-Access-Jwt-Assertion') &&
     !headers.get('Authorization')
   ) {
@@ -238,54 +242,48 @@ export async function bootstrapSession(
     requestInit.cache = 'no-store';
   }
 
-  const response = await fetch(`${BASE_URL}/bootstrap`, requestInit);
+  const response = await fetch(`${baseUrl}/bootstrap`, requestInit);
 
   return parseSessionResponse(response);
 }
 
 export async function fetchAdminUsers(
-  options: SessionFetchOptions = {}
+  options: SessionFetchOptions = {},
+  authApiUrl?: string
 ): Promise<AdminUserSummary[]> {
-  if (!BASE_URL) {
-    if (import.meta.env.DEV) {
-      // Return mock users for development
-      return [
-        {
-          id: 'dev-user-123',
-          email: 'dev@localhost.com',
-          isPaid: true,
-          roles: ['admin'],
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: 'test-user-456',
-          email: 'test@example.com',
-          isPaid: false,
-          roles: ['pending'],
-          createdAt: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-        },
-        {
-          id: 'user-789',
-          email: 'user@example.com',
-          isPaid: false,
-          roles: ['verified'],
-          createdAt: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
-        },
-      ];
-    }
-    throw new Error(
-      'Auth API URL is required to fetch admin users. Configure VITE_AUTH_API_URL or ensure worker endpoints are available.'
-    );
+  const baseUrl = getBaseUrl(authApiUrl);
+  if (!baseUrl) {
+    // Return mock users for development
+    return [
+      {
+        id: 'dev-user-123',
+        email: 'dev@localhost.com',
+        isPaid: true,
+        roles: ['admin'],
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: 'test-user-456',
+        email: 'test@example.com',
+        isPaid: false,
+        roles: ['pending'],
+        createdAt: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
+      },
+      {
+        id: 'user-789',
+        email: 'user@example.com',
+        isPaid: false,
+        roles: ['verified'],
+        createdAt: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
+      },
+    ];
   }
-
-  const baseUrl = ensureBaseUrl('fetch admin users');
 
   const headers = createAuthHeaders(options.accessJwt);
 
   // In development mode with production auth, add mock email header if no auth JWT is present
   if (
-    import.meta.env.DEV &&
-    import.meta.env.VITE_ENVIRONMENT === 'development' &&
+    authApiUrl !== undefined &&
     !headers.get('CF-Access-Jwt-Assertion') &&
     !headers.get('Authorization')
   ) {
@@ -324,9 +322,10 @@ export async function fetchAdminUsers(
 
 export async function toggleUserPaid(
   payload: TogglePaidPayload,
-  options: SessionFetchOptions = {}
+  options: SessionFetchOptions = {},
+  authApiUrl?: string
 ): Promise<AdminUserSummary> {
-  const baseUrl = ensureBaseUrl('toggle user paid status');
+  const baseUrl = ensureBaseUrl('toggle user paid status', authApiUrl);
 
   const headers = createAuthHeaders(options.accessJwt);
   headers.set('Content-Type', 'application/json');
@@ -361,38 +360,28 @@ export async function toggleUserPaid(
 }
 
 export async function checkAccess(
-  options: SessionFetchOptions = {}
+  options: SessionFetchOptions = {},
+  authApiUrl?: string
 ): Promise<AccessCheckResponse> {
-  if (!BASE_URL) {
-    if (import.meta.env.DEV) {
-      // Return mock access data for development
-      const mockSession = createMockDevSession();
-      return {
-        ...mockSession,
-        hasContentAccess: mockSession.hasContentAccess!,
-        accessLevel: mockSession.accessLevel!,
-        authenticated: mockSession.authenticated,
-        roles: mockSession.roles,
-        isPaid: mockSession.isPaid,
-      };
-    }
+  const baseUrl = getBaseUrl(authApiUrl);
+  if (!baseUrl) {
+    // Return mock access data for development
+    const mockSession = createMockDevSession(authApiUrl);
     return {
-      hasContentAccess: false,
-      accessLevel: 'none',
-      authenticated: false,
-      roles: [],
-      isPaid: false,
+      ...mockSession,
+      hasContentAccess: mockSession.hasContentAccess!,
+      accessLevel: mockSession.accessLevel!,
+      authenticated: mockSession.authenticated,
+      roles: mockSession.roles,
+      isPaid: mockSession.isPaid,
     };
   }
-
-  const baseUrl = ensureBaseUrl('check access');
 
   const headers = createAuthHeaders(options.accessJwt);
 
   // In development mode with production auth, add mock email header if no auth JWT is present
   if (
-    import.meta.env.DEV &&
-    import.meta.env.VITE_ENVIRONMENT === 'development' &&
+    authApiUrl !== undefined &&
     !headers.get('CF-Access-Jwt-Assertion') &&
     !headers.get('Authorization')
   ) {
@@ -435,9 +424,10 @@ export async function checkAccess(
 
 export async function updateUserRole(
   payload: UpdateRolePayload,
-  options: SessionFetchOptions = {}
+  options: SessionFetchOptions = {},
+  authApiUrl?: string
 ): Promise<AdminUserSummary> {
-  const baseUrl = ensureBaseUrl('update user role');
+  const baseUrl = ensureBaseUrl('update user role', authApiUrl);
 
   const headers = createAuthHeaders(options.accessJwt);
   headers.set('Content-Type', 'application/json');

@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useRouter } from '@tanstack/react-router';
 import { Settings } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/card';
 import { getWorkerUrl } from '@/config/workers';
 
+import type { AppRouter } from '../../router';
 import { DevelopmentSetup } from './DevelopmentSetup';
 
 interface NotAuthorizedProps {
@@ -18,14 +19,15 @@ interface NotAuthorizedProps {
 }
 
 export function NotAuthorized({ loginPath = '/app' }: NotAuthorizedProps) {
+  const router = useRouter() as AppRouter;
+
   // In development mode without auth API configured, show setup guide
-  if (import.meta.env.DEV && !import.meta.env.VITE_AUTH_API_URL) {
+  if (router.authApiUrl === undefined) {
     return <DevelopmentSetup />;
   }
 
   // Get the auth API URL - use configured URL or fallback to worker URL
-  const authApiUrl =
-    import.meta.env.VITE_AUTH_API_URL || getWorkerUrl('AUTH_API');
+  const authApiUrl = router.authApiUrl || getWorkerUrl('AUTH_API');
   const loginUrl = `${authApiUrl}/session?redirect=${encodeURIComponent(
     (typeof window !== 'undefined' ? window.location.origin : '') + loginPath
   )}`;

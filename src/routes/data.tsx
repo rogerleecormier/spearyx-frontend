@@ -3,10 +3,6 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { Body, Card, ElevatedCard, Hero, Title } from '@/components/brand';
 import { Layout } from '@/components/layout';
-import { getServerData } from '@/lib/server/server-data';
-
-// For server-side calls, we need to import the server function properly
-// This will be handled by TanStack Start's server function system
 
 import { Button } from '../components/ui/button';
 import { useLogger } from '../lib/useLogger';
@@ -29,8 +25,16 @@ export const Route = createFileRoute('/data')({
       isServerSide: true,
     };
 
-    // Call the server function - on server side this runs directly, on client side it makes HTTP call
-    const serverFunctionData = await getServerData({ count: 3 });
+    // Simulate server function data
+    const serverFunctionData = {
+      items: Array.from({ length: 3 }, (_, i) => ({
+        id: i + 1,
+        name: `Server Item ${i + 1}`,
+        timestamp: new Date().toISOString(),
+      })),
+      serverTime: new Date().toISOString(),
+      total: 3,
+    };
 
     return {
       serverData,

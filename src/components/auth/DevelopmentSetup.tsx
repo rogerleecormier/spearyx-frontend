@@ -1,3 +1,4 @@
+import { useRouter } from '@tanstack/react-router';
 import { AlertCircle, Copy, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
@@ -12,8 +13,11 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
+import type { AppRouter } from '../../router';
+
 export function DevelopmentSetup() {
   const [copiedEnv, setCopiedEnv] = useState(false);
+  const router = useRouter() as AppRouter;
 
   const envContent = `# Auth API Configuration
 # Use your production auth worker
@@ -158,21 +162,18 @@ VITE_ENVIRONMENT=development`;
             <div className="grid gap-4 md:grid-cols-3">
               <div>
                 <h4 className="font-medium">Environment</h4>
-                <p className="text-sm text-muted-foreground">
-                  {import.meta.env.DEV ? 'Development' : 'Production'}
-                </p>
+                <p className="text-sm text-muted-foreground">Development</p>
               </div>
               <div>
                 <h4 className="font-medium">Auth API URL</h4>
                 <p className="text-sm text-muted-foreground">
-                  {import.meta.env.VITE_AUTH_API_URL ||
-                    'Not configured (using fallback)'}
+                  {router.authApiUrl || 'Not configured (using fallback)'}
                 </p>
               </div>
               <div>
                 <h4 className="font-medium">Authentication Mode</h4>
                 <p className="text-sm text-muted-foreground">
-                  {import.meta.env.VITE_AUTH_API_URL
+                  {router.authApiUrl
                     ? 'Real Auth Worker'
                     : 'Mock Authentication'}
                 </p>

@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -11,11 +11,14 @@ import {
 } from '@/components/ui/card';
 import { useSession } from '@/hooks/useSession';
 
+import type { AppRouter } from '../router';
+
 export const Route = createFileRoute('/debug-auth')({
   component: AuthDebug,
 });
 
 function AuthDebug() {
+  const router = useRouter() as AppRouter;
   const {
     session,
     isAuthenticated,
@@ -30,8 +33,7 @@ function AuthDebug() {
     try {
       setTestResult('Testing...');
 
-      const authUrl =
-        import.meta.env.VITE_AUTH_API_URL || 'https://spearyx.com/auth';
+      const authUrl = router.authApiUrl || 'https://spearyx.com/auth';
       console.log('🔍 Testing fetch to:', `${authUrl}/session`);
 
       const response = await fetch(`${authUrl}/session`, {
@@ -83,15 +85,13 @@ function AuthDebug() {
         </CardHeader>
         <CardContent className="space-y-2">
           <p>
-            <strong>Auth API URL:</strong>{' '}
-            {import.meta.env.VITE_AUTH_API_URL || 'Not set'}
+            <strong>Auth API URL:</strong> {router.authApiUrl || 'Not set'}
           </p>
           <p>
-            <strong>Environment:</strong>{' '}
-            {import.meta.env.VITE_ENVIRONMENT || 'Not set'}
+            <strong>Environment:</strong> {'Development'}
           </p>
           <p>
-            <strong>Dev Mode:</strong> {import.meta.env.DEV ? 'Yes' : 'No'}
+            <strong>Dev Mode:</strong> Yes
           </p>
           <p>
             <strong>All Env Vars:</strong>
@@ -100,7 +100,7 @@ function AuthDebug() {
             className="overflow-auto rounded bg-muted p-2 text-xs"
             suppressHydrationWarning
           >
-            {JSON.stringify(import.meta.env, null, 2)}
+            {JSON.stringify({ authApiUrl: router.authApiUrl }, null, 2)}
           </pre>
         </CardContent>
       </Card>

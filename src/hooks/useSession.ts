@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from '@tanstack/react-router';
 
 import {
   bootstrapSession,
@@ -8,6 +9,7 @@ import {
   type AccessCheckResponse,
   type SessionPayload,
 } from '../lib/session';
+import type { AppRouter } from '../router';
 
 export const SESSION_QUERY_KEY = ['session'] as const;
 export const ACCESS_CHECK_QUERY_KEY = ['access-check'] as const;
@@ -31,13 +33,15 @@ function withAccessLevel(
 }
 
 export function useSession() {
+  const router = useRouter() as AppRouter;
+
   const sessionQuery = useQuery({
     queryKey: SESSION_QUERY_KEY,
     staleTime: 60 * 1000,
     retry: false,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      const session = await fetchSession();
+      const session = await fetchSession({}, router.authApiUrl);
 
       if (!session.authenticated) {
         return session;
@@ -47,7 +51,7 @@ export function useSession() {
         return session;
       }
 
-      return bootstrapSession({ noCache: true });
+      return bootstrapSession({ noCache: true }, router.authApiUrl);
     },
   });
 
@@ -57,10 +61,11 @@ export function useSession() {
     retry: false,
     refetchOnWindowFocus: true,
     enabled: sessionQuery.data?.authenticated === true,
-    queryFn: () => checkAccess(),
+    queryFn: () => checkAccess({}, router.authApiUrl),
   });
 
-  const sessionData = sessionQuery.data ?? createAnonymousSession();
+  const sessionData =
+    sessionQuery.data ?? createAnonymousSession(router.authApiUrl);
   const dataWithFlags = withAdminFlag(sessionData);
   const dataWithAccess = withAccessLevel(dataWithFlags, accessQuery.data);
 
