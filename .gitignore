@@ -124,3 +124,6 @@ miniflare-*.log
 
 # Local development
 *.local
+
+# VSCode settings
+*.code-workspace
