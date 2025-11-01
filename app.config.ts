@@ -40,4 +40,10 @@ export default createApp({
       ],
     },
   ],
+  server: {
+    preset: 'cloudflare-pages',
+    rollupConfig: {
+      external: ['node:*', 'vite'],
+    },
+  },
 });
