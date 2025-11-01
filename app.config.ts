@@ -5,8 +5,9 @@ import react from '@vitejs/plugin-react';
 
 export default createApp({
   server: {
-    preset: 'cloudflare-module',
-    compatibilityDate: '2024-11-19',
+    rollupConfig: {
+      external: ['vite'],
+    },
   },
   routers: [
     {
