@@ -7,7 +7,8 @@ export default defineNitroConfig({
       if (id === 'vite' || id.startsWith('vite/')) {
         return true;
       }
-      return false;
+      // Allow default handling for Node built-ins and other packages
+      return undefined;
     },
   },
 });
