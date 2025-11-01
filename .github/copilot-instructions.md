@@ -122,9 +122,10 @@ Heavy export libraries are manually chunked in `vite.config.ts`:
 
 ### SSR Considerations
 
-- TanStack Start handles SSR with `vinxi`
+- TanStack Start handles SSR with Nitro (Cloudflare Pages preset)
 - Server functions in `src/server/`
 - Client-side code marked with `"use client"` directives
+- Edge runtime compatible - no Node.js APIs in server code
 
 ## Design System
 
@@ -161,10 +162,19 @@ shadcn/ui components in `src/components/ui/` with Tailwind CSS:
 
 ### Cloudflare Pages
 
-- Auto-deployment from `main` branch
-- Build command: `npm run build`
-- Output directory: `dist`
-- Environment variables configured in Cloudflare dashboard
+- **Build Configuration**: TanStack Start with `target: 'cloudflare-pages'` in `vite.config.ts`
+- **Auto-deployment**: Triggers on push to `main` branch
+- **Build command**: `npm run build`
+- **Output directory**: `dist` (configured in `wrangler.jsonc`)
+- **Environment**: Edge runtime (Cloudflare Workers)
+- **No app.config.ts**: Uses Vite config with inline TanStack Start options
+
+### Build Output Structure
+
+- `dist/_worker.js/` - Cloudflare Workers SSR bundle
+- `dist/` - Static assets and client bundle
+- `dist/_routes.json` - Cloudflare Pages routing config
+- `dist/_headers` - Custom headers for assets
 
 ### Worker Integration
 
