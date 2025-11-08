@@ -4,4 +4,4 @@ export default {
   server: {
     preset: 'cloudflare-pages',
   },
-} as const
+} as const;
