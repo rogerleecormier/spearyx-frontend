@@ -1,8 +1,7 @@
 // app.config.ts
-import { defineConfig } from '@tanstack/react-start/config'
-
-export default defineConfig({
+// Export the config directly to avoid depending on '@tanstack/start/config' types at build time.
+export default {
   server: {
     preset: 'cloudflare-pages',
   },
-})
+} as const
