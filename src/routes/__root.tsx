@@ -1,42 +1,37 @@
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
-  HeadContent,
+  createRootRoute,
   Outlet,
+  HeadContent,
   Scripts,
-  createRootRouteWithContext,
+  Link,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 
 import appStyles from '../index.css?url';
-import type { RouterContext } from '../router';
 
-function RootDocument({ children }: { children: ReactNode }) {
+function NotFound() {
   return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body className="bg-background text-foreground">
-        <div id="app">{children}</div>
-        <Scripts />
-      </body>
-    </html>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground">
+      <div className="text-center">
+        <h1 className="text-primary text-9xl font-bold">404</h1>
+        <h2 className="mt-4 text-3xl font-semibold">Page Not Found</h2>
+        <p className="mt-2 text-muted-foreground">
+          The page you're looking for doesn't exist.
+        </p>
+        <Link
+          to="/"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 mt-6 inline-block rounded-md px-6 py-3 transition-colors"
+        >
+          Go Home
+        </Link>
+      </div>
+    </div>
   );
 }
 
-function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </QueryClientProvider>
-  );
-}
-
-export const Route = createRootRouteWithContext<RouterContext>()({
+export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -60,5 +55,32 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
   }),
   component: RootComponent,
-  shellComponent: RootDocument,
+  notFoundComponent: NotFound,
 });
+
+function RootComponent() {
+  const [queryClient] = useState(() => new QueryClient());
+
+  return (
+    <RootDocument>
+      <QueryClientProvider client={queryClient}>
+        <Outlet />
+        <TanStackRouterDevtools />
+      </QueryClientProvider>
+    </RootDocument>
+  );
+}
+
+function RootDocument({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body className="bg-background text-foreground">
+        <div id="root">{children}</div>
+        <Scripts />
+      </body>
+    </html>
+  );
+}
