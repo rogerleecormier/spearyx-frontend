@@ -161,4 +161,3 @@ If you want to test deployments locally:
 - Use Shadcn UI components for consistent design
 - Leverage Tailwind CSS utility classes
 - Keep components small and focused on single responsibilities
-- Test frequently
